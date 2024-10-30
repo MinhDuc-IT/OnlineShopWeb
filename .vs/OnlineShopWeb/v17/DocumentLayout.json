@@ -3,12 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\Login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Content\\css\\Login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\asus\\onedrive\\workspace\\workspace\\doan\\onlineshopweb\\onlineshopweb\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\.gitignore||{3B902123-F8A7-4915-9F01-361F908088D0}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\asus\\onedrive\\workspace\\workspace\\doan\\onlineshopweb\\onlineshopweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\asus\\onedrive\\workspace\\workspace\\doan\\onlineshopweb\\onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\LoginController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -138,7 +142,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Bookmark",
@@ -146,7 +150,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
+              "Title": ".gitignore",
+              "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\.gitignore",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\.gitignore",
+              "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\.gitignore",
+              "RelativeToolTip": "OnlineShopWeb\\.gitignore",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001001|",
+              "WhenOpened": "2024-10-30T13:10:19.191Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
               "Title": "LoginController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\LoginController.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Controllers\\LoginController.cs",
@@ -158,7 +175,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "bootstrap.min.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\bootstrap.min.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\bootstrap.min.css",
@@ -176,14 +193,14 @@
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAOcAAAAAAAAAAAAAAA4BAAAxAAAA",
+              "ViewState": "AQIAAJ8AAAAAAAAAAAAAAA4BAAAxAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-28T16:55:00.281Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 5,
               "Title": "User.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Models\\User.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Models\\User.cs",
@@ -195,7 +212,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 6,
               "Title": "HomeController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\HomeController.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Controllers\\HomeController.cs",
@@ -207,7 +224,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 7,
               "Title": "Order.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Models\\Order.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Models\\Order.cs",
@@ -219,20 +236,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Login.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\Login.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\Login.css",
               "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\Login.css",
               "RelativeToolTip": "OnlineShopWeb\\Content\\css\\Login.css",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAABoAAAAaAAAA",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAABoAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-10-29T15:19:42.47Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 8,
               "Title": "main.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\main.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\main.css",
@@ -244,7 +261,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 9,
               "Title": "bootstrap.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\bootstrap.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\bootstrap.css",
@@ -256,7 +273,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 10,
               "Title": "price-range.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\price-range.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\price-range.css",
@@ -268,7 +285,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
+              "DocumentIndex": 11,
               "Title": "Error.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\Error.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\Error.cshtml",
@@ -280,7 +297,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 11,
+              "DocumentIndex": 12,
               "Title": "animate.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\animate.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\animate.css",
@@ -292,7 +309,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 12,
+              "DocumentIndex": 13,
               "Title": "prettyPhoto.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\prettyPhoto.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\prettyPhoto.css",
@@ -304,7 +321,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 13,
+              "DocumentIndex": 14,
               "Title": "responsive.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\responsive.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\responsive.css",
@@ -316,7 +333,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 14,
+              "DocumentIndex": 15,
               "Title": "bootstrap.min.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\js\\bootstrap.min.js",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\js\\bootstrap.min.js",
@@ -328,7 +345,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 15,
+              "DocumentIndex": 16,
               "Title": "AssemblyInfo.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Properties\\AssemblyInfo.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Properties\\AssemblyInfo.cs",
@@ -340,7 +357,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 16,
+              "DocumentIndex": 17,
               "Title": "bootstrap.min.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Scripts\\bootstrap.min.js",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Scripts\\bootstrap.min.js",
@@ -352,7 +369,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 17,
+              "DocumentIndex": 18,
               "Title": "bootstrap.js",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Scripts\\bootstrap.js",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Scripts\\bootstrap.js",
@@ -364,7 +381,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 18,
+              "DocumentIndex": 19,
               "Title": "RouteConfig.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\App_Start\\RouteConfig.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\App_Start\\RouteConfig.cs",
@@ -376,7 +393,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 19,
+              "DocumentIndex": 20,
               "Title": "ProductController.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\ProductController.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Controllers\\ProductController.cs",
@@ -388,7 +405,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 20,
+              "DocumentIndex": 21,
               "Title": "FilterConfig.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\App_Start\\FilterConfig.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\App_Start\\FilterConfig.cs",
@@ -400,7 +417,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 21,
+              "DocumentIndex": 22,
               "Title": "packages.config",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\packages.config",
               "RelativeDocumentMoniker": "OnlineShopWeb\\packages.config",
@@ -412,7 +429,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 22,
+              "DocumentIndex": 23,
               "Title": "Global.asax.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Global.asax.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Global.asax.cs",
@@ -424,7 +441,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 23,
+              "DocumentIndex": 24,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Product\\Index.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Product\\Index.cshtml",
@@ -436,7 +453,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 24,
+              "DocumentIndex": 25,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Home\\Index.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Home\\Index.cshtml",
@@ -444,12 +461,11 @@
               "RelativeToolTip": "OnlineShopWeb\\Views\\Home\\Index.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAYCAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-28T02:57:02.401Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-28T02:57:02.401Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 25,
+              "DocumentIndex": 26,
               "Title": "Web.config",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Web.config",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Web.config",
@@ -462,7 +478,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 26,
+              "DocumentIndex": 27,
               "Title": "_ViewStart.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\_ViewStart.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\_ViewStart.cshtml",
@@ -470,12 +486,11 @@
               "RelativeToolTip": "OnlineShopWeb\\Views\\_ViewStart.cshtml",
               "ViewState": "AQIAAAAAAAAAAAAAAAAAAAMAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-10-28T16:40:36.88Z",
-              "EditorCaption": ""
+              "WhenOpened": "2024-10-28T16:40:36.88Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 27,
+              "DocumentIndex": 28,
               "Title": "Contact.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Home\\Contact.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Home\\Contact.cshtml",
@@ -487,7 +502,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 28,
+              "DocumentIndex": 29,
               "Title": "About.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Home\\About.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Home\\About.cshtml",
@@ -499,7 +514,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 29,
+              "DocumentIndex": 30,
               "Title": "bootstrap-theme.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\bootstrap-theme.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\bootstrap-theme.css",
@@ -511,7 +526,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 30,
+              "DocumentIndex": 31,
               "Title": "Index.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Category\\Index.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Category\\Index.cshtml",
@@ -523,7 +538,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 31,
+              "DocumentIndex": 32,
               "Title": "BundleConfig.cs",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\App_Start\\BundleConfig.cs",
               "RelativeDocumentMoniker": "OnlineShopWeb\\App_Start\\BundleConfig.cs",
