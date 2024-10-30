@@ -27,7 +27,7 @@ namespace OnlineShopWeb.Controllers
             }
             else
             {
-                return Json(new { success = true, userEmail = user.Email, name = user.Name });
+                return Json(new { success = true, userEmail = user.Email, name = user.Name ,Role =user.Role });
             }
         }
 

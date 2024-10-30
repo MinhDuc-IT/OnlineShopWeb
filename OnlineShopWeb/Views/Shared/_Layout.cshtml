@@ -234,6 +234,7 @@
                             if (response.success === true) {
                                 // Lưu thông tin vào Local Storage
                                 localStorage.setItem("userEmail", response.userEmail);
+                                sessionStorage.setItem("Role", response.Role)
                                 console.log("success")
                                 $('#myModal').modal('hide')
                                 alert("Welcome "+ response.name)
@@ -261,6 +262,8 @@
                 document.getElementById("Logout").className = "hideButton";
                 document.getElementById("Login").className = "";
                 localStorage.removeItem("userEmail")
+                sessionStorage.removeItem("Role")
+
             })
         </script>
         <!--- form sign up -->

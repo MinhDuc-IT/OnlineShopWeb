@@ -3,20 +3,20 @@
   "WorkspaceRootPath": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\asus\\onedrive\\workspace\\workspace\\doan\\onlineshopweb\\onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\LoginController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Controllers\\LoginController.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Content\\css\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\asus\\onedrive\\workspace\\workspace\\doan\\onlineshopweb\\onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\content\\css\\login.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Views\\Shared\\_Layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:OnlineShopWeb\\Content\\css\\bootstrap.min.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Models\\User.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -138,7 +138,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 7,
+          "SelectedChildIndex": 3,
           "Children": [
             {
               "$type": "Bookmark",
@@ -152,13 +152,14 @@
               "RelativeDocumentMoniker": "OnlineShopWeb\\Controllers\\LoginController.cs",
               "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Controllers\\LoginController.cs",
               "RelativeToolTip": "OnlineShopWeb\\Controllers\\LoginController.cs",
-              "ViewState": "AQIAACAAAAAAAAAAAAAmwCYAAAAAAAAA",
+              "ViewState": "AQIAAA0AAAAAAAAAAAAcwBoAAAANAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-10-28T16:39:59.985Z"
+              "WhenOpened": "2024-10-28T16:39:59.985Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "bootstrap.min.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\bootstrap.min.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\bootstrap.min.css",
@@ -170,13 +171,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 0,
               "Title": "_Layout.cshtml",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
               "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
               "RelativeToolTip": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAAJ4AAAAAAAAAAAAwwLwAAAAtAAAA",
+              "ViewState": "AQIAAFkAAAAAAAAAAAAwwOQAAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
               "WhenOpened": "2024-10-28T16:55:00.281Z",
               "EditorCaption": ""
@@ -219,13 +220,13 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "Login.css",
               "DocumentMoniker": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\Login.css",
               "RelativeDocumentMoniker": "OnlineShopWeb\\Content\\css\\Login.css",
               "ToolTip": "C:\\Users\\ASUS\\OneDrive\\Workspace\\WorkSpace\\DoAN\\OnlineShopWeb\\OnlineShopWeb\\Content\\css\\Login.css",
               "RelativeToolTip": "OnlineShopWeb\\Content\\css\\Login.css",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAACYAAAAAAAAA",
+              "ViewState": "AQIAABIAAAAAAAAAAAAAACYAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
               "WhenOpened": "2024-10-29T15:19:42.47Z",
               "EditorCaption": ""
