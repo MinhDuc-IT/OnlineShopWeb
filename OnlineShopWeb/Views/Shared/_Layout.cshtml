@@ -180,6 +180,12 @@
     <!--end sign up-->
 
         <script>
+            if (localStorage.getItem("userEmail")) {
+                document.getElementById("Login").className = "hideButton";
+                document.getElementById("Logout").className = "";
+
+
+            }
             $(document).ready(function () {
                 $("#myFormSignup").on("submit", function (e) {
 
