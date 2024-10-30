@@ -1,17 +1,67 @@
-﻿using System;
+﻿using OnlineShopWeb.Data;
+using OnlineShopWeb.Models;
+using System;
 using System.Collections.Generic;
+using System.Data.Entity.Validation;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Web.Services.Description;
 
 namespace OnlineShopWeb.Controllers
 {
+
     public class LoginController : Controller
     {
+        private readonly ApplicationDbContext applicationDbContext = new ApplicationDbContext();
+
         // GET: Login
-        public ActionResult Index()
+        [HttpPost]
+
+        public JsonResult Login(string name, string password)
         {
-            return View();
+            var user = applicationDbContext.Users.FirstOrDefault(account => account.Email == name && account.Password == password);
+            if (user == null)
+            {
+                return Json(new { success = false });
+            }
+            else
+            {
+                return Json(new { success = true, userEmail = user.Email, name = user.Name, Role = user.Role });
+            }
         }
+
+        [HttpPost]
+
+        public JsonResult Signup(string name, string email, string password, string phone, string address)
+        {
+
+            var user = applicationDbContext.Users.FirstOrDefault(account => account.Email == email);
+            if (user == null)
+            {
+                var newUser = new User
+                {
+                    Name = name,
+                    Email = email,
+                    Password = password,
+                    Phone = phone,
+                    Address = address,
+                    Role = "user"
+                };
+                applicationDbContext.Users.Add(newUser);
+                applicationDbContext.SaveChanges();
+                return Json(new { success = true });
+            }
+            else
+            {
+                return Json(new { success = false, Message = "Email đã tồn tại " });
+            }
+
+
+
+        }
+
     }
+
 }
+
