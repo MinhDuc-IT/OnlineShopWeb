@@ -12,29 +12,25 @@
     <link href="~/Content/css/price-range.css" rel="stylesheet">
     <link href="~/Content/css/animate.css" rel="stylesheet">
     <link href="~/Content/css/main.css" rel="stylesheet">
+    @*<link href="~/Content/css/fix.css" rel="stylesheet">*@
     <link href="~/Content/css/responsive.css" rel="stylesheet">
-    <img src="~/Content/fonts/fontawesome-webfont.svg" />
-    <a href="~/Content/fonts/fontawesome-webfont.woff">~/Content/fonts/fontawesome-webfont.woff</a>
-    <a href="~/Content/fonts/FontAwesome.otf">~/Content/fonts/FontAwesome.otf</a>
-    <img src="~/Content/fonts/glyphicons-halflings-regular.svg" />
-    <a href="~/Content/fonts/glyphicons-halflings-regular.woff">~/Content/fonts/glyphicons-halflings-regular.woff</a>
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
-    <link rel="shortcut icon" href="images/ico/favicon.ico">
-    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png">
-    <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png">
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
 </head><!--/head-->
 
 <body>
     <header id="header">
         <!--header-->
-        <div class="header_top">
-            <!--header_top-->
-            <div class="container">
+        <!--<div class="header_top">-->
+        <!--header_top-->
+        <!--<div class="container">
                 <div class="row">
                     <div class="col-sm-6">
                         <div class="contactinfo">
@@ -57,7 +53,8 @@
                     </div>
                 </div>
             </div>
-        </div><!--/header_top-->
+        </div>-->
+        <!--/header_top-->
 
         <div class="header-middle">
             <!--header-middle-->
@@ -65,7 +62,7 @@
                 <div class="row">
                     <div class="col-sm-4">
                         <div class="logo pull-left">
-                            <a href="index.html"><img src="images/home/logo.png" alt="" /></a>
+                            <a href="/Home/Index"><img src="~/Content/images/home/logo.png" alt="" /></a>
                         </div>
                         <div class="btn-group pull-right">
                             <div class="btn-group">
@@ -74,7 +71,7 @@
                                     <span class="caret"></span>
                                 </button>
                                 <ul class="dropdown-menu">
-                                    <li><a href="#">Canada</a></li>
+                                    <li><a href="#">VN</a></li>
                                     <li><a href="#">UK</a></li>
                                 </ul>
                             </div>
@@ -146,7 +143,8 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="search_box pull-right">
-                            <input type="text" placeholder="Search" />
+                            <input type="text" id="searchInput" placeholder="Search" />
+                            <button class="test" id="btnSearch"><i class="fa fa-search"></i></button>
                         </div>
                     </div>
                 </div>
@@ -175,8 +173,8 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="images/home/girl1.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    <img src="~/Content/images/home/girl1.jpg" class="girl img-responsive" alt="" />
+                                    <img src="~/Content/images/home/pricing.png" class="pricing" alt="" />
                                 </div>
                             </div>
                             <div class="item">
@@ -187,8 +185,8 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="images/home/girl2.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    <img src="~/Content/images/home/girl2.jpg" class="girl img-responsive" alt="" />
+                                    <img src="~/Content/images/home/pricing.png" class="pricing" alt="" />
                                 </div>
                             </div>
 
@@ -200,8 +198,8 @@
                                     <button type="button" class="btn btn-default get">Get it now</button>
                                 </div>
                                 <div class="col-sm-6">
-                                    <img src="images/home/girl3.jpg" class="girl img-responsive" alt="" />
-                                    <img src="images/home/pricing.png" class="pricing" alt="" />
+                                    <img src="~/Content/images/home/girl3.jpg" class="girl img-responsive" alt="" />
+                                    <img src="~/Content/images/home/pricing.png" class="pricing" alt="" />
                                 </div>
                             </div>
 
@@ -244,7 +242,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="images/home/iframe1.png" alt="" />
+                                        <img src="~/Content/images/home/iframe1.png" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -259,7 +257,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="images/home/iframe2.png" alt="" />
+                                        <img src="~/Content/images/home/iframe2.png" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -274,7 +272,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="images/home/iframe3.png" alt="" />
+                                        <img src="~/Content/images/home/iframe3.png" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -289,7 +287,7 @@
                             <div class="video-gallery text-center">
                                 <a href="#">
                                     <div class="iframe-img">
-                                        <img src="images/home/iframe4.png" alt="" />
+                                        <img src="~/Content/images/home/iframe4.png" alt="" />
                                     </div>
                                     <div class="overlay-icon">
                                         <i class="fa fa-play-circle-o"></i>
@@ -302,7 +300,7 @@
                     </div>
                     <div class="col-sm-3">
                         <div class="address">
-                            <img src="images/home/map.png" alt="" />
+                            <img src="~/Content/images/home/map.png" alt="" />
                             <p>505 S Atlantic Ave Virginia Beach, VA(Virginia)</p>
                         </div>
                     </div>
@@ -387,13 +385,29 @@
 
     </footer><!--/Footer-->
 
-
-
     <script src="~/Content/js/jquery.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
     <script src="~/Content/js/price-range.js"></script>
     <script src="~/Content/js/jquery.prettyPhoto.js"></script>
     <script src="~/Content/js/main.js"></script>
+    <script>
+        $('body').on('click', '#btnSearch', function () {
+            var query = document.getElementById("searchInput").value;
+            if (query) {
+                $.ajax({
+                    url: '/Search/Index',
+                    type: 'GET',
+                    data: { query: query },
+                    success: function (response) {
+                        // Xử lý phản hồi từ server nếu cần
+                        $('body').html(response);
+                    }
+                });
+            } else {
+                alert("Vui lòng nhập từ khóa!");
+            }
+        });
+    </script>
 </body>
 </html>
