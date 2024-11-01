@@ -11,8 +11,8 @@
     <div>
         @foreach (var product in Model)
         {
-            <div class="col-sm-4" bis_skin_checked="1">
-                <div class="product-image-wrapper" bis_skin_checked="1">
+            <div class="col-sm-3" bis_skin_checked="1">
+                <div class="product-image-wrapper product-hover" bis_skin_checked="1">
                     <div class="single-products" bis_skin_checked="1">
                         <div class="productinfo text-center" bis_skin_checked="1">
                             <img src="~/Content/images/home/product1.jpg" alt="">
@@ -20,20 +20,13 @@
                             <p>@product.Name</p>
                             <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
                         </div>
-                        @*<div class="product-overlay" bis_skin_checked="1">
-                                <div class="overlay-content" bis_skin_checked="1">
-                                    <h2>@product.Price</h2>
-                                    <p>@product.Name</p>
-                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
-                                </div>
-                            </div>*@
                     </div>
-                    <div class="choose" bis_skin_checked="1">
+                    @*<div class="choose" bis_skin_checked="1">
                         <ul class="nav nav-pills nav-justified">
                             <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
                             <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
                         </ul>
-                    </div>
+                    </div>*@
                 </div>
             </div>
         }
