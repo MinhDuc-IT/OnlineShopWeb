@@ -9,6 +9,8 @@ using System.Web;
 using System.Web.Mvc;
 using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
+using OnlineShopWeb.ViewModels;
+using OnlineShopWeb.Helpers;
 
 namespace OnlineShopWeb.Controllers
 {
@@ -16,10 +18,65 @@ namespace OnlineShopWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
 
+        private VnPayService vnPayService = new VnPayService();
+
+        [HttpGet]
         public async Task<ActionResult> Checkout()
         {
             return View();
         }
+
+        [HttpPost]
+        public ActionResult Checkout(CheckoutRequest checkoutRequest)
+        {
+            if (checkoutRequest.PaymentMethod == "Vnpay")
+            {
+                var vnPayModel = new VnPaymentRequestModel
+                {
+                    Amount = checkoutRequest.Total,
+                    CreatedDate = DateTime.Now,
+                    Description = $"{checkoutRequest.FullName}-{checkoutRequest.Mobile}",
+                    FullName = checkoutRequest.FullName,
+                    OrderId = new Random().Next(1000, 10000)
+                };
+
+                var httpContext = System.Web.HttpContext.Current;
+
+                return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
+            }
+            TempData["Message"] = $"Lỗi thanh toán VN Pay";
+            return RedirectToAction("PaymentFail");
+        }
+
+        public ActionResult PaymentCallBack()
+        {
+            var httpContext = System.Web.HttpContext.Current;
+
+            var response = vnPayService.PaymentExecute(httpContext.Request.QueryString);
+
+            if (response == null || response.VnPayResponseCode != "00")
+            {
+                TempData["Message"] = $"Lỗi thanh toán VN Pay: {response?.VnPayResponseCode}";
+                return RedirectToAction("PaymentFail");
+            }
+
+            // Lưu đơn hàng vào database
+
+            TempData["Message"] = $"Thanh toán VNPay thành công";
+            return RedirectToAction("PaymentSuccess");
+        }
+
+
+        public ActionResult PaymentFail()
+        {
+            return View();
+        }
+
+        public ActionResult PaymentSuccess()
+        {
+            return View();
+        }
+
 
         // GET: Order
         public async Task<ActionResult> Index()
