@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\zed\\source\\repos\\OnlineShop\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|C:\\Users\\zed\\source\\repos\\OnlineShop\\onlineshopweb\\areas\\admin\\views\\statistical\\statisticalcategory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\views\\statistical\\statisticalcategory.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|c:\\users\\zed\\source\\repos\\onlineshop\\onlineshopweb\\areas\\admin\\controllers\\statisticalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\controllers\\statisticalcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 0,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "StatisticalCategory.cshtml",
+              "DocumentMoniker": "C:\\Users\\zed\\source\\repos\\OnlineShop\\OnlineShopWeb\\Areas\\Admin\\Views\\Statistical\\StatisticalCategory.cshtml",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Views\\Statistical\\StatisticalCategory.cshtml",
+              "ToolTip": "C:\\Users\\zed\\source\\repos\\OnlineShop\\OnlineShopWeb\\Areas\\Admin\\Views\\Statistical\\StatisticalCategory.cshtml",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Views\\Statistical\\StatisticalCategory.cshtml",
+              "ViewState": "AQIAAIsAAAAAAAAAAAAAAJ4AAAAOAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-11-05T08:53:50.946Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "StatisticalController.cs",
+              "DocumentMoniker": "C:\\Users\\zed\\source\\repos\\OnlineShop\\OnlineShopWeb\\Areas\\Admin\\Controllers\\StatisticalController.cs",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Controllers\\StatisticalController.cs",
+              "ToolTip": "C:\\Users\\zed\\source\\repos\\OnlineShop\\OnlineShopWeb\\Areas\\Admin\\Controllers\\StatisticalController.cs",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Controllers\\StatisticalController.cs",
+              "ViewState": "AQIAACcAAAAAAAAAAAAowEcAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-11-05T06:32:35.501Z",
+              "EditorCaption": ""
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
