@@ -1,0 +1,84 @@
+﻿@{
+    ViewBag.Title = "profile";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+
+<div class="p_content">
+    <div class="pc_header">
+        <span class="pch_title">Hồ sơ của tôi</span>
+        <span>Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
+    </div>
+    <div class="pc_main">
+        <div class="pcm_info">
+            <form>
+                <table>
+                    <tr>
+                        <td class="pcm_title">Tên đăng nhập</td>
+                        <td class="pcm_property">hoangduc54544</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Tên</td>
+                        <td class="pcm_property">
+                            <input class="input_Name" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Email</td>
+                        <td class="pcm_property">duch52362@gmail.com</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Số điện thoại</td>
+                        <td class="pcm_property">0386941739</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Giới tính</td>
+                        <td class="pcm_property pcm_gender">
+                            <input id="Male" name="gender" type="radio" />
+                            <label for="Male">Nam</label>
+                            <input id="Female" name="gender" type="radio" />
+                            <label for="Female">Nữ</label>
+                            <input id="orther" name="gender" type="radio" />
+                            <label for="orther">Khác</label>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Ngày sinh</td>
+                        <td class="pcm_property pcm_date">
+                            <select class="css_select" id="day"></select>
+                            <select class="css_select" id="month"></select>
+                            <select class="css_select" id="year"></select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title"></td>
+                        <td class="pcm_property"><button>Lưu</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="pcm_avatar">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTFHijBC_IDuRZtvLppsiBfCsa8b1XSyhT_dA&s" />
+            <button>Chọn Ảnh</button>
+            <span>Dụng lượng file tối đa 1 MB</span>
+            <span>Định dạng:.JPEG, .PNG</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function () {
+        let day = new Date().getDate(); 
+        let month = new Date().getMonth() + 1; 
+        let year = new Date().getFullYear();
+
+        for (let i = 1; i <= 31; i++) {
+            $('#day').append(`<option value="${i}" ${i === day ? 'selected' : ''}>${i}</option>`);
+        }
+        for (let i = 1; i <= 12; i++) {
+            $('#month').append(`<option value="${i}" ${i === month ? 'selected' : ''}>${i}</option>`);
+        }
+        for (let i = year; i >= 1910; i--) {
+            $('#year').append(`<option value="${i}" ${i === year ? 'selected' : ''}>${i}</option>`);
+        }
+    });
+</script>
