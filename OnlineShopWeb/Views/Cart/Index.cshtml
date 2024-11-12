@@ -49,9 +49,20 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <th colspan="4" style="padding: 15px 30px">
-                            <input type="checkbox" id="selectAll"> Select All
-                        </th>
+                        @*<th colspan="4" style="padding: 15px 30px">
+            <input type="checkbox" id="selectAll"> Select All
+            <button class="btn btn-danger btnDeleteSelected">Delete Selected</button>
+        </th>*@
+
+                        <tr>
+                            <td colspan="4" style="padding: 15px 30px">
+                                <input type="checkbox" id="selectAll"> Select All
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-danger btnDeleteSelected">Delete Selected</button>
+                            </td>
+                        </tr>
+
                         @if (Model != null && Model.Any())
                         {
                             var sum = decimal.Zero;
@@ -85,7 +96,7 @@
                                 </tr>
                             }
                             <tr>
-                                
+
                                 <th colspan="4" class="text-right">Sum: </th>
                                 <th>@sum</th>
                             </tr>

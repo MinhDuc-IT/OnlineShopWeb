@@ -142,5 +142,27 @@ namespace OnlineShopWeb.Controllers
             }
             return Json(new { Success = false });
         }
+
+        [HttpPost]
+        public ActionResult DeleteMany(List<int> ids)
+        {
+            var code = new { success = false, msg = "", code = -1, count = 0 };
+
+            Cart cart = (Cart)Session["Cart"];
+            if (cart != null && ids != null && ids.Any())
+            {
+                // Xóa tất cả sản phẩm có trong danh sách ids
+                foreach (var id in ids)
+                {
+                    cart.Remove(id);
+                }
+
+                code = new { success = true, msg = "Items removed successfully", code = 1, count = cart.CartItems.Count };
+            }
+
+            Session["Cart"] = cart;
+            return Json(code);
+        }
+
     }
 }

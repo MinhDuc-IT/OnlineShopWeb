@@ -31,6 +31,37 @@
         }
     });
 
+    $('body').on('click', '.btnDeleteSelected', function (e) {
+        e.preventDefault();
+
+        var selectedItems = [];
+        $('.item-select:checked').each(function () {
+            selectedItems.push($(this).data('id'));
+        });
+
+        if (selectedItems.length === 0) {
+            alert("Please select at least one product to delete.");
+            return;
+        }
+
+        var conf = confirm('Are you sure you want to remove these products from your cart?');
+        if (conf == true) {
+            $.ajax({
+                url: '/Cart/DeleteMany',
+                type: 'POST',
+                data: { ids: selectedItems },
+                success: function (rs) {
+                    if (rs.success) {
+                        $('#cart-item-count').html(rs.count);
+                        selectedItems.forEach(function (id) {
+                            $('#trow_' + id).remove();
+                        });
+                    }
+                }
+            });
+        }
+    });
+
     $('body').on('click', '.cart_quantity_delete', function (e) {
         e.preventDefault();
         var id = $(this).data('id');
@@ -109,7 +140,7 @@
 
 function ShowCount() {
     $.ajax({
-        url: '/CartController/ShowCount',
+        url: '/Cart/ShowCount',
         type: 'GET',
         success: function (rs) {
             $('#cart-item-count').html(rs.Count);
@@ -119,7 +150,7 @@ function ShowCount() {
 
 function DeleteAll() {
     $.ajax({
-        url: '/CartController/DeleteAll',
+        url: '/Cart/DeleteAll',
         type: 'POST',
         success: function (rs) {
             if (rs.success) {
@@ -131,7 +162,7 @@ function DeleteAll() {
 
 function LoadCart() {
     $.ajax({
-        url: '/CartController/Index',
+        url: '/Cart/Index',
         type: 'GET',
         success: function (rs) {
             $('#load_data').html(rs);
