@@ -7,24 +7,28 @@
 <div class="container-fluid py-5 checkout">
     <div class="container py-5">
         <h1 class="mb-4">Billing details</h1>
-        <form action="@Url.Action("Checkout","Order")" method="POST">
+        <form action="@Url.Action("Payment","Order")" method="POST">
             <div class="row g-5">
                 <div class="col-md-12 col-lg-6 col-xl-7">
+                    <div style="display: flex; align-items: center;">
+                        <input type="checkbox" id="userInfo" />
+                        <label for="userInfo" style="margin-left: 5px;">User Information</label>
+                    </div>
                     <div class="form-item">
                         <label class="form-label my-3">Full Name <sup>*</sup></label>
-                        <input type="text" class="form-control" name="FullName" required>
+                        <input type="text" class="form-control" name="FullName" id="FullName" required>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Address <sup>*</sup></label>
-                        <input type="text" class="form-control" name="Address" required>
+                        <input type="text" class="form-control" name="Address" id="Address" required>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Mobile<sup>*</sup></label>
-                        <input type="tel" class="form-control" name="Mobile" required>
+                        <input type="tel" class="form-control" name="Mobile" id="Mobile" required>
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email Address<sup>*</sup></label>
-                        <input type="email" class="form-control" name="Email" required>
+                        <input type="email" class="form-control" name="Email" id="Email" required>
                     </div>
                     <hr>
                     <div class="form-item">
@@ -47,131 +51,6 @@
                             <tbody>
                                 <tr>
                                     <th scope="row">
-                                        <div class="d-flex align-items-center mt-2">
-                                            <a href="#"><img src="https://placehold.co/90x90?text=OrderItem" class="img-fluid rounded-circle" alt=""></a>
-                                        </div>
-                                    </th>
-                                    <td class="py-5"><a href="#">Awesome Brocoli</a></td>
-                                    <td class="py-5" data-price="69.00">$69.00</td>
-                                    <td class="py-5">
-                                        <div class="input-group quantity mt-4" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="1">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-5 total-price">$138.00</td>
-                                    <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div class="d-flex align-items-center mt-2">
-                                            <a href="#"><img src="https://placehold.co/90x90?text=OrderItem" class="img-fluid rounded-circle" alt=""></a>
-                                        </div>
-                                    </th>
-                                    <td class="py-5"><a href="#">Potatoes</a></td>
-                                    <td class="py-5" data-price="69.00">$69.00</td>
-                                    <td class="py-5">
-                                        <div class="input-group quantity mt-4" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="1">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-5 total-price">$138.00</td>
-                                    <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                        <div class="d-flex align-items-center mt-2">
-                                            <a href="#"><img src="https://placehold.co/90x90?text=OrderItem" class="img-fluid rounded-circle" alt=""></a>
-                                        </div>
-                                    </th>
-                                    <td class="py-5"><a href="#">Big Banana</a></td>
-                                    <td class="py-5" data-price="69.00">$69.00</td>
-                                    <td class="py-5">
-                                        <div class="input-group quantity mt-4" style="width: 100px;">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-minus rounded-circle bg-light border">
-                                                    <i class="fa fa-minus"></i>
-                                                </button>
-                                            </div>
-                                            <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="1">
-                                            <div class="input-group-btn">
-                                                <button class="btn btn-sm btn-plus rounded-circle bg-light border">
-                                                    <i class="fa fa-plus"></i>
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="py-5 total-price">$138.00</td>
-                                    <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                    </th>
-                                    <td class="py-5"></td>
-                                    <td class="py-5"></td>
-                                    <td class="py-5" style="padding: 30px 0px;">
-                                        <p class="mb-0 text-dark py-3">Subtotal</p>
-                                    </td>
-                                    <td class="py-5">
-                                        <div class="py-3 border-bottom border-top">
-                                            <p class="mb-0 text-dark sub-total">$414.00</p>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
-                                    </th>
-                                    <td class="py-5">
-                                        <p class="mb-0 text-dark py-4">Shipping</p>
-                                    </td>
-                                    <td colspan="3" class="py-5">
-                                        <div class="form-check text-start">
-                                            <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-1" name="Shipping-1" value="Shipping">
-                                            <label class="form-check-label" for="Shipping-1">Free Shipping</label>
-                                        </div>
-                                        <div class="form-check text-start">
-                                            <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-2" name="Shipping-1" value="Shipping">
-                                            <label class="form-check-label" for="Shipping-2">Flat rate: $15.00</label>
-                                        </div>
-                                        <div class="form-check text-start">
-                                            <input type="radio" class="form-check-input bg-primary border-0" id="Shipping-3" name="Shipping-1" value="Shipping">
-                                            <label class="form-check-label" for="Shipping-3">Local Pickup: $8.00</label>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <th scope="row">
                                     </th>
                                     <td class="py-5" style="padding: 30px 0px;">
                                         <p class="mb-0 text-dark text-uppercase py-3">TOTAL</p>
@@ -179,33 +58,13 @@
                                     <td class="py-5"></td>
                                     <td class="py-5"></td>
                                     <td class="py-5">
-                                        @*<div class="py-3 border-bottom border-top">
-                                                <p class="mb-0 text-dark total">$135.00</p>
-                                            </div>*@
-                                        <input type="text" class="form-control" name="Total" value="135000" readonly>
+                                        <input type="text" class="form-control total" name="Total" value="0" readonly>
                                     </td>
                                 </tr>
                             </tbody>
                         </table>
                     </div>
                     <hr style="height: 1px; background-color: black; border: none; margin-top: 0;" />
-                    <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Transfer-1" name="Transfer" value="Transfer">
-                                <label class="form-check-label" for="Transfer-1">Direct Bank Transfer</label>
-                            </div>
-                            <p class="text-start text-dark">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order will not be shipped until the funds have cleared in our account.</p>
-                        </div>
-                    </div>
-                    <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Payments-1" name="PaymentMethod" value="Payments">
-                                <label class="form-check-label" for="Payments-1">Check Payments</label>
-                            </div>
-                        </div>
-                    </div>
                     <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
@@ -217,16 +76,8 @@
                     <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Paypal-1" name="PaymentMethod"" value="Paypal">
-                                <label class="form-check-label" for="Paypal-1">Paypal</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Vnpay-1" name="PaymentMethod" value="Vnpay">
-                                <label class="form-check-label" for="Vnpay-1">Vnpay</label>
+                                <input type="radio" class="form-check-input bg-primary border-0" id="NCB-1" name="PaymentMethod" value="NCB">
+                                <label class="form-check-label" for="NCB-1">NCB</label>
                             </div>
                         </div>
                     </div>
@@ -243,82 +94,89 @@
     <script>
 
         $(document).ready(function () {
+            $('#userInfo').change(function () {
+                if (this.checked) {
+                    $('#FullName').val("Demo");
+                    $('#Address').val("Demo");
+                    $('#Mobile').val("0123456789");
+                    $('#Email').val("demo@gmail.com");
+
+                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
+                }
+                else {
+                    $('#FullName, #Address, #Mobile, #Email').val("");
+                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', false);
+                }
+            });
+
+
+            const checkoutRequests = [
+            //    { productId: 1, quantity: 2 }
+            ];
+
+            $.ajax({
+                url: '@Url.Action("GetOrderItem", "Order")',
+                type: 'POST',
+                data: JSON.stringify(checkoutRequests),
+                contentType: 'application/json; charset=utf-8',
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        response.data.forEach(function (item) {
+                            $('tbody').prepend(`
+                                <tr>
+                                    <th scope="row">
+                                        <div class="d-flex align-items-center mt-2">
+                                            <a href="#"><img src="${item.Img}" class="img-fluid rounded-circle" alt=""></a>
+                                        </div>
+                                    </th>
+                                    <td class="py-5"><a href="#">${item.Name}</a></td>
+                                    <td class="py-5" data-price="${item.Price}">${item.Price}</td>
+                                    <td class="py-5">
+                                        <div class="input-group quantity mt-4" style="width: 100px;">
+                                            <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="${item.Quantity}" readonly>
+                                        </div>
+                                    </td>
+                                    <td class="py-5 total-price">${item.Total}</td>
+                                    <td>
+                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
+                                            <i class="fa fa-times text-danger"></i>
+                                        </button>
+                                    </td>
+                                </tr>
+                            `);
+
+                            UpdateTotal();
+                        });
+                    } else {
+                        alert(response.message);
+                    }
+                },
+                error: function (response) {
+                    alert("An error occurred: " + response.statusText);
+                }
+            });
+
             $('form').on('submit', function (event) {
-                if (someCondition) {
+                var paymentMethodSelected = $('input[name="PaymentMethod"]:checked');
+                if (paymentMethodSelected.length === 0) {
+                    alert("Please select a payment method.");
                     event.preventDefault();
                 }
+
+                //if (someCondition) {
+                //    event.preventDefault();
+                //}
             });
-
-
-            $('.button-handle').click(function () {
-                // Xóa hàng tr chứa nút vừa click
-                $(this).closest('tr').remove();
-                UpdateSubTotal();
-            });
-
-            $('.btn-plus').click(function () {
-                var $row = $(this).closest('tr');
-                $row.find('.btn-minus').show();
-
-                var $quantityInput = $row.find('.input-quantity');
-
-                var quantity = parseInt($quantityInput.val());
-                var price = parseFloat($row.find('td[data-price]').data('price'));
-
-                quantity += 1;
-                $quantityInput.val(quantity);
-
-                $row.find('.total-price').text('$' + (quantity * price).toFixed(2));
-                UpdateSubTotal();
-            })
-
-            $('.btn-minus').click(function () {
-                var $row = $(this).closest('tr');
-                var $quantityInput = $row.find('.input-quantity');
-                var quantity = parseInt($quantityInput.val());
-                var price = parseFloat($row.find('td[data-price]').data('price')); // Lấy giá từ thuộc tính data
-
-                if (quantity > 1) {
-                    quantity -= 1;
-                    $quantityInput.val(quantity);
-
-                    $row.find('.total-price').text('$' + (quantity * price).toFixed(2));
-                }
-
-                if (quantity === 1) {
-                    $(this).hide();
-                } else {
-                    $row.find('.btn-minus').show();
-                }
-                UpdateSubTotal();
-            });
-
-            $('.input-quantity').on('input', function () {
-                var $row = $(this).closest('tr');
-                var quantity = parseInt($(this).val());
-                var price = parseFloat($row.find('td[data-price]').data('price'));
-
-                if (quantity >= 1) {
-                    $row.find('.total-price').text('$' + (quantity * price).toFixed(2));
-                } else {
-                    $(this).val(1);
-                    $row.find('.total-price').text('$' + price.toFixed(2));
-                }
-                UpdateSubTotal();
-            })
-
-
-            function UpdateSubTotal() {
-                var subtotal = 0;
-                $('.total-price').each(function () {
-                    var total = parseFloat($(this).text().replace('$', ''));
-                    subtotal += total;
-                });
-                $('.sub-total').text('$' + subtotal.toFixed(2));
-                $('.total').text('$' + subtotal.toFixed(2));
-            }
         });
 
-
+        function UpdateTotal() {
+            var total = 0;
+            $('.total-price').each(function () {
+                var subTotal = parseFloat($(this).text()) || 0;
+                total += subTotal;
+            });
+            $('.total').val(total.toFixed(2));
+        }
     </script>
 }

@@ -25,6 +25,7 @@ namespace OnlineShopWeb.Helpers
             vnpay.AddRequestData("vnp_OrderType", "other");
             vnpay.AddRequestData("vnp_ReturnUrl", ConfigurationManager.AppSettings["VnPay:PaymentBackReturnUrl"]);
             vnpay.AddRequestData("vnp_TxnRef", tick);
+            vnpay.AddRequestData("vnp_BankCode", "NCB");
 
             var paymentUrl = vnpay.CreateRequestUrl(ConfigurationManager.AppSettings["VnPay:BaseUrl"], ConfigurationManager.AppSettings["VnPay:HashSecret"]);
 
