@@ -42,4 +42,10 @@ Desktop.ini
 .idea/
 
 # Microsoft Azure Web Apps Publish
+<<<<<<< HEAD
 Publish/
+=======
+
+Publish/
+
+>>>>>>> develop
