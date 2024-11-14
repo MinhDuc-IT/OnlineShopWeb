@@ -28,6 +28,9 @@
     <link rel="stylesheet" href="~/Content/Admin_Lib/plugins/dropzone/min/dropzone.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="~/Content/Admin_Lib/dist/css/adminlte.min.css">
+
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.css">
+
 </head>
 <body class="hold-transition sidebar-mini">
     <div class="wrapper">
@@ -58,21 +61,105 @@
                         </form>
                     </div>
                 </li>
-                <!-- Fullscreen -->
+
+
+                <!-- Messages Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-comments"></i>
+                        <span class="badge badge-danger navbar-badge">3</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="~/Content/clients/dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Brad Diesel
+                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">Call me whenever you can...</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="~/Content/clients/dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        John Pierce
+                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">I got your message bro</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <!-- Message Start -->
+                            <div class="media">
+                                <img src="~/Content/clients/dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">
+                                <div class="media-body">
+                                    <h3 class="dropdown-item-title">
+                                        Nora Silvester
+                                        <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
+                                    </h3>
+                                    <p class="text-sm">The subject goes here</p>
+                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
+                                </div>
+                            </div>
+                            <!-- Message End -->
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
+                    </div>
+                </li>
+                <!-- Notifications Dropdown Menu -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#">
+                        <i class="far fa-bell"></i>
+                        <span class="badge badge-warning navbar-badge">15</span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
+                        <span class="dropdown-item dropdown-header">15 Notifications</span>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-envelope mr-2"></i> 4 new messages
+                            <span class="float-right text-muted text-sm">3 mins</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-users mr-2"></i> 8 friend requests
+                            <span class="float-right text-muted text-sm">12 hours</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item">
+                            <i class="fas fa-file mr-2"></i> 3 new reports
+                            <span class="float-right text-muted text-sm">2 days</span>
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
+                    </div>
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link" data-widget="fullscreen" href="#" role="button">
                         <i class="fas fa-expand-arrows-alt"></i>
                     </a>
                 </li>
-                <!-- Settings dropdown -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-                        Settings
+
+                <li class="nav-item">
+                    <a class="nav-link" data-widget="control-sidebar" data-slide="true" href="#" role="button">
+                        <i class="fas fa-th-large"></i>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item" href="#">Thông tin tài khoản</a>
-                        <a class="dropdown-item" href="#">Đăng Xuất</a>
-                    </div>
+
                 </li>
             </ul>
         </nav>
@@ -133,6 +220,71 @@
     <script src="~/Content/Admin_Lib/dist/js/adminlte.min.js"></script>
     <!-- AdminLTE for demo purposes -->
     <script src="~/Content/Admin_Lib/dist/js/demo.js"></script>
+
+    <script src="//cdnjs.cloudflare.com/ajax/libs/raphael/2.1.0/raphael-min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/morris.js/0.5.1/morris.min.js"></script>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.min.js"></script>
+    <!-- Page specific script -->
+    <script>
+        $(function () {
+            ////Initialize Select2 Elements
+            //$('.select2').select2()
+
+            ////Initialize Select2 Elements
+            //$('.select2bs4').select2({
+            //    theme: 'bootstrap4'
+            //})
+
+            ////Datemask dd/mm/yyyy
+            //$('#datemask').inputmask('dd/mm/yyyy', { 'placeholder': 'dd/mm/yyyy' })
+            ////Datemask2 mm/dd/yyyy
+            //$('#datemask2').inputmask('mm/dd/yyyy', { 'placeholder': 'mm/dd/yyyy' })
+            ////Money Euro
+            //$('[data-mask]').inputmask()
+
+            ////Date picker
+            //$('#reservationdate').datetimepicker({
+            //    format: 'L'
+            //});
+
+            ////Date and time picker
+            //$('#reservationdatetime').datetimepicker({ icons: { time: 'far fa-clock' } });
+
+            ////Date range picker
+            //$('#reservation').daterangepicker()
+            ////Date range picker with time picker
+            //$('#reservationtime').daterangepicker({
+            //    timePicker: true,
+            //    timePickerIncrement: 30,
+            //    locale: {
+            //        format: 'MM/DD/YYYY hh:mm A'
+            //    }
+            //})
+            ////Date range as a button
+            //$('#daterange-btn').daterangepicker(
+            //    {
+            //        ranges: {
+            //            'Today': [moment(), moment()],
+            //            'Yesterday': [moment().subtract(1, 'days'), moment().subtract(1, 'days')],
+            //            'Last 7 Days': [moment().subtract(6, 'days'), moment()],
+            //            'Last 30 Days': [moment().subtract(29, 'days'), moment()],
+            //            'This Month': [moment().startOf('month'), moment().endOf('month')],
+            //            'Last Month': [moment().subtract(1, 'month').startOf('month'), moment().subtract(1, 'month').endOf('month')]
+            //        },
+            //        startDate: moment().subtract(29, 'days'),
+            //        endDate: moment()
+            //    },
+            //    function (start, end) {
+            //        $('#reportrange span').html(start.format('MMMM D, YYYY') + ' - ' + end.format('MMMM D, YYYY'))
+            //    }
+            //)
+
+            //Timepicker
+
+        });
+        // DropzoneJS Demo Code End
+    </script>
+
 
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
