@@ -158,6 +158,10 @@
     <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.Designer.cs">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411140402075_updatedModels.cs" />
+    <Compile Include="Migrations\202411140402075_updatedModels.designer.cs">
+      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -2929,7 +2933,6 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
-
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Category\_ListCategory.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
@@ -2949,10 +2952,8 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-    <Folder Include="Content\images\" />
     <Folder Include="Views\FileSystem\" />
     <Folder Include="Views\File\" />
-
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -2974,6 +2975,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411051127211_AddCostPriceToProducts.resx">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411140402075_updatedModels.resx">
+      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
