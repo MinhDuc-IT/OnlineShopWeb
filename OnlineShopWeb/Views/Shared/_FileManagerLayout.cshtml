@@ -1,0 +1,28 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>_FileManagerLayout</title>
+</head>
+<body>
+    <div>
+        @RenderBody()
+    </div>
+    <!-- Thêm jQuery từ CDN -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="~/Content/lib/jqueryui/themes/base/theme.css" />
+    <link rel="stylesheet" href="~/Content/lib/jqueryui/themes/base/jquery-ui.css" />
+    <link rel="stylesheet" type="text/css" href="~/Content/lib/elfinder/css/elfinder.full.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/lib/elfinder/css/theme.min.css">
+
+    <script src="~/Content/lib/jqueryui/jquery-ui.min.js"></script>
+    <script src="~/Content/lib/elfinder/js/elfinder.min.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

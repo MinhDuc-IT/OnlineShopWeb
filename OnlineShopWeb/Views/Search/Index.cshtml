@@ -1,0 +1,33 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+@{
+    ViewBag.Title = "Kết quả tìm kiếm";
+}
+<div class="ps_header">
+    <span><a href="/">Trang chủ</a>></span>
+    <p>Kết quả tìm kiếm "@ViewBag.Query"</p>
+</div>
+
+@if (Model != null && Model.Any())
+{
+    <div>
+        @foreach (var product in Model)
+        {
+            <div class="col-sm-3" bis_skin_checked="1">
+                <div class="product-image-wrapper product-hover" bis_skin_checked="1">
+                    <div class="single-products" bis_skin_checked="1">
+                        <div class="productinfo text-center" bis_skin_checked="1">
+                            <img src="~/Content/images/home/product1.jpg" alt="">
+                            <h2>@product.Price</h2>
+                            <p>@product.Name</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}
+else
+{
+    <div class=""></div>
+}

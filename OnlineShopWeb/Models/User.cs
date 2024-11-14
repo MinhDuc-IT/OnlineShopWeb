@@ -30,7 +30,6 @@ namespace OnlineShopWeb.Models
 
         [MaxLength(200)]
         public string Address { get; set; }
-
         [Required]
         public string Role { get; set; }
 

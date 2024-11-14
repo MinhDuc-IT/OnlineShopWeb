@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopWeb.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -8,9 +9,15 @@ namespace OnlineShopWeb.Controllers
 {
     public class HomeController : Controller
     {
-        public ActionResult Index()
+        private ApplicationDbContext db = new ApplicationDbContext();
+        public ActionResult Index(int? id)
         {
-            return View();
+            var items = db.Products.ToList();
+            if (id != null)
+            {
+                items = items.Where(x => x.ProductId == id).ToList();
+            }
+            return View(items);
         }
 
         public ActionResult About()
