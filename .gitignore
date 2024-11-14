@@ -1,4 +1,6 @@
+
 # Ignore build results
+
 [Dd]ebug/
 [Dd]ebugPublic/
 [Dd]istro/

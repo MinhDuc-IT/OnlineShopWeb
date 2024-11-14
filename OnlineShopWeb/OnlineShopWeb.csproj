@@ -185,6 +185,9 @@
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
+
+    <Content Include=".gitignore" />
+
     <Content Include="Content\Admin_Lib\dist\css\adminlte.css" />
     <Content Include="Content\Admin_Lib\dist\css\adminlte.min.css" />
     <Content Include="Content\Admin_Lib\dist\css\alt\adminlte.components.css" />
@@ -2107,6 +2110,7 @@
     <Content Include="Content\Admin_Lib\plugins\uplot\uPlot.iife.js" />
     <Content Include="Content\Admin_Lib\plugins\uplot\uPlot.iife.min.js" />
     <Content Include="Content\Admin_Lib\plugins\uplot\uPlot.min.css" />
+
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -2121,6 +2125,7 @@
     <Content Include="Content\css\prettyPhoto.css" />
     <Content Include="Content\css\price-range.css" />
     <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\Login.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\404\404.png" />
