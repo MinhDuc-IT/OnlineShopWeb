@@ -12,7 +12,12 @@ namespace OnlineShopWeb
         public static void RegisterRoutes(RouteCollection routes)
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
-
+            routes.MapRoute(
+              name: "CategoryProduct",
+              url: "danh-muc-san-pham/{id}",
+              defaults: new { controller = "Product", action = "ProductCategory", id = UrlParameter.Optional },
+              namespaces: new[] { "OnlineShopWeb.Controllers" }
+          );
             routes.MapRoute(
               name: "CategoryProduct",
               url: "danh-muc-san-pham/{id}",
