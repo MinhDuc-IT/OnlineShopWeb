@@ -1,5 +1,45 @@
-﻿################################################################################
-# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
-################################################################################
+﻿# Ignore build results
+[Dd]ebug/
+[Dd]ebugPublic/
+[Dd]istro/
+[Dd]ist/
+[Dd]ebug/
+[Dd]ebug/
+bin/
+obj/
 
-/OnlineShopWeb/.vs
+# User-specific files
+# Windows Installer files
+Thumbs.db
+Desktop.ini
+
+# User-specific files
+.vs/
+.vscode/
+
+# Windows Installer files
+*.cab
+*.msi
+*.msm
+*.msp
+
+# Windows Installer Files
+*.user
+*.userosscache
+*.suo
+*.userprefs
+
+# Windows Image File
+*.iso
+
+# Windows Installer logs
+*.cab
+
+# JetBrains Rider IDE
+.idea/
+
+# Rider Workspace
+.idea/
+
+# Microsoft Azure Web Apps Publish
+Publish/

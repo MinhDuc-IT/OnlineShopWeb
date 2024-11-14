@@ -1,7 +1,35 @@
-﻿
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Product Index";
 }
 
-<h2>Index</h2>
+<h2>Product Index</h2>
 
+<table class="table">
+    <thead>
+        <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>
+                    <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                </td>
+                <td>@product.Name</td>
+                <td>@product.Brand.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price.ToString("C")</td>
+                <td>@product.Stock</td>
+            </tr>
+        }
+    </tbody>
+</table>
