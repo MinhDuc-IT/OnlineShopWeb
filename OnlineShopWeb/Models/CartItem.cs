@@ -26,6 +26,9 @@ namespace OnlineShopWeb.Models
         [Range(0, (double)decimal.MaxValue)]
         public decimal Price { get; set; }
 
+        [Range(0, (double)decimal.MaxValue)]
+        public decimal TotalPrice { get; set; }
+
         [ForeignKey("CartId")]
         public virtual Cart Cart { get; set; }
 

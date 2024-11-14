@@ -14,15 +14,27 @@
     <link href="~/Content/css/main.css" rel="stylesheet">
     @*<link href="~/Content/css/fix.css" rel="stylesheet">*@
     <link href="~/Content/css/responsive.css" rel="stylesheet">
+
+
+    <link src="~/Content/fonts/fontawesome-webfont.svg">
+    <link href="~/Content/fonts/fontawesome-webfont.woff">
+    <link href="~/Content/fonts/FontAwesome.otf">
+    <link src="~/Content/fonts/glyphicons-halflings-regular.svg">
+    <link href="~/Content/fonts/glyphicons-halflings-regular.woff">
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
     <![endif]-->
+
     <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
     <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
     <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
     <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
+  
+    <link href="~/Content/css/checkoutcustom.css" rel="stylesheet"/>
+
 </head><!--/head-->
 
 <body>
@@ -93,8 +105,16 @@
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
                                 <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
-                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+
+                                <li><a href="@Url.Action("Checkout", "Order")"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                
+                                <li>
+                                    <a href="/Cart/Index">
+                                        <i class="fa fa-shopping-cart"></i> Cart
+                                        <span id="cart-item-count" class="badge">0</span>
+                                    </a>
+                                </li>
+
                                 <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                             </ul>
                         </div>
@@ -124,7 +144,7 @@
                                     <ul role="menu" class="sub-menu">
                                         <li><a href="/Category/Index">Categories</a></li>
                                         <li><a href="">Product Details</a></li>
-                                        <li><a href="">Checkout</a></li>
+                                        <li><a href="@Url.Action("Checkout", "Order")">Checkout</a></li>
                                         <li><a href="">Cart</a></li>
                                         <li><a href="">Login</a></li>
                                     </ul>
@@ -151,6 +171,7 @@
             </div>
         </div><!--/header-bottom-->
     </header><!--/header-->
+
 
     <section id="slider">
         <!--slider-->
@@ -217,6 +238,7 @@
             </div>
         </div>
     </section><!--/slider-->
+
 
     <section>
         <div class="container">
@@ -386,11 +408,13 @@
     </footer><!--/Footer-->
 
     <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Scripts/jsShopping.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
     <script src="~/Content/js/price-range.js"></script>
     <script src="~/Content/js/jquery.prettyPhoto.js"></script>
     <script src="~/Content/js/main.js"></script>
+
     <script>
         $('body').on('click', '#btnSearch', function () {
             var query = document.getElementById("searchInput").value;
@@ -409,5 +433,8 @@
             }
         });
     </script>
+
+    @RenderSection("Scripts",false)
+
 </body>
 </html>
