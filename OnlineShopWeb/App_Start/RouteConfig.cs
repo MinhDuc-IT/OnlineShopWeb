@@ -13,6 +13,14 @@ namespace OnlineShopWeb
         {
             routes.IgnoreRoute("{resource}.axd/{*pathInfo}");
 
+            routes.MapRoute(
+              name: "CategoryProduct",
+              url: "danh-muc-san-pham/{id}",
+              defaults: new { controller = "Product", action = "ProductCategory", id = UrlParameter.Optional },
+              namespaces: new[] { "OnlineShopWeb.Controllers" }
+          );
+
+
             // elFinder's connector route
             //routes.MapRoute(null, "connector", new { controller = "File", action = "Index" });
 
@@ -29,10 +37,12 @@ namespace OnlineShopWeb
                 defaults: new { controller = "FileSystem", action = "Thumbs" }
             );
 
+
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
+                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional },
+                namespaces: new[] { "OnlineShopWeb.Controllers" }
             );
         }
     }

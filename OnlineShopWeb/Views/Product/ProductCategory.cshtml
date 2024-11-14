@@ -1,0 +1,35 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+@{
+    ViewBag.Title = "index";
+}
+<div class="col-sm-3">
+    @Html.Partial("_SidebarPartial")
+</div>
+<div class="col-sm-9 padding-right">
+    @if (Model != null && Model.Any())
+    {
+        <div>
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-4 ">
+                    <div class="product-image-wrapper product-hover">
+                        <div class="single-products">
+                            <div class="productinfo text-center">
+                                <img src="~/Content/images/home/product1.jpg" alt="">
+                                <h2>@product.Price</h2>
+                                <p>@product.Name</p>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
+                        </div>
+                        @*<div class="choose">
+                            <ul class="nav nav-pills nav-justified">
+                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
+                                <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
+                            </ul>
+                        </div>*@
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>
