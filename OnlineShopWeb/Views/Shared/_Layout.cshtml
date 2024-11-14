@@ -13,11 +13,13 @@
     <link href="~/Content/css/animate.css" rel="stylesheet">
     <link href="~/Content/css/main.css" rel="stylesheet">
     <link href="~/Content/css/responsive.css" rel="stylesheet">
-    @*<img src="~/Content/fonts/fontawesome-webfont.svg" />
-        <a href="~/Content/fonts/fontawesome-webfont.woff">~/Content/fonts/fontawesome-webfont.woff</a>
-        <a href="~/Content/fonts/FontAwesome.otf">~/Content/fonts/FontAwesome.otf</a>
-        <img src="~/Content/fonts/glyphicons-halflings-regular.svg" />
-        <a href="~/Content/fonts/glyphicons-halflings-regular.woff">~/Content/fonts/glyphicons-halflings-regular.woff</a>*@
+
+    <link src="~/Content/fonts/fontawesome-webfont.svg">
+    <link href="~/Content/fonts/fontawesome-webfont.woff">
+    <link href="~/Content/fonts/FontAwesome.otf">
+    <link src="~/Content/fonts/glyphicons-halflings-regular.svg">
+    <link href="~/Content/fonts/glyphicons-halflings-regular.woff">
+
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -98,8 +100,16 @@
                             <ul class="nav navbar-nav">
                                 <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
                                 <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+
                                 <li><a href="@Url.Action("Checkout", "Order")"><i class="fa fa-crosshairs"></i> Checkout</a></li>
-                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                
+                                <li>
+                                    <a href="/Cart/Index">
+                                        <i class="fa fa-shopping-cart"></i> Cart
+                                        <span id="cart-item-count" class="badge">0</span>
+                                    </a>
+                                </li>
+
                                 <li><a href="login.html"><i class="fa fa-lock"></i> Login</a></li>
                             </ul>
                         </div>
@@ -328,6 +338,7 @@
 
 
     <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Scripts/jsShopping.js"></script>
     <script src="~/Content/js/bootstrap.min.js"></script>
     <script src="~/Content/js/jquery.scrollUp.min.js"></script>
     <script src="~/Content/js/price-range.js"></script>
