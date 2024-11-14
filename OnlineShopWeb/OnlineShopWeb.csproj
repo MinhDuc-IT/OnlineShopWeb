@@ -159,6 +159,7 @@
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.min.css" />
     <Content Include="Content\css\font-awesome.min.css" />
+    <Content Include="Content\css\footerCart.css" />
     <Content Include="Content\css\main.css" />
     <Content Include="Content\css\prettyPhoto.css" />
     <Content Include="Content\css\price-range.css" />

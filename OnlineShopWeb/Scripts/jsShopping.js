@@ -189,5 +189,6 @@ function UpdateCartTotal() {
             totalSum += parseFloat($(this).text()); // Chỉ cộng nếu item được chọn
         }
     });
-    $('th:contains("Sum:")').next().text(totalSum.toFixed(2)); // Cập nhật giá trị tổng
+    //$('th:contains("Sum:")').next().text(totalSum.toFixed(2)); // Cập nhật giá trị tổng
+    $('#sum').text(totalSum.toFixed(2)); // Cập nhật giá trị tổng vào phần tử có id="sum"
 }
