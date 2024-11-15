@@ -169,6 +169,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\BrandViewModel.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
@@ -2947,6 +2948,9 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+
+    <Content Include="Views\Home\_ProductListPartial.cshtml" />
+
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Category\_ListCategory.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
@@ -2969,6 +2973,7 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
