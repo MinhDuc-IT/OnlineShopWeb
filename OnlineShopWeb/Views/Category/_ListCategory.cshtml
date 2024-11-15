@@ -1,0 +1,13 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Category>
+@{
+    ViewBag.Title = "_ListCategory";
+}
+
+@foreach (var item in Model)
+{
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h4 class="panel-title"><a href="/danh-muc-san-pham/@(item.CategoryId)">@item.Name</a></h4>
+        </div>
+    </div>
+}

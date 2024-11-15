@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopWeb.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -19,12 +20,36 @@ namespace OnlineShopWeb.Controllers
         }
 
         // GET: Product
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
             var products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .ToList();
+
+            if (id.HasValue)
+            {
+                products = products.Where(p => p.ProductId == id).ToList();
+            }
+
+            return View(products);
+        }
+
+        public ActionResult ProductCategory(int id)
+        {
+            var products = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Where(p => p.CategoryId == id)
+                .ToList();
+
+            var category = _context.Categories.Find(id);
+            if (category != null)
+            {
+                ViewBag.CateName = category.Name;
+            }
+
+            ViewBag.CateId = id;
             return View(products);
         }
 

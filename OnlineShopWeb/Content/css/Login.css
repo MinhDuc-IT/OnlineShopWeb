@@ -1,0 +1,43 @@
+﻿#Login {
+    background-color: orangered;
+    border-radius: 5px;
+    color: aliceblue;
+    margin-top: 8px;
+    border: none;
+}
+
+#Logout {
+    background-color: aquamarine;
+    border-radius: 5px;
+    color: white;
+    margin-top: 8px;
+    border: none;
+}
+
+.FormButtonChild {
+    border-radius: 5px;
+    border: none;
+    background-color: orange;
+    width: 30%;
+    height: 33px;
+    color: white
+}
+
+.FormSignupButton {
+    width: 16%;
+    height: 30px;
+    background-color: orange;
+    border-radius: 5px;
+    border: none;
+    color: white
+}
+
+.formButton {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
+.hideButton {
+    display: none
+}

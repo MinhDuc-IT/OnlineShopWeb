@@ -18,13 +18,21 @@ namespace OnlineShopWeb.Controllers
             _context = new ApplicationDbContext();
         }
 
-        public ActionResult Index()
+        public ActionResult Index(int? id)
         {
+            // Tải danh sách sản phẩm
             var products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
                 .ToList();
 
+            // Lọc theo ProductId nếu có id
+            if (id != null)
+            {
+                products = products.Where(x => x.ProductId == id).ToList();
+            }
+
+            // Tải danh sách thương hiệu
             var brands = _context.Brands
                 .Select(b => new BrandViewModel
                 {
@@ -34,7 +42,7 @@ namespace OnlineShopWeb.Controllers
                 })
                 .ToList();
 
-            ViewData["Brands"] = brands; // Chuyển dữ liệu vào ViewData
+            ViewData["Brands"] = brands;
             return View(products);
         }
 

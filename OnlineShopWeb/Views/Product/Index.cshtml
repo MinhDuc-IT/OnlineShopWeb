@@ -1,35 +1,26 @@
 ﻿@model IEnumerable<OnlineShopWeb.Models.Product>
 
 @{
-    ViewBag.Title = "Product Index";
+    ViewBag.Title = "Product index";
 }
 
-<h2>Product Index</h2>
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>Image</th>
-            <th>Name</th>
-            <th>Brand</th>
-            <th>Description</th>
-            <th>Price</th>
-            <th>Stock</th>
-        </tr>
-    </thead>
-    <tbody>
+@if (Model != null && Model.Any())
+{
+    <div>
         @foreach (var product in Model)
         {
-            <tr>
-                <td>
-                    <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                </td>
-                <td>@product.Name</td>
-                <td>@product.Brand.Name</td>
-                <td>@product.Description</td>
-                <td>@product.Price.ToString("C")</td>
-                <td>@product.Stock</td>
-            </tr>
+            <div class="col-sm-4">
+                <div class="product-image-wrapper product-hover">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+                            <img src="~/Content/images/home/product1.jpg" alt="">
+                            <h2>@product.Price</h2>
+                            <p>@product.Name</p>
+                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+    </div>
+}
