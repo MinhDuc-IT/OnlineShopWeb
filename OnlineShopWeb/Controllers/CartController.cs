@@ -10,32 +10,106 @@ namespace OnlineShopWeb.Controllers
 {
     public class CartController : Controller
     {
+        private ApplicationDbContext db = new ApplicationDbContext();
+
+        public void CheckAndInsertProduct()
+        {
+            int productCount = db.Products.Count();
+
+            if (productCount < 3)
+            {
+                var newProduct = new Product
+                {
+                    Name = "test",
+                    BrandId = 1,
+                    Description = "test",
+                    Image = "https://placehold.co/90x90?text=OrderItem",
+                    Price = 40000,
+                    Stock = 9999,
+                    CategoryId = 0,
+                    IsDeleted = false,
+                    CostPrice = 25000
+                };
+                var newProduct1 = new Product
+                {
+                    Name = "test1",
+                    BrandId = 1,
+                    Description = "test",
+                    Image = "https://placehold.co/90x90?text=OrderItem",
+                    Price = 40000,
+                    Stock = 9999,
+                    CategoryId = 0,
+                    IsDeleted = false,
+                    CostPrice = 25000
+                };
+                var newProduct2 = new Product
+                {
+                    Name = "test2",
+                    BrandId = 1,
+                    Description = "test",
+                    Image = "https://placehold.co/90x90?text=OrderItem",
+                    Price = 40000,
+                    Stock = 9999,
+                    CategoryId = 0,
+                    IsDeleted = false,
+                    CostPrice = 25000
+                };
+
+                db.Products.AddRange(new List<Product> { newProduct,newProduct1,newProduct2});
+
+                db.SaveChanges();
+            }
+        }
+
         // GET: Cart
         public ActionResult Index()
         {
             Cart cart = (Cart)Session["Cart"];
             if (cart == null)
             {
+                var cartItems = new List<CartItem>();
+
+                int defaultQuantity = 1;
+
+                var product = db.Products.FirstOrDefault(p => p.Name == "test");
+                var product1 = db.Products.FirstOrDefault(p => p.Name == "test1");
+                var product2 = db.Products.FirstOrDefault(p => p.Name == "test2");
+
+                var item = new CartItem()
+                {
+                    ProductId = product.ProductId,
+                    Product = product,
+                    Quantity = defaultQuantity,
+                    Price = product.Price
+                };
+
+                var item1 = new CartItem()
+                {
+                    ProductId = product1.ProductId,
+                    Product = product1,
+                    Quantity = defaultQuantity,
+                    Price = product1.Price
+                };
+                var item2 = new CartItem()
+                {
+                    ProductId = product2.ProductId,
+                    Product = product2,
+                    Quantity = defaultQuantity,
+                    Price = product2.Price
+                };
+
+                item.TotalPrice = item.Price * item.Quantity;
+                item1.TotalPrice = item1.Price * item1.Quantity;
+                item2.TotalPrice = item2.Price * item2.Quantity;
+
+
+                cartItems.Add(item);
+                cartItems.Add(item1);
+                cartItems.Add(item2);
+
                 cart = new Cart
                 {
-                    CartItems = new List<CartItem>
-                    {
-                        new CartItem
-                        {
-                            ProductId = 1, Quantity = 2, Price = 100, TotalPrice = 200,
-                            Product = new Product { Name = "Sản phẩm 1", Image = "/images/cart/one.png" }
-                        },
-                        new CartItem
-                        {
-                            ProductId = 2, Quantity = 1, Price = 200, TotalPrice = 200,
-                            Product = new Product { Name = "Sản phẩm 2", Image = "/images/cart/two.png" }
-                        },
-                        new CartItem
-                        {
-                            ProductId = 3, Quantity = 3, Price = 150, TotalPrice = 450,
-                            Product = new Product { Name = "Sản phẩm 3", Image = "/images/cart/three.png" }
-                        }
-                    }
+                    CartItems = cartItems
                 };
                 Session["Cart"] = cart;
             }
@@ -93,7 +167,7 @@ namespace OnlineShopWeb.Controllers
                     cart.Remove(id);
                     code = new { success = true, msg = "", code = 1, count = cart.CartItems.Count };
                 }
-                
+
             }
             Session["Cart"] = cart;
             return Json(code);

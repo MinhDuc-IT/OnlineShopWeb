@@ -1,7 +1,23 @@
 ﻿
 @{
-    ViewBag.Title = "PaymentSuccess";
+    Layout = "~/Views/Shared/_OtherLayout.cshtml";
+    ViewData["Title"] = "PaymentSuccess";
 }
 
-<h2>PaymentSuccess</h2>
-<h3 class="text-danger">@TempData["Message"]</h3>
+<div class="container text-center">
+    <div class="logo-404">
+        <a href="@Url.Action("Index", "Home")"><img src="~/Content/images/home/logo.png" alt="Logo" /></a>
+    </div>
+    <div class="content-404">
+        <img src="~/Content/images/404/404.png" class="img-responsive" alt="Payment Success" />
+        <h1><b>Oops!</b> Payment Process Success</h1>
+        <h2 class="text-danger">@TempData["Message"]</h2>
+        <p>Your payment has been successfully processed. Thank you for your purchase!</p>
+        <h2><a href="@Url.Action("OrderDetails", "Order")">View Your Order</a></h2>
+        <h2><a href="@Url.Action("Index", "Home")">Continue Shopping</a></h2>
+    </div>
+</div>
+
+<script>
+    sessionStorage.removeItem('selectedItems');
+</script>

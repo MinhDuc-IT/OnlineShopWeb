@@ -133,11 +133,8 @@
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-
     <Compile Include="Controllers\AccountController.cs" />
-
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
-
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\FileController.cs" />
@@ -161,6 +158,10 @@
     <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.cs" />
     <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.Designer.cs">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411141424312_update.cs" />
+    <Compile Include="Migrations\202411141424312_update.Designer.cs">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -2108,11 +2109,8 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.min.css" />
-
     <Content Include="Content\css\Customize.css" />
-
     <Content Include="Content\css\checkoutcustom.css" />
-
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\footerCart.css" />
     <Content Include="Content\css\main.css" />
@@ -2133,11 +2131,9 @@
     <Content Include="Content\images\cart\one.png" />
     <Content Include="Content\images\cart\three.png" />
     <Content Include="Content\images\cart\two.png" />
-
     <Content Include="Content\images\CustomImage\bill.png" />
     <Content Include="Content\images\CustomImage\icon_search.png" />
     <Content Include="Content\images\CustomImage\user.png" />
-
     <Content Include="Content\images\home\bg_border.png" />
     <Content Include="Content\images\home\gallery1.jpg" />
     <Content Include="Content\images\home\gallery2.jpg" />
@@ -2910,9 +2906,7 @@
     <Content Include="Content\Admin_Lib\plugins\summernote\summernote.js.map" />
     <Content Include="Content\Admin_Lib\plugins\summernote\summernote.min.js.map" />
     <Content Include="Content\Admin_Lib\plugins\toastr\toastr.js.map" />
-
     <Content Include="Areas\Admin\Views\Statistical\StatisticalCategory.cshtml" />
-
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2944,7 +2938,6 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
-
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Category\_ListCategory.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
@@ -2955,7 +2948,6 @@
     <Content Include="Views\Account\Address.cshtml" />
     <Content Include="Views\Account\changePassword.cshtml" />
     <Content Include="Views\Account\myOrder.cshtml" />
-
     <Content Include="Views\Shared\_SliderPartial.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
@@ -2968,16 +2960,13 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
-
+    <Content Include="Views\Shared\_OtherLayout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-
-    <Folder Include="Content\images\" />
     <Folder Include="Views\FileSystem\" />
     <Folder Include="Views\File\" />
-
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -2999,6 +2988,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411051127211_AddCostPriceToProducts.resx">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411141424312_update.resx">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

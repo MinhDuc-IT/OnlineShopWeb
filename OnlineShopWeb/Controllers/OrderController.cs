@@ -25,6 +25,8 @@ namespace OnlineShopWeb.Controllers
 
         private VnPayService vnPayService = new VnPayService();
 
+        private List<OrderItem> orderItems = new List<OrderItem>();
+
         public ActionResult Checkout()
         {
             // Tạo một đối tượng User mới
@@ -70,6 +72,7 @@ namespace OnlineShopWeb.Controllers
             };
 
             // Kiểm tra và thêm các bản ghi mới vào DbContext
+            if(newUser.CustomerId == 0) db.Users.Add(newUser);
             if (brand.BrandId == 0) db.Brands.Add(brand);
             if (category.CategoryId == 0) db.Categories.Add(category);
             if (product.ProductId == 0) db.Products.Add(product);
@@ -86,34 +89,18 @@ namespace OnlineShopWeb.Controllers
         {
 
             //int userId = int.Parse(User.FindFirstValue("userId"));
-            int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
-            string orderItemKey = $"{userId}OrderItem";
-            string orderKey = $"{userId}Order";
+            //int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
 
             if (checkoutRequests == null || checkoutRequests.Count == 0)
             {
-                var orderItems = new List<OrderItem>();
-
-                int defaultQuantity = 1;
-
-                var product = db.Products.FirstOrDefault(p => p.Name == "test");
-                for (int i = 0; i < 3; i++)
-                {
-                    var item = new OrderItem(product.ProductId, product.Image, product.Name, product.Price, defaultQuantity);
-                    orderItems.Add(item);
-                }
-
-                Session[orderItemKey] = orderItems;
-
                 return Json(new
                 {
-                    success = true,
-                    data = orderItems,
-                    message = "No items provided; default items returned."
+                    success = false,
+                    data = "",
+                    message = "No items provided."
                 }, JsonRequestBehavior.AllowGet);
             }
 
-            var responseOrderItems = new List<OrderItem>();
             foreach (var checkoutItem in checkoutRequests)
             {
                 if (checkoutItem.productId < 0 || checkoutItem.quantity < 0)
@@ -144,16 +131,14 @@ namespace OnlineShopWeb.Controllers
                     }, JsonRequestBehavior.AllowGet);
                 }
 
-                var orderItem = new OrderItem(product.ProductId, product.Image, product.Name, product.Price, checkoutItem.quantity);
-                responseOrderItems.Add(orderItem);
+                var item = new OrderItem(product.ProductId, product.Image, product.Name, product.Price, checkoutItem.quantity);
+                orderItems.Add(item);
             }
-
-            Session[orderItemKey] = responseOrderItems;
 
             return Json(new
             {
                 success = true,
-                data = responseOrderItems,
+                data = orderItems,
                 message = "Order items retrieved successfully."
             }, JsonRequestBehavior.AllowGet);
         }
@@ -162,9 +147,7 @@ namespace OnlineShopWeb.Controllers
         public ActionResult Payment(PaymentRequest paymentRequest)
         {
             //int userId = int.Parse(User.FindFirstValue("userId"));
-            int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
-            string orderItemKey = $"{userId}OrderItem";
-            string orderKey = $"{userId}Order";
+            //int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
 
             if (paymentRequest.PaymentMethod == "NCB")
             {
@@ -176,16 +159,6 @@ namespace OnlineShopWeb.Controllers
                     FullName = paymentRequest.FullName,
                     OrderId = new Random().Next(1000, 10000)
                 };
-
-                var order = new Order
-                {
-                    CustomerId = userId,
-                    OrderDate = DateTime.Now,
-                    ToTalAmount = (decimal)vnPayModel.Amount
-                };
-
-                Session[orderKey] = order;
-
                 var httpContext = System.Web.HttpContext.Current;
 
                 return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
@@ -199,8 +172,6 @@ namespace OnlineShopWeb.Controllers
 
             //int userId = int.Parse(User.FindFirstValue("userId"));
             int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
-            string orderItemKey = $"{userId}OrderItem";
-            string orderKey = $"{userId}Order";
 
             var httpContext = System.Web.HttpContext.Current;
             var response = vnPayService.PaymentExecute(httpContext.Request.QueryString);
@@ -213,8 +184,12 @@ namespace OnlineShopWeb.Controllers
                 return RedirectToAction("PaymentFail");
             }
 
-            var newOrder = Session[orderKey] as Order;
-            var orderItems = Session[orderItemKey] as List<OrderItem>;
+            var newOrder = new Order
+            {
+                CustomerId = userId,
+                OrderDate = DateTime.Now,
+                ToTalAmount = (decimal)response.Amount
+            };
 
             if (newOrder == null || orderItems == null)
             {
@@ -242,7 +217,7 @@ namespace OnlineShopWeb.Controllers
 
         public ActionResult PaymentFail()
         {
-            return View();
+            return RedirectToAction("Checkout");
         }
 
         public ActionResult PaymentSuccess()

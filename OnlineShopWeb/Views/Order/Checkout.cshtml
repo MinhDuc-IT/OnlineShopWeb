@@ -45,7 +45,6 @@
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Handle</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -68,14 +67,6 @@
                     <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Delivery-1" name="PaymentMethod" value="Delivery">
-                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
                                 <input type="radio" class="form-check-input bg-primary border-0" id="NCB-1" name="PaymentMethod" value="NCB">
                                 <label class="form-check-label" for="NCB-1">NCB</label>
                             </div>
@@ -92,8 +83,20 @@
 <!-- Checkout Page End -->
 @section Scripts {
     <script>
+        function populateUserInfo() {
+            const savedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+            if (savedUserInfo) {
+                $('#FullName').val(savedUserInfo.name || '');
+                $('#Address').val(savedUserInfo.address || '');
+                $('#Mobile').val(savedUserInfo.phone || '');
+                $('#Email').val(savedUserInfo.email || '');
+            }
+        }
+
 
         $(document).ready(function () {
+            populateUserInfo();
+
             $('#userInfo').change(function () {
                 if (this.checked) {
                     $('#FullName').val("Demo");
@@ -101,18 +104,15 @@
                     $('#Mobile').val("0123456789");
                     $('#Email').val("demo@gmail.com");
 
-                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
                 }
                 else {
                     $('#FullName, #Address, #Mobile, #Email').val("");
-                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', false);
                 }
             });
 
-
-            const checkoutRequests = [
-            //    { productId: 1, quantity: 2 }
-            ];
+            const checkoutRequests = Object.values(
+                JSON.parse(sessionStorage.getItem('selectedItems')) || {}
+            );
 
             $.ajax({
                 url: '@Url.Action("GetOrderItem", "Order")',
@@ -138,11 +138,6 @@
                                         </div>
                                     </td>
                                     <td class="py-5 total-price">${item.Total}</td>
-                                    <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
-                                    </td>
                                 </tr>
                             `);
 
@@ -164,9 +159,14 @@
                     event.preventDefault();
                 }
 
-                //if (someCondition) {
-                //    event.preventDefault();
-                //}
+                const userInfo = {
+                    name: $('#FullName').val(),
+                    address: $('#Address').val(),
+                    phone: $('#Mobile').val(),
+                    email: $('#Email').val(),
+                };
+
+                sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
             });
         });
 
