@@ -1,0 +1,30 @@
+﻿
+@model OnlineShopWeb.Models.Product
+
+<div class="product-details">
+    <div class="row">
+        <!-- Hình ảnh sản phẩm -->
+        <div class="col-md-6">
+            <img src="@Url.Content(Model.Image)" alt="@Model.Name" class="img-fluid" />
+        </div>
+
+        <!-- Thông tin sản phẩm -->
+        <div class="col-md-6">
+            <h2>@Model.Name</h2>
+            <p><b>Thương hiệu:</b> @Model.Brand.Name</p>
+            <p><b>Danh mục:</b> @Model.Category.Name</p>
+            <p><b>Giá:</b> $@Model.Price</p>
+            <p><b>Số lượng còn:</b> @Model.Stock</p>
+            <p><b>Mô tả:</b> @Model.Description</p>
+
+            <form method="post" action="#">
+                <label for="quantity">Số lượng:</label>
+                <input type="number" id="quantity" name="quantity" value="1" min="1" max="@Model.Stock" />
+                <button type="button" class="btn btn-primary mt-3">
+                    <i class="fa fa-shopping-cart"></i> Thêm vào giỏ hàng
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+

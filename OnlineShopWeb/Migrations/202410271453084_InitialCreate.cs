@@ -31,13 +31,13 @@
                         CategoryId = c.Int(nullable: false),
                         IsDeleted = c.Boolean(nullable: false),
                     })
-                .PrimaryKey(t => t.ProductId)
-                .ForeignKey("dbo.Brands", t => t.BrandId, cascadeDelete: true)
-                .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
-                .Index(t => t.BrandId)
-                .Index(t => t.CategoryId);
+            .PrimaryKey(t => t.ProductId)
+            .ForeignKey("dbo.Brands", t => t.BrandId, cascadeDelete: true)
+            .ForeignKey("dbo.Categories", t => t.CategoryId, cascadeDelete: true)
+            .Index(t => t.BrandId)
+            .Index(t => t.CategoryId);
             
-            CreateTable(
+        CreateTable(
                 "dbo.Categories",
                 c => new
                     {
