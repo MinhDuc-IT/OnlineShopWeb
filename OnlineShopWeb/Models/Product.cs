@@ -36,6 +36,10 @@ namespace OnlineShopWeb.Models
         public int CategoryId { get; set; }
         public bool IsDeleted { get; set; }
 
+        [Required]
+        [Range(0, (double)decimal.MaxValue)]
+        public decimal CostPrice { get; set; }
+
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
 

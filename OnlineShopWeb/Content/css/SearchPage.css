@@ -1,0 +1,59 @@
+﻿﻿body, html {
+    overflow-x: hidden;
+}
+
+/*Customize Search Page*/
+
+.ps_header {
+    display: flex;
+    gap: 5px;
+    margin: 0 20px 20px 15px;
+    align-items: center;
+}
+
+.ps_header span{
+    color: rgb(128, 128, 137);
+}
+
+.ps_header span a{
+    color: rgb(128, 128, 137);
+    font-size: 14px;
+    padding-right: 5px;
+    cursor: pointer;
+}
+
+.ps_header span a:hover{
+    text-decoration: underline
+}
+
+.ps_header p{
+    margin: 0;
+}
+
+.productinfo{
+    background-color: rgb(255, 255, 255);
+}
+
+/*Search Page Empty*/
+.sp_empty {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+    margin: 100px auto;
+    text-align: center;
+    font-size: 18px;
+}
+
+.sp_empty img{
+    width: 134px;
+    height: 134px;
+    margin: 0 auto;
+}
+
+.spe_title {
+    color: rgba(0, 0, 0, .87);
+}
+
+.spe_hint {
+    color: rgba(0, 0, 0, .54);
+}

@@ -1,0 +1,58 @@
+﻿body {
+}
+
+.fixed-footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: #ffffff;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: center; /* Đưa các thành phần vào giữa theo chiều ngang */
+    align-items: center;
+    box-shadow: 0 -2px 5px rgba(0,0,0,0.1);
+    border-top: 1px solid #ddd;
+    font-size: 16px;
+    z-index: 1000;
+    gap: 20px; /* Tạo khoảng cách giữa các nhóm */
+}
+
+    .fixed-footer .actions {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Khoảng cách giữa các phần tử trong nhóm hành động */
+    }
+
+    .fixed-footer #selectAll {
+        margin-right: 5px;
+    }
+
+    .fixed-footer .btn-group {
+        display: flex;
+        gap: 10px;
+    }
+
+    .fixed-footer .btnDeleteSelected, .fixed-footer .btnPurchase {
+        padding: 10px 20px;
+        font-size: 14px;
+        border: none;
+        color: white;
+    }
+
+    .fixed-footer .btnDeleteSelected {
+        background-color: #ff4d4f;
+    }
+
+    .fixed-footer .btnPurchase {
+        background-color: #4CAF50;
+    }
+
+        .fixed-footer .btnDeleteSelected:hover, .fixed-footer .btnPurchase:hover {
+            opacity: 0.9;
+        }
+
+    .fixed-footer .sum {
+        font-weight: bold;
+        color: #333;
+    }

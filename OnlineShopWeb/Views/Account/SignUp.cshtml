@@ -1,0 +1,100 @@
+﻿@{
+    ViewBag.Title = "SignUp";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<div class="form-signup">
+    <form id="myFormSignup">
+        <div class="FL-header" id="Test">
+            Đăng ký
+        </div>
+        <div class="FL-main">
+            <div class="form-group">
+                <input type="text" name="name" class="form-control" id="nameSignUp" placeholder="Your Name" required>
+            </div>
+            <div class="form-group">
+                <input type="email" name="email" class="form-control" id="email" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="text" name="phone" class="form-control" id="phone" placeholder="Your Phone" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" class="form-control" id="passwordSignUP" placeholder="Your Password" required>
+                <i id="SUP-eye-slash" style="display: none" class="css_eye fas fa-eye-slash"></i>
+                <i id="SUP-eye" class="css_eye fas fa-eye"></i>
+            </div>
+            <div class="form-group">
+                <input type="password" name="confirmPassword" class="form-control" id="confirmPassword" placeholder="Confirm Password" required>
+                <i id="SUCP-eye-slash" style="display: none" class="css_eye fas fa-eye-slash"></i>
+                <i id="SUCP-eye" class="css_eye fas fa-eye"></i>
+            </div>
+            @*<div class="form-group">
+            <input type="text" name="address" class="form-control" id="address" placeholder="Your Address" required>
+        </div>*@
+            <button type="submit" class="FormButtonChild">SignUp</button>
+        </div>
+        <div class="FL-footer">
+            <span>Bạn đã có tài khoản? <a href="/Account/Login">Đăng nhập</a></span>
+        </div>
+    </form>
+</div>
+
+<script>
+    $(document).ready(function () {
+        $("#myFormSignup").on("submit", function (e) {
+            e.preventDefault();
+
+            var name = $("#nameSignUp").val();
+            var password = $("#passwordSignUP").val();
+            var confirmPassword = $("#confirmPassword").val()
+            var email = $("#email").val()
+            var phone = $("#phone").val()
+
+            if (password !== confirmPassword) {
+                alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+                return;
+            }
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/Signup",
+                data: { name: name, email: email, password: password, phone: phone, confirmPassword: confirmPassword },
+                success: function (response) {
+                    if (response.success === true) {
+                        window.location.href = "/Account/Login"
+                    } else {
+                        alert(response.Message);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error details:", xhr.responseText);
+                    alert("Có lỗi xảy ra.");
+                }
+            });
+        });
+
+        $('#SUP-eye').on('click', function () {
+            $('#passwordSignUP').attr('type', 'text');
+            $('#SUP-eye').hide();
+            $('#SUP-eye-slash').show();
+        });
+
+        $('#SUP-eye-slash').on('click', function () {
+            $('#passwordSignUP').attr('type', 'password');
+            $('#SUP-eye-slash').hide();
+            $('#SUP-eye').show();
+        });
+
+        $('#SUCP-eye').on('click', function () {
+            $('#confirmPassword').attr('type', 'text');
+            $('#SUCP-eye').hide();
+            $('#SUCP-eye-slash').show();
+        });
+
+        $('#SUCP-eye-slash').on('click', function () {
+            $('#confirmPassword').attr('type', 'password');
+            $('#SUCP-eye-slash').hide();
+            $('#SUCP-eye').show();
+        });
+    })
+</script>

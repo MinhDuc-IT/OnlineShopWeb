@@ -9,16 +9,15 @@ namespace OnlineShopWeb.Controllers
 {
     public class CategoryController : Controller
     {
-        // GET: Category
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             return View();
         }
+        [AllowAnonymous]
         public ActionResult ListCategory()
         {
-            var items = db.Categories.ToList();
-            items = items.Where(x => x.IsDeleted == false).ToList();
+            var items = db.Categories.Where(x => x.IsDeleted == false).ToList();
             return PartialView("_ListCategory", items);
         }
     }

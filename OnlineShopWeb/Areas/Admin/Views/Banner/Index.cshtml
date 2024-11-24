@@ -1,0 +1,119 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Banner>
+@{
+    ViewBag.Title = "Danh sách Banner";
+}
+
+@section naviheader{
+    <!-- Left navbar links -->
+    <ul class="navbar-nav">
+        <li class="nav-item">
+            <a class="nav-link" data-widget="pushmenu" href="#" role="button"><i class="fas fa-bars"></i></a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/Home" class="nav-link">Trang chủ</a>
+        </li>
+        <li class="nav-item d-none d-sm-inline-block">
+            <a href="/admin/banner" class="nav-link">Banner</a>
+        </li>
+    </ul>
+}
+
+<!-- Content Header (Page header) -->
+<section class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-6">
+                <h1>Quản lý Banner</h1>
+            </div>
+            <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item active">Banner</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="content">
+    <div class="card">
+        <div class="card-header">
+            <h3 class="card-title">Danh sách Banner</h3>
+
+            <div class="card-tools">
+                <a href="/admin/Banner/AddBanner" class="btn btn-primary">Thêm mới</a>
+            </div>
+        </div>
+        <div class="card-body">
+            <table class="table table-hover">
+                <thead>
+                    <tr>
+                        <th>STT</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th style="text-align: center">Image</th>
+                        <th>IsDelete</th>
+                        <th style="text-align: center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        var i = 1;
+                        foreach (var item in Model)
+                        {
+                            <tr id="trow_@item.Id">
+                                <td>@i</td>
+                                <td>@item.title</td>
+                                <td>@item.description</td>
+                                <td style="">
+                                    <img style="height: 70px" src="@((item.Image != null && item.Image.Length > 0)
+                                    ? "data:image/png;base64," + Convert.ToBase64String(item.Image)
+                                    : "")" alt="Prev Image" />
+                                </td>
+                                <td class="is-delete-column">@item.IsDeleted</td>
+                                <td style="display: flex; gap: 10px;">
+                                    <a href="/admin/banner/editBanner/@item.Id" class="btn btn-sm btn-primary">Edit</a>
+                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Delete</a>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="4">Không có bản ghi nào!!!</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</section>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $('body').on('click', '.btnDelete', function () {
+                var id = $(this).data("id");
+                var cof = confirm('Bạn có muốn xóa bản ghi này không?');
+                if (cof) {
+                    $.ajax({
+                        url: '/admin/banner/deleteBanner',
+                        type: 'POST',
+                        data: { id: id },
+                        success: function (rs) {
+                            if (rs.success) {
+                                $('#trow_' + id).find('.is-delete-column').text("True");
+                            }
+                        }
+                    })
+                }
+            })
+        })
+    </script>
+}
+
+

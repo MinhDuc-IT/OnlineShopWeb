@@ -13,7 +13,6 @@ namespace OnlineShopWeb.Models
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int CustomerId { get; set; }
 
-        [Required]
         [MaxLength(100)]
         public string Name { get; set; }
 
@@ -30,6 +29,9 @@ namespace OnlineShopWeb.Models
 
         [MaxLength(200)]
         public string Address { get; set; }
+        public int? Gender { get; set; }
+        public DateTime? BirthDay { get; set; }
+        public byte[] Avatar { get; set; }
         [Required]
         public string Role { get; set; }
 

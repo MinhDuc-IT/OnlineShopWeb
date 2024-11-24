@@ -10,7 +10,6 @@ namespace OnlineShopWeb.Controllers
     public class ProductController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        // GET: Product
         public ActionResult Index(int? id)
         {
             var items = db.Products.ToList();
