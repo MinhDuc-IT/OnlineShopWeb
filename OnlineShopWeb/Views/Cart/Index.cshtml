@@ -29,7 +29,7 @@
 </head><!--/head-->
 
 <body>
-
+    <h1>@TempData["Message"]</h1>
     <section id="cart_items">
         <div class="container">
             <div class="breadcrumbs">
@@ -120,76 +120,81 @@
     <script src="js/jquery.prettyPhoto.js"></script>
     <script src="js/main.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const checkboxes = document.querySelectorAll('.item-select');
-        const selectAll = document.getElementById('selectAll');
-        const btnPurchase = document.querySelector('.btnPurchase');
+        document.addEventListener('DOMContentLoaded', function () {
+            const checkboxes = document.querySelectorAll('.item-select');
+            const selectAll = document.getElementById('selectAll');
+            const btnPurchase = document.querySelector('.btnPurchase');
 
-        btnPurchase.style.display = 'none';
+            // Handle individual item selection
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function () {
+                    updatePurchaseButtonVisibility();
+                    updateSelectAllCheckbox();
+                });
+            });
 
-        // Load selected items from sessionStorage
-        const savedItems = JSON.parse(sessionStorage.getItem('selectedItems')) || {};
-
-        // Initialize checkbox states from sessionStorage
-        checkboxes.forEach(checkbox => {
-            const productId = checkbox.getAttribute('data-id');
-            if (savedItems[productId]) {
-                checkbox.checked = true;
-            }
-
-            // Update sessionStorage when a checkbox is clicked
-            checkbox.addEventListener('change', function () {
-                if (this.checked) {
-                    savedItems[productId] = {
-                        productId: productId,
-                        quantity: checkbox.closest('tr').querySelector('.cart_quantity_input').value
-                    };
-                } else {
-                    delete savedItems[productId];
-                }
-                sessionStorage.setItem('selectedItems', JSON.stringify(savedItems));
-
+            // Handle "Select All" functionality
+            selectAll.addEventListener('change', function () {
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
                 updatePurchaseButtonVisibility();
             });
-        });
 
-        // "Select All" functionality
-        selectAll.addEventListener('change', function () {
-            checkboxes.forEach(checkbox => {
-                checkbox.checked = this.checked;
-                const productId = checkbox.getAttribute('data-id');
-                if (this.checked) {
-                    savedItems[productId] = {
-                        productId: productId,
-                        quantity: checkbox.closest('tr').querySelector('.cart_quantity_input').value
-                    };
-                } else {
-                    delete savedItems[productId];
+            // Handle Checkout button click
+            btnPurchase.addEventListener('click', function (e) {
+                e.preventDefault();
+                const selectedItems = Array.from(checkboxes)
+                    .filter(checkbox => checkbox.checked)
+                    .map(checkbox => {
+                        const quantity = checkbox.closest('tr').querySelector('.cart_quantity_input').value;
+                        return {
+                            productId: checkbox.dataset.id,
+                            quantity: quantity
+                        };
+                    });
+
+                if (selectedItems.length === 0) {
+                    alert("Please select at least one item to checkout.");
+                    return;
                 }
+
+                // Send selected items to server
+                $.ajax({
+                    url: '@Url.Action("UpdateSelectedItems", "Cart")',
+                    method: 'POST',
+                    contentType: 'application/json',
+                    data: JSON.stringify(selectedItems),
+                    success: function (data) {
+                        if (data.success) {
+                            console.log("Session updated successfully.");
+                            window.location.href = '@Url.Action("Checkout", "Order")';
+                        } else {
+                            alert("Failed to update the cart. Please try again.");
+                        }
+                    },
+                    error: function () {
+                        alert("An error occurred while updating the cart. Please try again.");
+                    }
+                });
             });
-            sessionStorage.setItem('selectedItems', JSON.stringify(savedItems));
 
-            updatePurchaseButtonVisibility();
-
-        });
-
-        function updatePurchaseButtonVisibility() {
-            if (Object.keys(savedItems).length > 0) {
-                btnPurchase.style.display = 'block';
-            } else {
-                btnPurchase.style.display = 'none';
+            // Update the visibility of the Checkout button
+            function updatePurchaseButtonVisibility() {
+                const anyChecked = Array.from(checkboxes).some(checkbox => checkbox.checked);
+                btnPurchase.style.display = anyChecked ? 'block' : 'none';
             }
-        }
 
-        btnPurchase.addEventListener('click', function (e) {
-            e.preventDefault();
-            window.location.href = '@Url.Action("Checkout","Order")';
+            // Update "Select All" checkbox state
+            function updateSelectAllCheckbox() {
+                const allChecked = Array.from(checkboxes).every(checkbox => checkbox.checked);
+                selectAll.checked = allChecked;
+            }
+
+            // Initialize visibility and "Select All" state
+            updatePurchaseButtonVisibility();
+            updateSelectAllCheckbox();
         });
-
-        updatePurchaseButtonVisibility();
-
-    });
-
     </script>
 </body>
 </html>

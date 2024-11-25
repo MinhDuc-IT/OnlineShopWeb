@@ -163,6 +163,10 @@
     <Compile Include="Migrations\202411141424312_update.Designer.cs">
       <DependentUpon>202411141424312_update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.cs" />
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.Designer.cs">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -178,6 +182,7 @@
     <Compile Include="ViewModels\CheckoutRequest.cs" />
     <Compile Include="ViewModels\PaymentRequest.cs" />
     <Compile Include="ViewModels\OrderItem.cs" />
+    <Compile Include="ViewModels\SelectedItem.cs" />
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2991,6 +2996,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411141424312_update.resx">
       <DependentUpon>202411141424312_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251320093_AddFieldClickInProduct.resx">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

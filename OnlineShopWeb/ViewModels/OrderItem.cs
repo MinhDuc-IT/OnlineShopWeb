@@ -12,7 +12,7 @@ namespace OnlineShopWeb.ViewModels
         public string Name { get; set; }
         public decimal Price { get; set; }
         public int Quantity { get; set; }
-        public decimal Total { get; set; }
+        public decimal TotalPrice => Price * Quantity;
 
         public OrderItem(int productId, string img, string name, decimal price, int quantity)
         {
@@ -21,7 +21,6 @@ namespace OnlineShopWeb.ViewModels
             Name = name;
             Price = price;
             Quantity = quantity;
-            Total = Price * Quantity;
         }
     }
 }

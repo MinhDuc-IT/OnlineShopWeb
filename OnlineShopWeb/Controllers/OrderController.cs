@@ -21,134 +21,49 @@ namespace OnlineShopWeb.Controllers
 {
     public class OrderController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
-
-        private VnPayService vnPayService = new VnPayService();
-
-        private List<OrderItem> orderItems = new List<OrderItem>();
+        private readonly ApplicationDbContext db = new ApplicationDbContext();
+        private readonly VnPayService vnPayService = new VnPayService();
 
         public ActionResult Checkout()
         {
-            // Tạo một đối tượng User mới
-            var newUser = new User
+            var selectedItems = Session["SelectedItems"] as List<SelectedItem>;
+
+            if (selectedItems == null || !selectedItems.Any())
             {
-                Name = "test",
-                Email = "johndoe@example.com",
-                Password = "test",
-                Phone = "1234567890",
-                Address = "123 Main Street",
-                Role = "Customer"
-            };
-
-            // Thêm user vào DbContext và lưu vào cơ sở dữ liệu
-            db.Users.Add(newUser);
-
-            // Tìm hoặc tạo mới Brand
-            var brand = db.Brands.FirstOrDefault(b => b.Name == "test") ?? new Brand
-            {
-                Name = "test",
-                Description = "test"
-            };
-
-            // Tìm hoặc tạo mới Category
-            var category = db.Categories.FirstOrDefault(c => c.Name == "test") ?? new Category
-            {
-                Name = "test",
-                Description = "test",
-                IsDeleted = false
-            };
-
-            // Tìm hoặc tạo mới Product
-            var product = db.Products.FirstOrDefault(p => p.Name == "test") ?? new Product
-            {
-                Name = "test",
-                Brand = brand,           // Gán Brand trực tiếp vào Product
-                Description = "test",
-                Image = "https://placehold.co/90x90?text=OrderItem",
-                Price = 30000,
-                Stock = 99999,
-                Category = category,     // Gán Category trực tiếp vào Product
-                IsDeleted = false
-            };
-
-            // Kiểm tra và thêm các bản ghi mới vào DbContext
-            if(newUser.CustomerId == 0) db.Users.Add(newUser);
-            if (brand.BrandId == 0) db.Brands.Add(brand);
-            if (category.CategoryId == 0) db.Categories.Add(category);
-            if (product.ProductId == 0) db.Products.Add(product);
-
-            // Lưu các thay đổi vào cơ sở dữ liệu
-            db.SaveChanges();
-
-
-            return View();
-        }
-
-        [HttpPost]
-        public JsonResult GetOrderItem(List<CheckoutRequest> checkoutRequests)
-        {
-
-            //int userId = int.Parse(User.FindFirstValue("userId"));
-            //int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
-
-            if (checkoutRequests == null || checkoutRequests.Count == 0)
-            {
-                return Json(new
-                {
-                    success = false,
-                    data = "",
-                    message = "No items provided."
-                }, JsonRequestBehavior.AllowGet);
+                TempData["Message"] = "Không có sản phẩm nào trong đơn hàng!";
+                return RedirectToAction("Index", "Cart");
             }
 
-            foreach (var checkoutItem in checkoutRequests)
+            var productIds = selectedItems.Select(c => c.ProductId).Distinct().ToList();
+            var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToDictionary(p => p.ProductId);
+
+            var orderItems = new List<OrderItem>();
+
+            foreach (var selectedItem in selectedItems)
             {
-                if (checkoutItem.productId < 0 || checkoutItem.quantity < 0)
+                if (!products.TryGetValue(selectedItem.ProductId, out var product))
                 {
-                    return Json(new
-                    {
-                        success = false,
-                        message = "Invalid product ID or quantity."
-                    }, JsonRequestBehavior.AllowGet);
+                    TempData["Message"] = $"Sản phẩm với ID {selectedItem.ProductId} không còn tồn tại.";
+                    return RedirectToAction("Index", "Cart"); 
                 }
 
-                var product = db.Products.FirstOrDefault(p => p.ProductId == checkoutItem.productId);
-                if (product == null)
+                if (selectedItem.Quantity <= 0 || selectedItem.Quantity > product.Stock)
                 {
-                    return Json(new
-                    {
-                        success = false,
-                        message = $"Product with ID {checkoutItem.productId} not found."
-                    }, JsonRequestBehavior.AllowGet);
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} không hợp lệ.";
+                    return RedirectToAction("Index", "Cart"); 
                 }
 
-                if (checkoutItem.quantity > product.Stock)
-                {
-                    return Json(new
-                    {
-                        success = false,
-                        message = $"Insufficient stock for product with ID {checkoutItem.productId}. Only {product.Stock} items are available."
-                    }, JsonRequestBehavior.AllowGet);
-                }
-
-                var item = new OrderItem(product.ProductId, product.Image, product.Name, product.Price, checkoutItem.quantity);
-                orderItems.Add(item);
+                orderItems.Add(new OrderItem(product.ProductId, product.Image, product.Name, product.Price ,selectedItem.Quantity));
             }
 
-            return Json(new
-            {
-                success = true,
-                data = orderItems,
-                message = "Order items retrieved successfully."
-            }, JsonRequestBehavior.AllowGet);
+            Session["OrderItems"] = orderItems;
+
+            return View(orderItems);
         }
 
         [HttpPost]
         public ActionResult Payment(PaymentRequest paymentRequest)
         {
-            //int userId = int.Parse(User.FindFirstValue("userId"));
-            //int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
-
             if (paymentRequest.PaymentMethod == "NCB")
             {
                 var vnPayModel = new VnPaymentRequestModel
@@ -159,72 +74,118 @@ namespace OnlineShopWeb.Controllers
                     FullName = paymentRequest.FullName,
                     OrderId = new Random().Next(1000, 10000)
                 };
-                var httpContext = System.Web.HttpContext.Current;
 
+                var httpContext = System.Web.HttpContext.Current;
                 return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
             }
-            TempData["Message"] = $"Lỗi thanh toán VN Pay";
+
+            TempData["Message"] = "Lỗi thanh toán VN Pay";
             return RedirectToAction("PaymentFail");
         }
 
         public ActionResult PaymentCallBack()
         {
-
-            //int userId = int.Parse(User.FindFirstValue("userId"));
-            int userId = db.Users.FirstOrDefault(u => u.Name == "test").CustomerId;
+            var userId = db.Users.FirstOrDefault(u => u.Name == "test")?.CustomerId ?? 0;
+            if (userId == 0)
+            {
+                TempData["Message"] = "Người dùng không hợp lệ.";
+                return RedirectToAction("PaymentFail");
+            }
 
             var httpContext = System.Web.HttpContext.Current;
             var response = vnPayService.PaymentExecute(httpContext.Request.QueryString);
 
-            if (response == null || response.VnPayResponseCode != "00")
+            if (response?.VnPayResponseCode != "00")
             {
-                var errorMessage = VNPayError.GetMessage(response?.VnPayResponseCode);
-
-                TempData["Message"] = $"{errorMessage}";
+                TempData["Message"] = VNPayError.GetMessage(response?.VnPayResponseCode);
                 return RedirectToAction("PaymentFail");
             }
 
-            var newOrder = new Order
-            {
-                CustomerId = userId,
-                OrderDate = DateTime.Now,
-                ToTalAmount = (decimal)response.Amount
-            };
+            var orderItems = Session["OrderItems"] as List<OrderItem>;
 
-            if (newOrder == null || orderItems == null)
+            if (!orderItems.Any())
             {
-                TempData["Message"] = "Order data missing.";
+                TempData["Message"] = "Không có sản phẩm nào trong đơn hàng.";
                 return RedirectToAction("PaymentFail");
             }
 
-            db.Orders.Add(newOrder);
-            db.SaveChanges();
-
-            List<OrderDetail> orderDetails = orderItems.Select(orderItem => new OrderDetail
+            using (var transaction = db.Database.BeginTransaction())
             {
-                OrderId = newOrder.OrderId,
-                ProductId = orderItem.ProductId,
-                Price = orderItem.Price,
-                Quantity = orderItem.Quantity
-            }).ToList();
+                try
+                {
+                    var newOrder = new Order
+                    {
+                        CustomerId = userId,
+                        OrderDate = DateTime.Now,
+                        ToTalAmount = (decimal)response.Amount
+                    };
 
-            db.OrderDetails.AddRange(orderDetails);
-            db.SaveChanges();
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
 
-            TempData["Message"] = $"Thanh toán VNPay thành công";
-            return RedirectToAction("PaymentSuccess");
+                    var orderDetails = orderItems.Select(item => new OrderDetail
+                    {
+                        OrderId = newOrder.OrderId,
+                        ProductId = item.ProductId,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    }).ToList();
+
+                    db.OrderDetails.AddRange(orderDetails);
+
+                    var productIds = orderItems.Select(item => item.ProductId).ToList();
+                    var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToList();
+                    
+                    foreach (var item in orderItems)
+                    {
+                        var product = products.First(p => p.ProductId == item.ProductId);
+                        product.Stock -= item.Quantity;
+                        product.Click = 0;
+                    }
+
+                    //var cartUser = db.Carts.FirstOrDefault(c => c.CustomerId == userId);
+                    //var cartItemsRemove = db.CartItems.Where(c => productIds.Contains(c.ProductId) && c.CartId == cartUser.CartId).ToList();
+
+                    //db.CartItems.RemoveRange(cartItemsRemove);
+
+                    db.SaveChanges();
+
+                    //Cart cart = (Cart)Session["Cart"];
+                    //if (cart != null)
+                    //{
+                    //    foreach (var item in cartItemsRemove)
+                    //    {
+                    //        cart.CartItems.Remove(item);
+                    //    }
+                    //}
+
+                    //Session["Cart"] = cart;
+                    //HttpContext.Session.Remove("OrderItems");
+
+                    transaction.Commit();
+
+                    TempData["Message"] = "Thanh toán VNPay thành công";
+                    return RedirectToAction("PaymentSuccess");
+                }
+                catch (Exception ex)
+                {
+                    transaction.Rollback();
+                    TempData["Message"] = "Đã xảy ra lỗi trong quá trình xử lý thanh toán.";
+                    return RedirectToAction("PaymentFail");
+                }
+            }
         }
 
         public ActionResult PaymentFail()
         {
-            return RedirectToAction("Checkout");
+            return View();
         }
 
         public ActionResult PaymentSuccess()
         {
+            HttpContext.Session.Remove("OrderItems");
             return View();
         }
-
 
         // GET: Order
         public async Task<ActionResult> Index()
@@ -246,90 +207,6 @@ namespace OnlineShopWeb.Controllers
                 return HttpNotFound();
             }
             return View(order);
-        }
-
-        // GET: Order/Create
-        public ActionResult Create()
-        {
-            ViewBag.CustomerId = new SelectList(db.Users, "CustomerId", "Name");
-            return View();
-        }
-
-        // POST: Order/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "OrderId,CustomerId,OrderDate,ToTalAmount")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Orders.Add(order);
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-
-            ViewBag.CustomerId = new SelectList(db.Users, "CustomerId", "Name", order.CustomerId);
-            return View(order);
-        }
-
-        // GET: Order/Edit/5
-        public async Task<ActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = await db.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            ViewBag.CustomerId = new SelectList(db.Users, "CustomerId", "Name", order.CustomerId);
-            return View(order);
-        }
-
-        // POST: Order/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for 
-        // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "OrderId,CustomerId,OrderDate,ToTalAmount")] Order order)
-        {
-            if (ModelState.IsValid)
-            {
-                db.Entry(order).State = EntityState.Modified;
-                await db.SaveChangesAsync();
-                return RedirectToAction("Index");
-            }
-            ViewBag.CustomerId = new SelectList(db.Users, "CustomerId", "Name", order.CustomerId);
-            return View(order);
-        }
-
-        // GET: Order/Delete/5
-        public async Task<ActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            Order order = await db.Orders.FindAsync(id);
-            if (order == null)
-            {
-                return HttpNotFound();
-            }
-            return View(order);
-        }
-
-        // POST: Order/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<ActionResult> DeleteConfirmed(int id)
-        {
-            Order order = await db.Orders.FindAsync(id);
-            db.Orders.Remove(order);
-            await db.SaveChangesAsync();
-            return RedirectToAction("Index");
         }
 
         protected override void Dispose(bool disposing)

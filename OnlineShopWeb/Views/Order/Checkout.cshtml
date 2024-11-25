@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<OnlineShopWeb.ViewModels.OrderItem>
 @{
     ViewBag.Title = "Checkout";
 }
@@ -48,6 +48,24 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center mt-2">
+                                                <a href="#"><img src="@item.Img" class="img-fluid rounded-circle" alt=""></a>
+                                            </div>
+                                        </th>
+                                        <td class="py-5"><a href="#">@item.Name</a></td>
+                                        <td class="py-5" data-price="@item.Price">@item.Price</td>
+                                        <td class="py-5">
+                                            <div class="input-group quantity mt-4" style="width: 100px;">
+                                                <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="@item.Quantity" readonly>
+                                            </div>
+                                        </td>
+                                        <td class="py-5 total-price">@item.TotalPrice</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row">
                                     </th>
@@ -83,20 +101,7 @@
 <!-- Checkout Page End -->
 @section Scripts {
     <script>
-        function populateUserInfo() {
-            const savedUserInfo = JSON.parse(sessionStorage.getItem('userInfo'));
-            if (savedUserInfo) {
-                $('#FullName').val(savedUserInfo.name || '');
-                $('#Address').val(savedUserInfo.address || '');
-                $('#Mobile').val(savedUserInfo.phone || '');
-                $('#Email').val(savedUserInfo.email || '');
-            }
-        }
-
-
         $(document).ready(function () {
-            populateUserInfo();
-
             $('#userInfo').change(function () {
                 if (this.checked) {
                     $('#FullName').val("Demo");
@@ -104,17 +109,22 @@
                     $('#Mobile').val("0123456789");
                     $('#Email').val("demo@gmail.com");
 
+                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
+
                 }
                 else {
                     $('#FullName, #Address, #Mobile, #Email').val("");
+                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', false);
                 }
             });
 
-            const checkoutRequests = Object.values(
-                JSON.parse(sessionStorage.getItem('selectedItems')) || {}
-            );
+            UpdateTotal();
 
-            $.ajax({
+            //const checkoutRequests = Object.values(
+            //    JSON.parse(sessionStorage.getItem('selectedItems')) || {}
+            //);
+
+            @*$.ajax({
                 url: '@Url.Action("GetOrderItem", "Order")',
                 type: 'POST',
                 data: JSON.stringify(checkoutRequests),
@@ -150,7 +160,7 @@
                 error: function (response) {
                     alert("An error occurred: " + response.statusText);
                 }
-            });
+            });*@
 
             $('form').on('submit', function (event) {
                 var paymentMethodSelected = $('input[name="PaymentMethod"]:checked');
@@ -158,15 +168,6 @@
                     alert("Please select a payment method.");
                     event.preventDefault();
                 }
-
-                const userInfo = {
-                    name: $('#FullName').val(),
-                    address: $('#Address').val(),
-                    phone: $('#Mobile').val(),
-                    email: $('#Email').val(),
-                };
-
-                sessionStorage.setItem('userInfo', JSON.stringify(userInfo));
             });
         });
 
