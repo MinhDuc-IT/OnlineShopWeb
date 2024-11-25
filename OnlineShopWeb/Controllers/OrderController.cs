@@ -12,9 +12,6 @@ using OnlineShopWeb.Models;
 using OnlineShopWeb.ViewModels;
 using OnlineShopWeb.Helpers;
 using System.Diagnostics;
-using System.Xml.Linq;
-using System.ComponentModel.DataAnnotations.Schema;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
 
 namespace OnlineShopWeb.Controllers
@@ -24,6 +21,7 @@ namespace OnlineShopWeb.Controllers
         private readonly ApplicationDbContext db = new ApplicationDbContext();
         private readonly VnPayService vnPayService = new VnPayService();
 
+        // Hiển thị giỏ hàng đã chọn và kiểm tra tính hợp lệ
         public ActionResult Checkout()
         {
             var selectedItems = Session["SelectedItems"] as List<SelectedItem>;
@@ -34,33 +32,17 @@ namespace OnlineShopWeb.Controllers
                 return RedirectToAction("Index", "Cart");
             }
 
-            var productIds = selectedItems.Select(c => c.ProductId).Distinct().ToList();
-            var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToDictionary(p => p.ProductId);
-
-            var orderItems = new List<OrderItem>();
-
-            foreach (var selectedItem in selectedItems)
+            var orderItems = GetOrderItems(selectedItems);
+            if (orderItems == null)
             {
-                if (!products.TryGetValue(selectedItem.ProductId, out var product))
-                {
-                    TempData["Message"] = $"Sản phẩm với ID {selectedItem.ProductId} không còn tồn tại.";
-                    return RedirectToAction("Index", "Cart"); 
-                }
-
-                if (selectedItem.Quantity <= 0 || selectedItem.Quantity > product.Stock)
-                {
-                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} không hợp lệ.";
-                    return RedirectToAction("Index", "Cart"); 
-                }
-
-                orderItems.Add(new OrderItem(product.ProductId, product.Image, product.Name, product.Price ,selectedItem.Quantity));
+                return RedirectToAction("Index", "Cart");
             }
 
             Session["OrderItems"] = orderItems;
-
             return View(orderItems);
         }
 
+        // Tạo URL thanh toán VNPay
         [HttpPost]
         public ActionResult Payment(PaymentRequest paymentRequest)
         {
@@ -79,22 +61,21 @@ namespace OnlineShopWeb.Controllers
                 return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
             }
 
-            TempData["Message"] = "Lỗi thanh toán VN Pay";
+            TempData["Message"] = "Lỗi thanh toán VNPay";
             return RedirectToAction("PaymentFail");
         }
 
+        // Xử lý phản hồi sau thanh toán VNPay
         public ActionResult PaymentCallBack()
         {
-            var userId = db.Users.FirstOrDefault(u => u.Name == "test")?.CustomerId ?? 0;
+            var userId = GetUserId();
             if (userId == 0)
             {
                 TempData["Message"] = "Người dùng không hợp lệ.";
                 return RedirectToAction("PaymentFail");
             }
 
-            var httpContext = System.Web.HttpContext.Current;
-            var response = vnPayService.PaymentExecute(httpContext.Request.QueryString);
-
+            var response = vnPayService.PaymentExecute(System.Web.HttpContext.Current.Request.QueryString);
             if (response?.VnPayResponseCode != "00")
             {
                 TempData["Message"] = VNPayError.GetMessage(response?.VnPayResponseCode);
@@ -102,113 +83,52 @@ namespace OnlineShopWeb.Controllers
             }
 
             var orderItems = Session["OrderItems"] as List<OrderItem>;
-
-            if (!orderItems.Any())
+            if (orderItems == null || !orderItems.Any())
             {
                 TempData["Message"] = "Không có sản phẩm nào trong đơn hàng.";
                 return RedirectToAction("PaymentFail");
             }
 
-            using (var transaction = db.Database.BeginTransaction())
-            {
-                try
-                {
-                    var newOrder = new Order
-                    {
-                        CustomerId = userId,
-                        OrderDate = DateTime.Now,
-                        ToTalAmount = (decimal)response.Amount
-                    };
-
-                    db.Orders.Add(newOrder);
-                    db.SaveChanges();
-
-                    var orderDetails = orderItems.Select(item => new OrderDetail
-                    {
-                        OrderId = newOrder.OrderId,
-                        ProductId = item.ProductId,
-                        Price = item.Price,
-                        Quantity = item.Quantity
-                    }).ToList();
-
-                    db.OrderDetails.AddRange(orderDetails);
-
-                    var productIds = orderItems.Select(item => item.ProductId).ToList();
-                    var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToList();
-                    
-                    foreach (var item in orderItems)
-                    {
-                        var product = products.First(p => p.ProductId == item.ProductId);
-                        product.Stock -= item.Quantity;
-                        product.Click = 0;
-                    }
-
-                    //var cartUser = db.Carts.FirstOrDefault(c => c.CustomerId == userId);
-                    //var cartItemsRemove = db.CartItems.Where(c => productIds.Contains(c.ProductId) && c.CartId == cartUser.CartId).ToList();
-
-                    //db.CartItems.RemoveRange(cartItemsRemove);
-
-                    db.SaveChanges();
-
-                    //Cart cart = (Cart)Session["Cart"];
-                    //if (cart != null)
-                    //{
-                    //    foreach (var item in cartItemsRemove)
-                    //    {
-                    //        cart.CartItems.Remove(item);
-                    //    }
-                    //}
-
-                    //Session["Cart"] = cart;
-                    //HttpContext.Session.Remove("OrderItems");
-
-                    transaction.Commit();
-
-                    TempData["Message"] = "Thanh toán VNPay thành công";
-                    return RedirectToAction("PaymentSuccess");
-                }
-                catch (Exception ex)
-                {
-                    transaction.Rollback();
-                    TempData["Message"] = "Đã xảy ra lỗi trong quá trình xử lý thanh toán.";
-                    return RedirectToAction("PaymentFail");
-                }
-            }
+            return ProcessOrder(userId, orderItems, (decimal)response.Amount);
         }
 
+        // Hiển thị thông báo lỗi thanh toán
         public ActionResult PaymentFail()
         {
             return View();
         }
 
+        // Hiển thị thông báo thanh toán thành công
         public ActionResult PaymentSuccess()
         {
-            HttpContext.Session.Remove("OrderItems");
             return View();
         }
 
-        // GET: Order
+        // Hiển thị danh sách đơn hàng
         public async Task<ActionResult> Index()
         {
             var orders = db.Orders.Include(o => o.Customer);
             return View(await orders.ToListAsync());
         }
 
-        // GET: Order/Details/5
+        // Chi tiết đơn hàng
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Order order = await db.Orders.FindAsync(id);
+
+            var order = await db.Orders.FindAsync(id);
             if (order == null)
             {
                 return HttpNotFound();
             }
+
             return View(order);
         }
 
+        // Giải phóng tài nguyên
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -217,5 +137,143 @@ namespace OnlineShopWeb.Controllers
             }
             base.Dispose(disposing);
         }
+
+        #region Helper Methods
+
+        // Lấy danh sách sản phẩm từ session
+        private List<OrderItem> GetOrderItems(List<SelectedItem> selectedItems)
+        {
+            var productIds = selectedItems.Select(c => c.ProductId).Distinct().ToList();
+            var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToDictionary(p => p.ProductId);
+
+            var orderItems = new List<OrderItem>();
+            foreach (var selectedItem in selectedItems)
+            {
+                if (!products.TryGetValue(selectedItem.ProductId, out var product))
+                {
+                    TempData["Message"] = $"Sản phẩm với ID {selectedItem.ProductId} không còn tồn tại.";
+                    return null;
+                }
+
+                if (selectedItem.Quantity <= 0 || selectedItem.Quantity > product.Stock)
+                {
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} không hợp lệ.";
+                    return null;
+                }
+
+                orderItems.Add(new OrderItem(product.ProductId, product.Image, product.Name, product.Price, selectedItem.Quantity));
+            }
+
+            return orderItems;
+        }
+
+        // Xử lý logic đặt hàng
+        private ActionResult ProcessOrder(int userId, List<OrderItem> orderItems, decimal? amount)
+        {
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Thêm đơn hàng
+                    var newOrder = new Order
+                    {
+                        CustomerId = userId,
+                        OrderDate = DateTime.Now,
+                        ToTalAmount = amount ?? 0
+                    };
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+
+                    // Thêm chi tiết đơn hàng
+                    var orderDetails = orderItems.Select(item => new OrderDetail
+                    {
+                        OrderId = newOrder.OrderId,
+                        ProductId = item.ProductId,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    }).ToList();
+                    db.OrderDetails.AddRange(orderDetails);
+
+                    // Cập nhật sản phẩm
+                    UpdateProductStock(orderItems);
+
+                    // Xóa sản phẩm trong giỏ hàng
+                    ClearCart(userId, orderItems);
+
+                    HttpContext.Session.Remove("OrderItems");
+
+                    transaction.Commit();
+                    TempData["Message"] = "Thanh toán VNPay thành công";
+                    return RedirectToAction("PaymentSuccess");
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    TempData["Message"] = "Đã xảy ra lỗi trong quá trình xử lý thanh toán.";
+                    return RedirectToAction("PaymentFail");
+                }
+            }
+        }
+
+        // Cập nhật số lượng sản phẩm trong kho
+        private void UpdateProductStock(List<OrderItem> orderItems)
+        {
+            var productIds = orderItems.Select(item => item.ProductId).ToList();
+            var products = db.Products.Where(p => productIds.Contains(p.ProductId)).ToList();
+
+            foreach (var item in orderItems)
+            {
+                var product = products.First(p => p.ProductId == item.ProductId);
+                product.Stock -= item.Quantity;
+                product.Click = 0;
+            }
+
+            db.SaveChanges();
+        }
+
+        // Xóa sản phẩm trong giỏ hàng
+        private void ClearCart(int userId, List<OrderItem> orderItems)
+        {
+            // Lấy giỏ hàng từ cơ sở dữ liệu
+            var cart = db.Carts.FirstOrDefault(c => c.CustomerId == userId);
+            if (cart != null)
+            {
+                var productIds = orderItems.Select(item => item.ProductId).ToList();
+
+                // Lấy các mặt hàng cần xóa khỏi cơ sở dữ liệu
+                var cartItems = db.CartItems
+                    .Where(c => c.CartId == cart.CartId && productIds.Contains(c.ProductId))
+                    .ToList();
+
+                // Xóa các mặt hàng khỏi cơ sở dữ liệu
+                db.CartItems.RemoveRange(cartItems);
+                db.SaveChanges();
+            }
+
+            // Cập nhật giỏ hàng trong session
+            var sessionCart = Session["Cart"] as Cart;
+            if (sessionCart != null)
+            {
+                var itemsToRemove = sessionCart.CartItems
+                    .Where(ci => orderItems.Any(oi => oi.ProductId == ci.ProductId))
+                    .ToList();
+
+                foreach (var item in itemsToRemove)
+                {
+                    sessionCart.CartItems.Remove(item);
+                }
+
+                // Cập nhật lại Session["Cart"]
+                Session["Cart"] = sessionCart;
+            }
+        }
+
+        // Lấy ID người dùng hiện tại
+        private int GetUserId()
+        {
+            return db.Users.FirstOrDefault(u => u.Name == "test")?.CustomerId ?? 0;
+        }
+
+        #endregion
     }
 }
