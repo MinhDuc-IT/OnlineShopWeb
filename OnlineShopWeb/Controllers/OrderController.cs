@@ -57,6 +57,8 @@ namespace OnlineShopWeb.Controllers
                     OrderId = new Random().Next(1000, 10000)
                 };
 
+                Session["OrderInfo"] = paymentRequest;
+
                 var httpContext = System.Web.HttpContext.Current;
                 return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
             }
@@ -174,12 +176,17 @@ namespace OnlineShopWeb.Controllers
             {
                 try
                 {
+                    var orderInfo = Session["OrderInfo"] as PaymentRequest;
+
                     // Thêm đơn hàng
                     var newOrder = new Order
                     {
                         CustomerId = userId,
                         OrderDate = DateTime.Now,
-                        ToTalAmount = amount ?? 0
+                        ToTalAmount = amount ?? 0,
+                        RecipientName = orderInfo.FullName,
+                        RecipientAddress = orderInfo.Address,
+                        RecipientPhoneNumber = orderInfo.Mobile
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
@@ -200,7 +207,7 @@ namespace OnlineShopWeb.Controllers
                     // Xóa sản phẩm trong giỏ hàng
                     ClearCart(userId, orderItems);
 
-                    HttpContext.Session.Remove("OrderItems");
+                    ClearSession();
 
                     transaction.Commit();
                     TempData["Message"] = "Thanh toán VNPay thành công";
@@ -266,6 +273,12 @@ namespace OnlineShopWeb.Controllers
                 // Cập nhật lại Session["Cart"]
                 Session["Cart"] = sessionCart;
             }
+        }
+
+        private void ClearSession()
+        {
+            HttpContext.Session.Remove("OrderItems");
+            HttpContext.Session.Remove("OrderInfo");
         }
 
         // Lấy ID người dùng hiện tại

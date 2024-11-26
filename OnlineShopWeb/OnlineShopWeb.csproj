@@ -167,6 +167,10 @@
     <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.Designer.cs">
       <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411251519377_updateorder.cs" />
+    <Compile Include="Migrations\202411251519377_updateorder.Designer.cs">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
     <Compile Include="Models\Cart.cs" />
@@ -2999,6 +3003,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411251320093_AddFieldClickInProduct.resx">
       <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251519377_updateorder.resx">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
