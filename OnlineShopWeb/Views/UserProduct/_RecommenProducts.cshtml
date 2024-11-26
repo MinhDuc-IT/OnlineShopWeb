@@ -1,0 +1,56 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+
+@if (Model != null && Model.Any())
+{
+    <div class="recommended_items">
+        <h2 class="title text-center">recommended products</h2>
+
+        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                @{
+                    var productList = Model.ToList(); 
+                    int productCount = productList.Count;
+                    for (int i = 0; i < productCount; i += 3) 
+                    {
+                        var isActive = i == 0 ? "active" : "";
+                        <div class="item @isActive">
+                            @for (int j = i; j < i + 3 && j < productCount; j++) 
+                            {
+                                var product = productList[j];
+                                <a href="#">
+                                    <div class="col-sm-4">
+                                        <div class="product-image-wrapper">
+                                            <div class="single-products">
+                                                <div class="productinfo text-center">
+                                                    <img src="~/Content/images/home/recommend1.jpg" alt="" />
+                                                    <h2>@product.Price</h2>
+                                                    <p>@product.Name</p>
+                                                    <button class="btn btn-default add-to-cart">
+                                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                                    </button>
+                                                    @*<a class="btn btn-default add-to-cart">
+                                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                                    </a>*@
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </a>
+                            }
+                        </div>
+                    }
+                }
+            </div>
+            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                <i class="fa fa-angle-left"></i>
+            </a>
+            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                <i class="fa fa-angle-right"></i>
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <div></div>
+}

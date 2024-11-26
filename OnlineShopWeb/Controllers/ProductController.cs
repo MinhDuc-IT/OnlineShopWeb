@@ -1,6 +1,7 @@
 ﻿using OnlineShopWeb.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -34,6 +35,24 @@ namespace OnlineShopWeb.Controllers
 
             ViewBag.CateId = id;
             return View(items);
+        }
+        public ActionResult loadMoreProducts(int page = 1, int pageSize = 3) 
+        {
+            var products = db.Products
+                            .OrderBy(b => b.ProductId)
+                            .Skip((page - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList()
+                            .Select(b => new {
+                                b.ProductId,
+                                b.Price,
+                                b.Name,
+                                ImageUrl = Url.Content("~/Content/images/home/product1.jpg") 
+                            }).ToList();
+
+            bool hasMore = db.Products.Count() > page * pageSize;
+
+            return Json(new { success = true, products = products, hasMore = hasMore }, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -18,7 +18,6 @@ namespace OnlineShopWeb
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            GlobalFilters.Filters.Add(new AuthenticateUserAttribute());
         }
         protected void Application_Error()
         {

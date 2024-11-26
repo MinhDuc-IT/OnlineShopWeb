@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +11,7 @@ namespace OnlineShopWeb.Controllers
     public class HomeController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
-        [AllowAnonymous]
+        [AuthenticateUser]
         public ActionResult Index(int? id)
         {
             var items = db.Products.ToList();

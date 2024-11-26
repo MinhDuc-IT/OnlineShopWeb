@@ -15,7 +15,6 @@ namespace OnlineShopWeb.Controllers
         {
             return View();
         }
-        [AllowAnonymous]
         public ActionResult ListBanners()
         {
             var Banners = db.Banners.ToList();

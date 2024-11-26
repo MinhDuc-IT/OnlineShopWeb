@@ -40,21 +40,7 @@ namespace OnlineShopWeb.Attributes
 
         protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
-            var user = filterContext.HttpContext.Session["User"] as User;
-            if (user == null)
-            {
-                string currentController = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
-                string currentAction = filterContext.ActionDescriptor.ActionName;
-                if (currentController != "Account" && currentAction != "Login")
-                {
-                    filterContext.HttpContext.Session["CurrentUrl"] = "/" + currentController + "/" + currentAction;
-                }
-                filterContext.Result = new RedirectResult("/Account/Login");
-            }
-            else
-            {
-                filterContext.Result = new RedirectResult("/Error/PageNotFound"); 
-            }
+            filterContext.Result = new RedirectResult("/Error/PageNotFound");
         }
     }
 }

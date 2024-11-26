@@ -9,10 +9,10 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Controllers
 {
-    
+
+    [AuthenticateUser]
     public class CartController : Controller
     {
-        [AuthorizeUser(Roles = "User")]
         public ActionResult Index()
         {
             Cart cart = (Cart)Session["Cart"];

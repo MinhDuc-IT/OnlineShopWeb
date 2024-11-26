@@ -19,6 +19,32 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             IEnumerable<Banner> Banners = db.Banners.ToList();
             return View(Banners);
         }
+        public ActionResult GetBannerByPage(int crrPage, int pageSize)
+        {
+            var banners = db.Banners
+                            .OrderBy(b => b.Id) 
+                            .Skip((crrPage - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList()
+                            .Select(b => new {
+                                b.Id,
+                                b.title,
+                                b.description,
+                                ImageBase64 = b.Image != null ? Convert.ToBase64String(b.Image) : null,
+                                b.IsDeleted
+                            }).ToList();
+
+            var totalRecords = db.Banners.Count();
+
+            return Json(new
+            {
+                success = true,
+                data = banners,
+                totalRecords = totalRecords,
+                totalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+            }, JsonRequestBehavior.AllowGet);
+        }
+
         public ActionResult AddBanner()
         {
             return View();

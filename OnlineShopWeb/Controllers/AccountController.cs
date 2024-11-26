@@ -139,12 +139,10 @@ namespace OnlineShopWeb.Controllers
             }
             return Json(new { success = false });
         }
-        [AllowAnonymous]
         public ActionResult Login()
         {
             return View();
         }
-        [AllowAnonymous]
         [HttpPost]
         public ActionResult Login(string name, string password, bool remember)
         {

@@ -17,17 +17,6 @@ namespace OnlineShopWeb.Attributes
             string currentController = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             string currentAction = filterContext.ActionDescriptor.ActionName;
 
-            var dynamicUrls = new[]
-            {
-                "/danh-muc-san-pham/{id}",
-            };
-
-            if (dynamicUrls.Any(url => Regex.IsMatch(currentUrl, url.Replace("{id}", @"\d+"))))
-            {
-                base.OnActionExecuting(filterContext);
-                return;
-            }
-
             if (filterContext.HttpContext.Session["User"] == null)
             {
                 var cookie = filterContext.HttpContext.Request.Cookies["AuthCookie"];
@@ -52,18 +41,7 @@ namespace OnlineShopWeb.Attributes
                 }
                 else
                 {
-                    var allowedActions = new[]
-                    {
-                        new { Controller = "Home", Action = "Index" },
-                        new { Controller = "Banner", Action = "ListBanners" },
-                        new { Controller = "Category", Action = "ListCategory" },
-                        new { Controller = "Search", Action = "Index" },
-                        new { Controller = "Account", Action = "SignUp" },
-                        new { Controller = "Account", Action = "Login" },
-                        new { Controller = "Error", Action = "PageNotFound" },
-                    };
-
-                    if (allowedActions.Any(a => a.Controller == currentController && a.Action == currentAction))
+                    if (currentController == "Home" && currentAction == "Index")
                     {
                         base.OnActionExecuting(filterContext);
                         return;

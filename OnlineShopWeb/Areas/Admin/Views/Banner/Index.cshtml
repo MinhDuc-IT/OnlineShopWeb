@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OnlineShopWeb.Models.Banner>
+﻿@*@model IEnumerable<OnlineShopWeb.Models.Banner>*@
 @{
     ViewBag.Title = "Danh sách Banner";
 }
@@ -19,23 +19,23 @@
 }
 
 <!-- Content Header (Page header) -->
-<section class="content-header">
-    <div class="container-fluid">
-        <div class="row mb-2">
-            <div class="col-sm-6">
-                <h1>Quản lý Banner</h1>
-            </div>
-            <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                    <li class="breadcrumb-item"><a href="#">Home</a></li>
-                    <li class="breadcrumb-item active">Banner</li>
-                </ol>
+@*<section class="content-header">
+        <div class="container-fluid">
+            <div class="row mb-2">
+                <div class="col-sm-6">
+                    <h1>Quản lý Banner</h1>
+                </div>
+                <div class="col-sm-6">
+                    <ol class="breadcrumb float-sm-right">
+                        <li class="breadcrumb-item"><a href="#">Home</a></li>
+                        <li class="breadcrumb-item active">Banner</li>
+                    </ol>
+                </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>*@
 
-<section class="content">
+<section class="content Ad_css_card">
     <div class="card">
         <div class="card-header">
             <h3 class="card-title">Danh sách Banner</h3>
@@ -57,44 +57,94 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        var i = 1;
-                        foreach (var item in Model)
-                        {
-                            <tr id="trow_@item.Id">
-                                <td>@i</td>
-                                <td>@item.title</td>
-                                <td>@item.description</td>
-                                <td style="">
-                                    <img style="height: 70px" src="@((item.Image != null && item.Image.Length > 0)
-                                    ? "data:image/png;base64," + Convert.ToBase64String(item.Image)
-                                    : "")" alt="Prev Image" />
-                                </td>
-                                <td class="is-delete-column">@item.IsDeleted</td>
-                                <td style="display: flex; gap: 10px;">
-                                    <a href="/admin/banner/editBanner/@item.Id" class="btn btn-sm btn-primary">Edit</a>
-                                    <a href="#" data-id="@item.Id" class="btn btn-sm btn-danger btnDelete">Delete</a>
-                                </td>
-                            </tr>
-                            i++;
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="4">Không có bản ghi nào!!!</td>
-                        </tr>
-                    }
                 </tbody>
             </table>
         </div>
+        <div class="card-footer text-center"></div>
     </div>
 
 </section>
 
 @section scripts {
     <script>
+        function Paging(crrPage) {
+            let pageSize = 1;
+            $.ajax({
+                type: 'GET',
+                url: '/Admin/Banner/GetBannerByPage',
+                data: { crrPage: crrPage, pageSize: pageSize },
+                dataType: 'json',
+                success: function (response) {
+                    if (response.success) {
+                        let banners = response.data;
+                        let totalPages = response.totalPages;
+                        let tbody = $('tbody');
+                        tbody.empty();
+
+                        if (banners.length > 0) {
+                            banners.forEach((item, index) => {
+                                let row = `
+                                        <tr id="trow_${item.Id}">
+                                            <td>${(crrPage - 1) * pageSize + index + 1}</td>
+                                            <td>${item.title}</td>
+                                            <td>${item.description}</td>
+                                            <td><img style="height: 70px" src="data:image/png;base64,${item.ImageBase64}" alt="Prev Image" /></td>
+                                            <td class="is-delete-column">${item.IsDeleted}</td>
+                                            <td style="display: flex; gap: 10px;">
+                                                <a href="/admin/banner/editBanner/${item.Id}" class="btn btn-sm btn-primary">Edit</a>
+                                                <a href="#" data-id="${item.Id}" class="btn btn-sm btn-danger btnDelete">Delete</a>
+                                            </td>
+                                        </tr>`;
+                                tbody.append(row);
+                            });
+                        } else {
+                            tbody.html('<tr><td colspan="6">Không có bản ghi nào!!!</td></tr>');
+                        }
+
+                        // Render pagination buttons
+                        RenderPagination(crrPage, totalPages);
+                    }
+                }
+            });
+        }
+
+        function RenderPagination(crrPage, totalPages) {
+            let pagination = $('.card-footer');
+            pagination.empty();
+
+            if (totalPages > 1) {
+                let button = '';
+
+                if (crrPage > 1) {
+                    button += `<button class="btn btn-sm btn-default btnPage" data-page="${crrPage - 1}">Prev</button>`;
+                }
+
+                if (crrPage > 3) {
+                    button += `<button class="btn btn-sm ${1 === crrPage ? 'btn-primary' : 'btn-default'} btnPage" data-page="1">1</button>`;
+                    if (crrPage > 4) {
+                        button += `<span class="btn btn-sm disabled">...</span>`;
+                    }
+                }
+
+                for (let i = Math.max(1, crrPage - 2); i <= Math.min(totalPages, crrPage + 2); i++) {
+                    button += `<button class="btn btn-sm ${i === crrPage ? 'btn-primary' : 'btn-default'} btnPage" data-page="${i}">${i}</button>`;
+                }
+
+                if (crrPage < totalPages - 2) {
+                    if (crrPage < totalPages - 3) {
+                        button += `<span class="btn btn-sm disabled">...</span>`;
+                    }
+                    button += `<button class="btn btn-sm ${totalPages - 1 === crrPage ? 'btn-primary' : 'btn-default'} btnPage" data-page="${totalPages}">${totalPages}</button>`;
+                }
+
+                if (crrPage < totalPages) {
+                    button += `<button class="btn btn-default btn-sm btnPage" data-page="${crrPage + 1}">Next</button>`;
+                }
+
+                pagination.append(button);
+            }
+        }
+
         $(document).ready(function () {
             $('body').on('click', '.btnDelete', function () {
                 var id = $(this).data("id");
@@ -112,6 +162,12 @@
                     })
                 }
             })
+            $('body').on('click', '.btnPage', function () {
+                let page = $(this).data('page');
+                Paging(page);
+            });
+
+            Paging(1);
         })
     </script>
 }

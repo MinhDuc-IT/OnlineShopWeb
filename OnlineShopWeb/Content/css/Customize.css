@@ -631,7 +631,6 @@
     width: 350px;
     margin: 0 auto;
     display: block;
-    /* padding: 20px; */
     background-color: #fff;
     border-radius: 4px;
     box-shadow: 0 3px 10px 0 rgba(0, 0, 0, .14);
@@ -648,4 +647,12 @@
 
 .E-logo{
     width: 500px
+}
+
+/*btn_LoadMore*/
+.AP-footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
 }

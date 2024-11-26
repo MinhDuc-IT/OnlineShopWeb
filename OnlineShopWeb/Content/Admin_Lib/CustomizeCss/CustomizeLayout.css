@@ -1,5 +1,10 @@
 ﻿body {
 }
+
 #Ad_Avatar {
     border-radius: 50%;
+}
+
+.Ad_css_card{
+    padding: 10px !important;
 }

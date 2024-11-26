@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -36,5 +37,7 @@ namespace OnlineShopWeb.Models
         public string Role { get; set; }
 
         public virtual ICollection<Order> Orders { get; set; }
+        [JsonIgnore]
+        public virtual ICollection<UserProduct> UserProducts { get; set; }
     }
 }
