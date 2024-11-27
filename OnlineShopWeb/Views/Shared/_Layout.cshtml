@@ -214,6 +214,7 @@
                             if (response.success === true) {
                                 // Lưu thông tin vào Local Storage
                                 localStorage.setItem("userEmail", response.userEmail);
+                                localStorage.setItem("userId", response.userId);
                                 sessionStorage.setItem("Role", response.Role)
                                 console.log("success")
                                 $('#myModal').modal('hide')

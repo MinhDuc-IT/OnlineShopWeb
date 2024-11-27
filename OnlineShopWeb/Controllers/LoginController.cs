@@ -27,7 +27,11 @@ namespace OnlineShopWeb.Controllers
             }
             else
             {
-                return Json(new { success = true, userEmail = user.Email, name = user.Name, Role = user.Role });
+                Session["UserId"] = user.CustomerId;
+                Session["UserEmail"] = user.Email;
+                Session["UserName"] = user.Name;
+                Session["UserRole"] = user.Role;
+                return Json(new { success = true, userId = user.CustomerId, userEmail = user.Email, name = user.Name, Role = user.Role });
             }
         }
 
