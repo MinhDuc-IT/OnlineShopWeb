@@ -2,7 +2,6 @@
 @{
     ViewBag.Title = "Home Page";
 }
-@model IEnumerable<OnlineShopWeb.Models.Product>
 
 <div class="container">
     <div class="row">
@@ -25,10 +24,12 @@
                             <div class="product-image-wrapper product-hover">
                                 <div class="single-products">
                                     <div class="productinfo text-center">
-                                        <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                                        <h2>@product.Price.ToString("N0") VNĐ</h2>
-                                        <p>@product.Name</p>
-                                        <a href="#" class="btn btn-default add-to-cart">
+                                        <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
+                                            <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                            <h2>@product.Price.ToString("N0") VNĐ</h2>
+                                            <p>@product.Name</p>
+                                        </a>
+                                        <a href="#" class="btn btn-default btnAddToCart" data-id="@product.ProductId">
                                             <i class="fa fa-shopping-cart"></i>Add to cart
                                         </a>
                                     </div>
@@ -70,9 +71,11 @@
                                                 <div class="product-image-wrapper">
                                                     <div class="single-products">
                                                         <div class="productinfo text-center">
-                                                            <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                                                            <h2>@product.Price.ToString("N0") VNĐ</h2>
-                                                            <p>@product.Name</p>
+                                                            <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
+                                                                <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                                                <h2>@product.Price.ToString("N0") VNĐ</h2>
+                                                                <p>@product.Name</p>
+                                                            </a>
                                                             <a href="#" class="btn btn-default add-to-cart">
                                                                 <i class="fa fa-shopping-cart"></i>Add to cart
                                                             </a>
