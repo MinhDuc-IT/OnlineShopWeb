@@ -11,9 +11,15 @@
     <link href="~/Content/css/prettyPhoto.css" rel="stylesheet">
     <link href="~/Content/css/price-range.css" rel="stylesheet">
     <link href="~/Content/css/animate.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="~/Content/css/main.css" rel="stylesheet">
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/css/Login.css" />
+
+
     <link href="~/Content/css/Customize.css" rel="stylesheet">
+
     <link href="~/Content/css/responsive.css" rel="stylesheet">
 
 
@@ -43,6 +49,282 @@
 <body>
     @Html.Partial("_Header")
 
+
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-default dropdown-toggle usa" data-toggle="dropdown">
+                                    DOLLAR
+                                    <span class="caret"></span>
+                                </button>
+                                <ul class="dropdown-menu">
+                                    <li><a href="#">Canadian Dollar</a></li>
+                                    <li><a href="#">Pound</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="shop-menu pull-right">
+                            <ul class="nav navbar-nav">
+                                <li><a href="#"><i class="fa fa-user"></i> Account</a></li>
+                                <li><a href="#"><i class="fa fa-star"></i> Wishlist</a></li>
+                                <li><a href="checkout.html"><i class="fa fa-crosshairs"></i> Checkout</a></li>
+                                <li><a href="cart.html"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                                <li><button type="button" data-toggle="modal" data-target="#myModal" id="Login">Login</button></li>
+                                <li><button type="button" class="hideButton" id="Logout">Logout</button></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-middle-->
+        <!-- Nút mở Modal -->
+        <!-- Modal -->
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">LOGIN</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form nhập dữ liệu -->
+                        <form id="myForm">
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="name" class="form-control" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <input type="password" name="password" class="form-control" id="Password" required>
+                            </div>
+                            <div class="formButton">
+                                <button type="submit" class="FormButtonChild">Login</button>
+                                <button type="button" class="FormButtonChild" data-toggle="modal" data-target="#myModalSignup">Sign up</button>
+                            </div>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Sign up-->
+        <div class="modal fade" id="myModalSignup" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">SIGN UP</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form nhập dữ liệu -->
+                        <form id="myFormSignup">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" class="form-control" id="nameSignUp" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="email">Email:</label>
+                                <input type="email" name="email" class="form-control" id="email" required>
+                            </div> <div class="form-group">
+                                <label for="password">Password:</label>
+                                <input type="password" name="password" class="form-control" id="passwordSignUP" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="phone">Phone:</label>
+                                <input type="text" name="phone" class="form-control" id="phone" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="address">Address:</label>
+                                <input type="text" name="address" class="form-control" id="address" required>
+                            </div>
+                            <button type="submit" class="FormSignupButton">Sign up</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--end sign up-->
+
+        <script>
+            if (localStorage.getItem("userEmail")) {
+                document.getElementById("Login").className = "hideButton";
+                document.getElementById("Logout").className = "";
+
+
+            }
+            $(document).ready(function () {
+                $("#myFormSignup").on("submit", function (e) {
+
+                    e.preventDefault(); // Ngăn chặn form gửi đi theo cách thông thường
+                    console.log("dc chay")
+
+                    var name = $("#nameSignUp").val();
+                    var password = $("#passwordSignUP").val();
+                    var address = $("#address").val()
+                    var email = $("#email").val()
+                    var phone = $("#phone").val()
+                    console.log(name, password, email, phone, address)
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Login/Signup", // Đường dẫn đến action trong controller
+                        data: { name: name, email: email, password: password, phone: phone, address: address },
+                        success: function (response) {
+                            if (response.success === true) {
+                                // Lưu thông tin vào Local Storage
+                                console.log("success")
+                                $('#myModalSignup').modal('hide')
+                                alert("Sign up successfully")
+
+                            } else {
+                                // Hiển thị thông báo lỗi
+
+                                alert(response.Message);
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error details:", xhr.responseText); // In ra phản hồi từ server
+                            alert("Có lỗi xảy ra.");
+                        }
+                    });
+                });
+            });
+            $(document).ready(function () {
+                $("#myForm").on("submit", function (e) {
+
+                    e.preventDefault(); // Ngăn chặn form gửi đi theo cách thông thường
+                    console.log("dc chay")
+
+                    var name = $("#name").val();
+                    var password = $("#Password").val();
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/Login/Login", // Đường dẫn đến action trong controller
+                        data: { name: name, password: password },
+                        success: function (response) {
+                            if (response.success === true) {
+                                // Lưu thông tin vào Local Storage
+                                localStorage.setItem("userEmail", response.userEmail);
+                                localStorage.setItem("userId", response.userId);
+                                sessionStorage.setItem("Role", response.Role)
+                                console.log("success")
+                                $('#myModal').modal('hide')
+                                alert("Welcome " + response.name)
+
+                                document.getElementById("Login").className = "hideButton";
+                                document.getElementById("Logout").className = "";
+
+
+                            } else {
+                                // Hiển thị thông báo lỗi
+                                console.log(response.account, response.pas)
+
+
+                                alert("Sai thông tin đăng nhập ");
+                            }
+                        },
+                        error: function (xhr, status, error) {
+                            console.error("Error details:", xhr.responseText); // In ra phản hồi từ server
+                            alert("Có lỗi xảy ra trong quá trình đăng nhập.");
+                        }
+                    });
+                });
+            });
+            document.getElementById("Logout").addEventListener("click", () => {
+                document.getElementById("Logout").className = "hideButton";
+                document.getElementById("Login").className = "";
+                localStorage.removeItem("userEmail")
+                sessionStorage.removeItem("Role")
+
+            })
+        </script>
+        <!--- form sign up -->
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Sign u</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <!-- Form nhập dữ liệu -->
+                        <form id="myForm">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" class="form-control" id="name" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="Password">Password:</label>
+                                <input type="password" name="password" class="form-control" id="Password" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Login</button>
+                            <button type="button" class="btn btn-primary">Sign up</button>
+
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="header-bottom">
+            <!--header-bottom-->
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="sr-only">Toggle navigation</span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                        </div>
+                        <div class="mainmenu pull-left">
+                            <ul class="nav navbar-nav collapse navbar-collapse">
+                                <li><a href="index.html" class="active">Home</a></li>
+                                <li class="dropdown">
+                                    <a href="#">Shop<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="/Category/Index">Categories</a></li>
+                                        <li><a href="">Product Details</a></li>
+                                        <li><a href="">Checkout</a></li>
+                                        <li><a href="">Cart</a></li>
+                                        <li><a href="">Login</a></li>
+                                    </ul>
+                                </li>
+                                <li class="dropdown">
+                                    <a href="#">Blog<i class="fa fa-angle-down"></i></a>
+                                    <ul role="menu" class="sub-menu">
+                                        <li><a href="blog.html">Blog List</a></li>
+                                        <li><a href="blog-single.html">Blog Single</a></li>
+                                    </ul>
+                                </li>
+                                <li><a href="404.html">404</a></li>
+                                <li><a href="contact-us.html">Contact</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="search_box pull-right">
+                            <input type="text" placeholder="Search" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!--/header-bottom-->
+    </header><!--/header-->
 
 
     <section id="slider">
@@ -120,7 +402,6 @@
         </div>
     </section>
 
-
     @Html.Partial("_Footer")
 
 
@@ -131,8 +412,6 @@
     <script src="~/Content/js/price-range.js"></script>
     <script src="~/Content/js/jquery.prettyPhoto.js"></script>
     <script src="~/Content/js/main.js"></script>
-
-    
 
     @RenderSection("Scripts",false)
 

@@ -1,0 +1,28 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+
+@if (Model == null || !Model.Any())
+{
+    <div class="col-sm-12">
+        <p class="text-center">Không tồn tại sản phẩm trong kho.</p>
+    </div>
+}
+else
+{
+    foreach (var product in Model)
+    {
+        <div class="col-sm-4">
+            <div class="product-image-wrapper">
+                <div class="single-products">
+                    <div class="productinfo text-center">
+                        <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                        <h2>@product.Price.ToString("N0") VNĐ</h2>
+                        <p>@product.Name</p>
+                        <a href="#" class="btn btn-default add-to-cart">
+                            <i class="fa fa-shopping-cart btnAddToCart"></i>Add to cart
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+}
