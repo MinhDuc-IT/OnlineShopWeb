@@ -1,5 +1,6 @@
 ﻿using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
+using OnlineShopWeb.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,6 +12,7 @@ namespace OnlineShopWeb.Controllers
 {
     public class CartController : Controller
     {
+
         private Cart GetCartFromDatabase(ApplicationDbContext db, int customerId)
         {
             var cart = db.Carts.Include(c => c.CartItems).FirstOrDefault(c => c.CustomerId == customerId);
@@ -143,7 +145,7 @@ namespace OnlineShopWeb.Controllers
                     cart.Remove(id, userId);
                     code = new { success = true, msg = "", code = 1, count = cart.CartItems.Count };
                 }
-                
+
             }
             //Session["Cart"] = cart;
             //db.SaveChanges();
@@ -202,7 +204,6 @@ namespace OnlineShopWeb.Controllers
             return Json(new { Success = false });
         }
 
-        [HttpPost]
         public ActionResult DeleteMany(List<int> ids)
         {
             var code = new { success = false, msg = "", code = -1, count = 0 };
@@ -226,6 +227,26 @@ namespace OnlineShopWeb.Controllers
             db.SaveChanges();
             return Json(code);
         }
+
+        [HttpPost]
+        public JsonResult UpdateSelectedItems(List<SelectedItem> items)
+        {
+            try
+            {
+                if (items == null || !items.Any())
+                {
+                    return Json(new { success = false, message = "No items selected." });
+                }
+
+                Session["SelectedItems"] = items;
+                return Json(new { success = true, message = "Cart updated successfully!" });
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Error: {ex.Message}" });
+            }
+        }
+
 
     }
 }

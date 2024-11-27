@@ -103,7 +103,11 @@
                     $('#trow_' + id).find('.cart_total_price').text(rs.newTotalPrice);
                     $('#cart-item-count').text(rs.cartCount);
                     UpdateCartTotal();
+
+                    updateCartSessionStorage(id, rs.newQuantity);
+
                     ShowCount();
+
                 }
             }
         });
@@ -131,8 +135,12 @@
                     }
                     $('#cart-item-count').text(rs.cartCount);
                     UpdateCartTotal();
+
+                    updateCartSessionStorage(id, rs.newQuantity);
+
                     LoadCart();
                     ShowCount();
+
                 }
             }
         });
@@ -205,4 +213,14 @@ function UpdateCartTotal() {
     });
     //$('th:contains("Sum:")').next().text(totalSum.toFixed(2)); // Cập nhật giá trị tổng
     $('#sum').text(totalSum.toFixed(2)); // Cập nhật giá trị tổng vào phần tử có id="sum"
+}
+
+function updateCartSessionStorage(productId, newQuantity) {
+    const cartData = JSON.parse(sessionStorage.getItem('selectedItems')) || {};
+
+    if (cartData[productId]) {
+        cartData[productId].quantity = newQuantity;
+    }
+
+    sessionStorage.setItem('selectedItems', JSON.stringify(cartData));
 }

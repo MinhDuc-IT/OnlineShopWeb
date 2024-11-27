@@ -184,6 +184,19 @@
     <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.Designer.cs">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
     </Compile>
+
+    <Compile Include="Migrations\202411141424312_update.cs" />
+    <Compile Include="Migrations\202411141424312_update.Designer.cs">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.cs" />
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.Designer.cs">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411251519377_updateorder.cs" />
+    <Compile Include="Migrations\202411251519377_updateorder.Designer.cs">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
+
     <Compile Include="Migrations\202411140402075_updatedModels.cs" />
     <Compile Include="Migrations\202411140402075_updatedModels.designer.cs">
       <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
@@ -195,6 +208,7 @@
     <Compile Include="Migrations\202411251433216_updateCart.cs" />
     <Compile Include="Migrations\202411251433216_updateCart.designer.cs">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
+
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -212,6 +226,7 @@
     <Compile Include="ViewModels\CheckoutRequest.cs" />
     <Compile Include="ViewModels\PaymentRequest.cs" />
     <Compile Include="ViewModels\OrderItem.cs" />
+    <Compile Include="ViewModels\SelectedItem.cs" />
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -2973,7 +2988,9 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
+
     <Content Include="Views\Home\_ProductListPartial.cshtml" />
+
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Category\_ListCategory.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
@@ -2996,8 +3013,12 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
+
+    <Content Include="Views\Shared\_OtherLayout.cshtml" />
+
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Cart\_CartItemsList.cshtml" />
+
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3026,6 +3047,16 @@
     <EmbeddedResource Include="Migrations\202411051127211_AddCostPriceToProducts.resx">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
     </EmbeddedResource>
+
+    <EmbeddedResource Include="Migrations\202411141424312_update.resx">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251320093_AddFieldClickInProduct.resx">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251519377_updateorder.resx">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
+
     <EmbeddedResource Include="Migrations\202411140402075_updatedModels.resx">
       <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
     </EmbeddedResource>
@@ -3034,6 +3065,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411251433216_updateCart.resx">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
+
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
