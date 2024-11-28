@@ -1,5 +1,4 @@
-﻿@model IEnumerable<OnlineShopWeb.Models.Product>
-@{
+﻿@{
     ViewBag.Title = "Home Page";
 }
 
@@ -11,8 +10,88 @@
         </div>
 
 
+
+@Html.Action("GetRecommenProducts", "UserProduct")
+
+<div class="col-sm-9 padding-right">
+    <div class="features_items">
+        <h2 class="title text-center">Features Items</h2>
+        <div class="wrapper-product"></div>
+        <div class="AP-footer">
+            <button id="btn_LoadMore" class="btn btn-success">Xem Thêm</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentPage = 1;
+    const pageSize = 3;
+
+    function LoadMoreProducts(page) {
+        $.ajax({
+            type: 'GET',
+            url: '/Product/loadMoreProducts',
+            data: { page: page, pageSize: pageSize },
+            dataType: 'json',
+            success: function (response) {
+                if (response.success) {
+                    let products = response.products;
+                    let listProducts = products.map((product) => {
+                        return `
+                        <div class="col-sm-4 product-conatiner" data-id = ${product.ProductId}>
+                            <div class="product-image-wrapper product-hover">
+                                <div class="single-products">
+                                    <div class="productinfo text-center">
+                                        <img src="${product.ImageUrl}" alt="Product Image">
+                                        <h2>${product.Price}</h2>
+                                        <p>${product.Name}</p>
+                                        <a href="#" class="btn btn-default add-to-cart">
+                                            <i class="fa fa-shopping-cart"></i> Add to cart
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                    $(".wrapper-product").append(listProducts.join(""));
+
+                    if (!response.hasMore) {
+                        $('#btn_LoadMore').hide();
+                    }
+                }
+            },
+            error: function () {
+                alert('Không thể tải thêm sản phẩm. Vui lòng thử lại sau.');
+            }
+        });
+    }
+    $(document).ready(function () {
+        LoadMoreProducts(currentPage);
+        $('.wrapper-product').on('click', '.product-conatiner', function () {
+            let id = $(this).data('id');
+            $.ajax({
+                type: 'POST',
+                url: '/UserProduct/UpdateViewNum',
+                data: { id: id },
+                dataType: 'Json',
+                success: function (response) {
+                    if (response.success) {
+                        alert(`Cap nhat thanh cong cho san pham co id: ${id}`)
+                    }
+                }
+            })
+        });
+        $('#btn_LoadMore').on('click', function () {
+            currentPage++;
+            LoadMoreProducts(currentPage);
+        });
+    });
+</script>
+
+      
+      <!-- NDThanh -->
         <!-- Main Content Area -->
-        <div class="col-sm-9 padding-right">
+        @*<div class="col-sm-9 padding-right">
             <!-- Features Items -->
             <div class="features_items">
                 <h2 class="title text-center">Features Items</h2>
@@ -187,4 +266,5 @@
             padding: 20px;
         }
     </style>
-}
+}*@
+

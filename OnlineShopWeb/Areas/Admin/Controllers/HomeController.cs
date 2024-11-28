@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopWeb.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
@@ -6,9 +7,9 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthorizeUser(Roles = "Admin")]
     public class HomeController : Controller
     {
-        // GET: Admin/Home
         public ActionResult Index()
         {
             return View();

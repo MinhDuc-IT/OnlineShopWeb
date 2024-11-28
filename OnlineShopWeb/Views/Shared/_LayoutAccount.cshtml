@@ -1,4 +1,4 @@
-﻿﻿<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -14,6 +14,7 @@
     <link href="~/Content/css/main.css" rel="stylesheet">
     <link href="~/Content/css/responsive.css" rel="stylesheet">
     <link href="~/Content/css/Customize.css" rel="stylesheet">
+    <link href="~/Content/css/SearchPage.css" rel="stylesheet">
     <!--[if lt IE 9]>
     <script src="js/html5shiv.js"></script>
     <script src="js/respond.min.js"></script>
@@ -27,15 +28,15 @@
 </head>
 <body>
     @Html.Partial("_Header")
-    <div class="profile_wrapper">
+    <div class="bg_fullScreen">
         <div class="profile_container">
             <div class="p_sidebar">
                 <div class="p_image_user">
                     <div class="p_user_logo">
-                        <img src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Logo">
+                        <img id="sb_Avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Logo">
                     </div>
                     <div class="p_name_user">
-                        <span style="font-weight: bold;">hoangduc54544</span>
+                        <span style="font-weight: bold;" id="sb_UserName">OnlineShopWeb</span>
                         <span id="changeProfile"><i class="fa fa-pencil"></i> <a style="color: #555" href="/Account/profile">Sửa Hồ Sơ</a></span>
                     </div>
                 </div>
@@ -62,22 +63,40 @@
     <script src="~/Content/js/price-range.js"></script>
     <script src="~/Content/js/jquery.prettyPhoto.js"></script>
     <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/Slider.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#profile, #address, #password, #order').on('click', function () {
+                sessionStorage.setItem('activeLink', this.id);
+            });
+
+            $('#account, #changeProfile').on('click', function () {
+                sessionStorage.setItem('activeLink', "profile");
+            });
+
+            const activeLink = sessionStorage.getItem('activeLink');
+            if (activeLink) {
+                $('#' + activeLink).addClass('active_link');
+            }
+            $.ajax({
+                type: "GET",
+                url: "/Account/GetUserInfo",
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#sb_UserName").text(response.userInfo.Name);
+                        if (response.userInfo.Avatar) {
+                            $("#sb_Avatar").attr("src", "data:image/png;base64," + response.userInfo.Avatar);
+                        }
+                    } else {
+                        alert("Đã có lỗi xảy ra: " + response.message);
+                    }
+                },
+                error: function (error) {
+                    alert("Đã xảy ra lỗi khi lấy thông tin!");
+                }
+            });
+        })
+    </script>
 </body>
 </html>
-
-<script>
-    $(document).ready(function () {
-        $('#profile, #address, #password, #order').on('click', function () {
-            sessionStorage.setItem('activeLink', this.id);
-        });
-
-        $('#account, #changeProfile').on('click', function () {
-            sessionStorage.setItem('activeLink', "profile");
-        });
-
-        const activeLink = sessionStorage.getItem('activeLink');
-        if (activeLink) {
-            $('#' + activeLink).addClass('active_link');
-        }
-    })
-</script>

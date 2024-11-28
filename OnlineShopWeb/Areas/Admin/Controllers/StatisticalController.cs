@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthorizeUser(Roles = "Admin")]
     public class StatisticalController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();

@@ -51,5 +51,6 @@ namespace OnlineShopWeb.Models
         public virtual Brand Brand { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<UserProduct> UserProducts { get; set; }
     }
 }

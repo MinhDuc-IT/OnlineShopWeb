@@ -22,8 +22,6 @@
     </ul>
 }
 
-
-<!-- Content Header (Page header) -->
 <section class="content-header">
     <div class="container-fluid">
         <div class="row mb-2">
@@ -37,7 +35,7 @@
                 </ol>
             </div>
         </div>
-    </div><!-- /.container-fluid -->
+    </div>
 </section>
 
 <!-- Main content -->
@@ -68,18 +66,6 @@
                                 <input type="text" class="form-control" name="Description" />
                             </div>
                         </div>
-                        @*<div class="col-md-6">
-                            <div class="form-group">
-                                <label>IsDelete</label>
-                                <input type="text" class="form-control" name="IsDelete" />
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                                <label>Danh mục cha</label>
-                                <input type="text" class="form-control" name="DanhMucCha" />
-                            </div>
-                        </div>*@
                     </div>
                     <button type="submit" class=" btn btn-primary">Add New</button>
                 </div>
@@ -87,34 +73,29 @@
 
         </div>
     </form>
-    <!-- /.card -->
-
 </section>
-<!-- /.content -->
 
 @section scripts {
     <script>
         $(document).ready(function () {
             $('#my_form').on('submit', function (e) {
-                e.preventDefault(); // Ngăn chặn hành vi gửi form mặc định
+                e.preventDefault(); 
 
-                var form = document.getElementById('my_form'); // Không dùng dấu #
+                var form = document.getElementById('my_form'); 
                 var formData = new FormData(form);
 
                 $.ajax({
                     type: 'POST',
-                    url: '/Admin/Category/createCategory', // Đường dẫn tới action trong controller
+                    url: '/Admin/Category/createCategory', 
                     dataType: 'json',
                     data: formData,
                     processData: false,
                     contentType: false,
                     success: function (response) {
                         alert(response.message);
-                        // Bạn có thể xử lý thêm ở đây nếu cần
                     },
                     error: function (xhr, status, error) {
                         alert('An error occurred: ' + error);
-                        // Xử lý lỗi nếu cần
                     }
                 });
             });

@@ -3,36 +3,39 @@
     ViewBag.Title = "Kết quả tìm kiếm";
 }
 
-<h2>Kết quả tìm kiếm</h2>
-<p>Từ khóa tìm kiếm: <strong>@ViewBag.Query</strong></p>
-
 @if (Model != null && Model.Any())
 {
-    <div>
-        @foreach (var product in Model)
-        {
-            <div class="col-sm-3" bis_skin_checked="1">
-                <div class="product-image-wrapper product-hover" bis_skin_checked="1">
-                    <div class="single-products" bis_skin_checked="1">
-                        <div class="productinfo text-center" bis_skin_checked="1">
-                            <img src="~/Content/images/home/product1.jpg" alt="">
-                            <h2>@product.Price</h2>
-                            <p>@product.Name</p>
-                            <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+    <div class="bg_fullScreen">
+        <div class="container">
+        <div class="ps_header">
+            <span><a href="/">Trang chủ</a>></span>
+            <p>Kết quả tìm kiếm "@ViewBag.Query"</p>
+        </div>
+            @foreach (var product in Model)
+            {
+                <div class="col-sm-3" >
+                    <div class="product-image-wrapper product-hover" >
+                        <div class="single-products" >
+                            <div class="productinfo text-center">
+                                <img src="~/Content/images/home/product1.jpg" alt="ImageProduct">
+                                <h2>@product.Price</h2>
+                                <p>@product.Name</p>
+                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                            </div>
                         </div>
                     </div>
-                    @*<div class="choose" bis_skin_checked="1">
-                        <ul class="nav nav-pills nav-justified">
-                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to wishlist</a></li>
-                            <li><a href="#"><i class="fa fa-plus-square"></i>Add to compare</a></li>
-                        </ul>
-                    </div>*@
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 }
 else
 {
-    <p>Không tìm thấy sản phẩm nào!</p>
+    <div class="bg_fullScreen">
+        <div class="sp_empty">
+            <img src="~/Content/images/CustomImage/logoSearch.png" />
+            <div class="spe_title">Không tìm thấy kết quả nào</div>
+            <div class="spe_hint">Hãy thử sử dụng các từ khóa chung chung hơn</div>
+        </div>
+    </div>
 }

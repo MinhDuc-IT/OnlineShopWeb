@@ -1,6 +1,7 @@
 ﻿using OnlineShopWeb.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -12,6 +13,7 @@ namespace OnlineShopWeb.Controllers
 {
     public class ProductController : Controller
     {
+
         private readonly ApplicationDbContext _context;
 
         public ProductController()
@@ -20,6 +22,7 @@ namespace OnlineShopWeb.Controllers
         }
 
         // GET: Product
+
         public ActionResult Index(int? id)
         {
             var products = _context.Products
@@ -98,30 +101,24 @@ namespace OnlineShopWeb.Controllers
             base.Dispose(disposing);
         }
 
-        //public ActionResult Detail(int id = 1) // Mặc định id = 1
-        //{
-        //    var item = _context.Products.Find(id);
+        public ActionResult loadMoreProducts(int page = 1, int pageSize = 3) 
+        {
+            var products = _context.Products
+                            .OrderBy(b => b.ProductId)
+                            .Skip((page - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList()
+                            .Select(b => new {
+                                b.ProductId,
+                                b.Price,
+                                b.Name,
+                                ImageUrl = Url.Content("~/Content/images/home/product1.jpg") 
+                            }).ToList();
 
-        //    if (item == null) // Trường hợp sản phẩm không tồn tại
-        //    {
-        //        item = new Product
-        //        {
-        //            ProductId = id, // Gán id nếu có, ngược lại là 0
-        //            Name = "Sample Product",
-        //            BrandId = 1, // Giá trị mẫu cho BrandId
-        //            Description = "This is a test product for testing purposes.",
-        //            Image = "/images/sample-product.jpg", // Đường dẫn mẫu đến hình ảnh
-        //            Price = 100, // Giá mẫu
-        //            Stock = 10, // Số lượng tồn kho mẫu
-        //            CategoryId = 1, // Giá trị mẫu cho CategoryId
-        //            IsDeleted = false, // Chưa bị xoá
-        //            CostPrice = 50, // Giá vốn mẫu
-        //        };
+            bool hasMore = _context.Products.Count() > page * pageSize;
 
-        //    }
-
-        //    return View(item);
-        //}
+            return Json(new { success = true, products = products, hasMore = hasMore }, JsonRequestBehavior.AllowGet);
+        }
 
         public ActionResult Detail(int id)
         {

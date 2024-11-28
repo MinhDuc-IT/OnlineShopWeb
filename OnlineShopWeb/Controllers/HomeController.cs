@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -11,6 +12,7 @@ namespace OnlineShopWeb.Controllers
 {
     public class HomeController : Controller
     {
+
         private readonly ApplicationDbContext _context;
 
         public HomeController()
@@ -18,6 +20,7 @@ namespace OnlineShopWeb.Controllers
             _context = new ApplicationDbContext();
         }
 
+        [AuthenticateUser]
         public ActionResult Index(int? id)
         {
             // Tải danh sách sản phẩm
@@ -66,5 +69,6 @@ namespace OnlineShopWeb.Controllers
                 .ToList();
             return PartialView("_ProductListPartial", products);
         }
+
     }
 }

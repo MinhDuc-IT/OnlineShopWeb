@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using OnlineShopWeb.ViewModels;
 using System;
@@ -10,6 +11,8 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Controllers
 {
+
+    [AuthenticateUser]
     public class CartController : Controller
     {
 
@@ -26,40 +29,7 @@ namespace OnlineShopWeb.Controllers
 
             return cart;
         }
-
-
-        // GET: Cart
-        //public ActionResult Index()
-        //{
-        //    Cart cart = (Cart)Session["Cart"];
-        //    if (cart == null)
-        //    {
-        //        cart = new Cart
-        //        {
-        //            CartItems = new List<CartItem>
-        //            {
-        //                new CartItem
-        //                {
-        //                    ProductId = 1, Quantity = 2, Price = 100, TotalPrice = 200,
-        //                    Product = new Product { Name = "Sản phẩm 1", Image = "/images/cart/one.png" }
-        //                },
-        //                new CartItem
-        //                {
-        //                    ProductId = 2, Quantity = 1, Price = 200, TotalPrice = 200,
-        //                    Product = new Product { Name = "Sản phẩm 2", Image = "/images/cart/two.png" }
-        //                },
-        //                new CartItem
-        //                {
-        //                    ProductId = 3, Quantity = 3, Price = 150, TotalPrice = 450,
-        //                    Product = new Product { Name = "Sản phẩm 3", Image = "/images/cart/three.png" }
-        //                }
-        //            }
-        //        };
-        //        Session["Cart"] = cart;
-        //    }
-        //    return View(cart.CartItems);
-        //}
-
+ 
         public ActionResult Index()
         {
             var db = new ApplicationDbContext();
@@ -95,6 +65,7 @@ namespace OnlineShopWeb.Controllers
             }
             return Json(new { Count = 0 }, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpPost]
         public ActionResult AddToCart(int id, int quantity)
