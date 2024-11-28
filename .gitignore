@@ -47,3 +47,6 @@ Desktop.ini
 
 Publish/
 
+# Ignore upgrade log files
+UpgradeLog*.htm
+
