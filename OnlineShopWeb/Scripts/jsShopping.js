@@ -9,15 +9,17 @@
             quantity = parseInt(tQuantity);
         }
 
-        /*alert(id + " " + quantity);*/
+        //alert(id + " " + quantity);
         $.ajax({
             url: '/Cart/AddToCart',
             type: 'POST',
             data: { id: id, quantity: quantity },
             success: function (rs) {
+                console.log(rs); // Kiểm tra nội dung rs
                 if (rs.success) {
-                    $('#cart-item-count').html(rs.Count);
+                    $('#cart-item-count').html(rs.count);
                     alert(rs.msg);
+                    ShowCount();
                 }
             }
         });
@@ -52,10 +54,14 @@
                 data: { ids: selectedItems },
                 success: function (rs) {
                     if (rs.success) {
-                        $('#cart-item-count').html(rs.count);
+                        
                         selectedItems.forEach(function (id) {
                             $('#trow_' + id).remove();
                         });
+                        $('#cart-item-count').html(rs.count);
+                        UpdateCartTotal();
+                        LoadCart();
+                        ShowCount();
                     }
                 }
             });
@@ -73,9 +79,11 @@
                 data: { id: id },
                 success: function (rs) {
                     if (rs.success) {
-                        $('#cart-item-count').html(rs.Count);
+                        $('#cart-item-count').html(rs.count);
                         $('#trow_' + id).remove();
                         UpdateCartTotal();
+                        LoadCart();
+                        ShowCount();
                     }
                 }
             });
@@ -95,6 +103,11 @@
                     $('#trow_' + id).find('.cart_total_price').text(rs.newTotalPrice);
                     $('#cart-item-count').text(rs.cartCount);
                     UpdateCartTotal();
+
+                    updateCartSessionStorage(id, rs.newQuantity);
+
+                    ShowCount();
+
                 }
             }
         });
@@ -122,6 +135,12 @@
                     }
                     $('#cart-item-count').text(rs.cartCount);
                     UpdateCartTotal();
+
+                    updateCartSessionStorage(id, rs.newQuantity);
+
+                    LoadCart();
+                    ShowCount();
+
                 }
             }
         });
@@ -136,6 +155,8 @@
     $('body').on('change', '.item-select', function () {
         UpdateCartTotal();
     });
+
+    
 });
 
 //function ShowCount() {
@@ -162,10 +183,11 @@ function DeleteAll() {
 
 function LoadCart() {
     $.ajax({
-        url: '/Cart/Index',
+        url: '/Cart/GetCartItems',
         type: 'GET',
         success: function (rs) {
             $('#load_data').html(rs);
+            //$('#cart-item-count').html(rs.count);
         }
     });
 }
@@ -191,4 +213,14 @@ function UpdateCartTotal() {
     });
     //$('th:contains("Sum:")').next().text(totalSum.toFixed(2)); // Cập nhật giá trị tổng
     $('#sum').text(totalSum.toFixed(2)); // Cập nhật giá trị tổng vào phần tử có id="sum"
+}
+
+function updateCartSessionStorage(productId, newQuantity) {
+    const cartData = JSON.parse(sessionStorage.getItem('selectedItems')) || {};
+
+    if (cartData[productId]) {
+        cartData[productId].quantity = newQuantity;
+    }
+
+    sessionStorage.setItem('selectedItems', JSON.stringify(cartData));
 }

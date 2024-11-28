@@ -11,7 +11,12 @@
         </div>
         <div class="hd_item">
             <ul class="hd_nav">
-                <li><a href="/Cart/Index"><i class="fa fa-shopping-cart"></i> Cart</a></li>
+                <li>
+                    <a href="/Cart/Index">
+                        <i class="fa fa-shopping-cart"></i> Cart
+                        <span id="cart-item-count" class="badge">0</span>
+                    </a>
+                </li>
                 @{
                     if (Session["User"] == null)
                     {

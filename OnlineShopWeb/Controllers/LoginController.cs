@@ -7,6 +7,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Security;
+
 using System.Web.Services.Description;
 
 namespace OnlineShopWeb.Controllers
@@ -59,11 +60,12 @@ namespace OnlineShopWeb.Controllers
                 }
             }
         }
+        
         [HttpPost]
         public JsonResult Signup(string name, string email, string password, string phone, string address)
         {
-
             var user = db.Users.FirstOrDefault(account => account.Email == email);
+
             if (user == null)
             {
                 var newUser = new User
@@ -77,12 +79,17 @@ namespace OnlineShopWeb.Controllers
                 };
                 db.Users.Add(newUser);
                 db.SaveChanges();
+
                 return Json(new { success = true });
             }
             else
             {
                 return Json(new { success = false, Message = "Email đã tồn tại " });
             }
+
         }
+
     }
+
 }
+

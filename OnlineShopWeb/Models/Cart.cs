@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopWeb.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -40,12 +41,15 @@ namespace OnlineShopWeb.Models
             }
         }
 
-        public void Remove(int id)
+        public void Remove(int id, int userId)
         {
-            var checkExits = CartItems.SingleOrDefault(x => x.ProductId == id);
+            var db = new ApplicationDbContext();
+            var checkExits = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == userId);
             if (checkExits != null)
             {
                 CartItems.Remove(checkExits);
+                db.CartItems.Remove(checkExits);
+                db.SaveChanges();
             }
         }
 
