@@ -284,7 +284,7 @@ namespace OnlineShopWeb.Controllers
         // Lấy ID người dùng hiện tại
         private int GetUserId()
         {
-            return db.Users.FirstOrDefault(u => u.Name == "test")?.CustomerId ?? 0;
+            return db.Users.FirstOrDefault(u => u.Name == "Duc")?.CustomerId ?? 0;
         }
 
         #endregion

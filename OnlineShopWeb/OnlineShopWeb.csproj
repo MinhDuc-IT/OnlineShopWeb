@@ -196,7 +196,7 @@
     <Compile Include="Migrations\202411251519377_updateorder.cs" />
     <Compile Include="Migrations\202411251519377_updateorder.Designer.cs">
       <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
-
+    </Compile>
     <Compile Include="Migrations\202411140402075_updatedModels.cs" />
     <Compile Include="Migrations\202411140402075_updatedModels.designer.cs">
       <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
@@ -3056,7 +3056,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411251519377_updateorder.resx">
       <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
-
+    </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411140402075_updatedModels.resx">
       <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
     </EmbeddedResource>

@@ -65,10 +65,9 @@
                                     <span>US @Model.Price</span>
                                     <label>Quantity:</label>
                                     <input type="text" id="quantity_value" value="1" />
-                                    <button type="button" class="btn btn-fefault cart btnAddToCart">
-                                        <i class="fa fa-shopping-cart"data-id="@Model.ProductId"></i>
-                                        Add to cart
-                                    </button>
+                                    <a href="#" class="btn btn-default cart btnAddToCart" data-id="@Model.ProductId">
+                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                    </a>
                                 </span>
                                 <p><b>Availability:</b>@(Model.Stock > 0 ? "In stock" : " Out of stock")</p>
                                 <p><b>Condition:</b> New</p>
