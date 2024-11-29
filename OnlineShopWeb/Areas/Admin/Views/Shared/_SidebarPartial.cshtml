@@ -1,0 +1,30 @@
+﻿@using OnlineShopWeb.Models
+@{
+    var brands = ViewData["Brands"] as IEnumerable<BrandViewModel>;
+}
+
+<div class="left-sidebar">
+    <h2>Category</h2>
+    <div class="panel-group category-products" id="accordian">
+
+        <!--category-productsr-->
+        @Html.Action("ListCategory", "Category")
+    </div><!--/category-products-->
+
+
+    <div class="brands_products">
+        <h2>Brands</h2>
+        <div class="brands-name">
+            <ul class="nav nav-pills nav-stacked">
+                @foreach (var brand in brands)
+                {
+                    <li>
+                        <a href="#" data-brand-id="@brand.BrandId">
+                            <span class="pull-right">(@brand.ProductCount)</span>@brand.BrandName
+                        </a>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+</div>

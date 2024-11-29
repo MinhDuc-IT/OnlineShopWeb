@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc; 
 
 namespace OnlineShopWeb.Models
 {
@@ -20,6 +21,7 @@ namespace OnlineShopWeb.Models
         [Required]
         public int BrandId { get; set; }
 
+        [AllowHtml]
         public string Description { get; set; }
 
         [Required]

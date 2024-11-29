@@ -1,0 +1,95 @@
+﻿@model OnlineShopWeb.Models.Product
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Product</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            Brand Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Brand.Name)
+        </dd>
+
+        <dt>
+            Category Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Category.Name)
+        </dd>
+
+        <dt>
+            Product Name
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Description)
+        </dt>
+        <dd>
+            @* Use Html.Raw to render the HTML content *@
+            <div class="description-content">
+                @Html.Raw(Model.Description)
+            </div>
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Image)
+        </dt>
+        <dd>
+            @if (!string.IsNullOrEmpty(Model.Image))
+            {
+                <img src="data:image/jpeg;base64,@Model.Image" alt="Product Image" style="max-width:200px; max-height:200px;" />
+            }
+            else
+            {
+                <p>No image available</p>
+            }
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Stock)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Stock)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.IsDeleted)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.IsDeleted)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CostPrice)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.CostPrice)
+        </dd>
+    </dl>
+</div>
+
+<div style="display: flex">
+    <div style="background-color: #FE980F; width: 80px; height: 60px; display: flex; justify-content: center; align-items: center; border-radius: 3px; margin-right: 10px;">
+        @Html.ActionLink("Edit", "Edit", new { id = Model.ProductId }, new { style = "color: white; text-decoration: none;" })
+    </div>
+    <div style="background-color: #FE980F; width: 80px; height: 60px; display: flex; justify-content: center; align-items: center; border-radius: 3px; margin-right: 10px;">
+        @Html.ActionLink("Back to List", "Index", null, new { style = "color: white; text-decoration: none;" })
+    </div>
+</div>
