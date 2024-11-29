@@ -7,17 +7,17 @@
     {
         public override void Up()
         {
-            CreateTable(
-                "dbo.Banners",
-                c => new
-                    {
-                        Id = c.Int(nullable: false, identity: true),
-                        title = c.String(nullable: false, maxLength: 500),
-                        description = c.String(nullable: false, maxLength: 500),
-                        Image = c.Binary(nullable: false),
-                        IsDeleted = c.Boolean(nullable: false),
-                    })
-                .PrimaryKey(t => t.Id);
+            //CreateTable(
+            //    "dbo.Banners",
+            //    c => new
+            //        {
+            //            Id = c.Int(nullable: false, identity: true),
+            //            title = c.String(nullable: false, maxLength: 500),
+            //            description = c.String(nullable: false, maxLength: 500),
+            //            Image = c.Binary(nullable: false),
+            //            IsDeleted = c.Boolean(nullable: false),
+            //        })
+            //    .PrimaryKey(t => t.Id);
             
         }
         
