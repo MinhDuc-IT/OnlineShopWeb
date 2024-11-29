@@ -2,37 +2,63 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity; // Thêm namespace này
+using OnlineShopWeb.Models;
+using OnlineShopWeb.Data;
 
 namespace OnlineShopWeb.Controllers
 {
     public class ProductController : Controller
     {
         private readonly ApplicationDbContext _context;
-
         public ProductController()
         {
             _context = new ApplicationDbContext();
         }
-
-        // Action hiển thị chi tiết sản phẩm
-        public ActionResult Details(int id)
+        // GET: Product
+        public ActionResult Index()
         {
-            // Lấy sản phẩm theo id
-            var product = _context.Products
-                .Include("Category")  // Gắn thông tin danh mục
-                .Include("Brand")     // Gắn thông tin thương hiệu
-                .FirstOrDefault(p => p.ProductId == id && !p.IsDeleted);
-
-            if (product == null)
-            {
-                return HttpNotFound("Sản phẩm không tồn tại.");
-            }
-
-            return View(product);
+            var products = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .ToList();
+            return View(products);
         }
-
+        public ActionResult GetProductsByBrand(int brandId)
+        {
+            try
+            {
+                var products = _context.Products
+                    .Where(p => p.BrandId == brandId)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .ToList();
+                return PartialView("_ProductListPartial", products);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+        public ActionResult GetProductsByCategory(int categoryId)
+        {
+            try
+            {
+                var products = _context.Products
+                    .Where(p => p.CategoryId == categoryId)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .ToList();
+                return PartialView("_ProductListPartial", products);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)
@@ -41,5 +67,13 @@ namespace OnlineShopWeb.Controllers
             }
             base.Dispose(disposing);
         }
+        public async Task<ActionResult> Details(int Id)
+        {
+            if (Id == null) return RedirectToAction("Index");
+
+            var productsById = _context.Products.Where(p => p.ProductId == Id).FirstOrDefault();
+
+            return View(productsById);
+        }
     }
-}
+    }
