@@ -44,6 +44,7 @@ namespace OnlineShopWeb.Helpers
             }
 
             var vnp_orderId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
+            var vnp_amount = Convert.ToDouble(vnpay.GetResponseData("vnp_Amount"));
             var vnp_TransactionId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
             var vnp_SecureHash = collections["vnp_SecureHash"];
             var vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
@@ -64,6 +65,7 @@ namespace OnlineShopWeb.Helpers
                 PaymentMethod = "VnPay",
                 OrderDescription = vnp_OrderInfo,
                 OrderId = vnp_orderId.ToString(),
+                Amount = vnp_amount,
                 TransactionId = vnp_TransactionId.ToString(),
                 Token = vnp_SecureHash,
                 VnPayResponseCode = vnp_ResponseCode

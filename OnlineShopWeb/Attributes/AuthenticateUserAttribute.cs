@@ -75,11 +75,13 @@ namespace OnlineShopWeb.Attributes
             }
             else
             {
-
-                if (currentController != "Account" && currentAction != "Login")
+                if (currentController != "Account" || currentAction != "Login")
                 {
-                    filterContext.HttpContext.Session["CurrentUrl"] = "/" + currentController + "/" + currentAction;
-                    filterContext.Result = new RedirectResult("/Account/Login");
+                    if (currentController != "Cart" || currentAction != "ShowCount")
+                    {
+                        filterContext.HttpContext.Session["CurrentUrl"] = "/" + currentController + "/" + currentAction;
+                        filterContext.Result = new RedirectResult("/Account/Login");
+                    }
                 }
             }
 

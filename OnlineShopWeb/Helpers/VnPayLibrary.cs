@@ -123,8 +123,6 @@ namespace OnlineShopWeb.Helpers
             return hash.ToString();
         }
 
-
-        // có chế biến cho .NET Core MVC
         public static string GetIpAddress(HttpContext context)
         {
             var ipAddress = string.Empty;

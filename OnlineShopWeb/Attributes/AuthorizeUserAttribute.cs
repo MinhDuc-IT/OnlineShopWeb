@@ -16,19 +16,6 @@ namespace OnlineShopWeb.Attributes
         {
             var user = httpContext.Session["User"] as User;
 
-            //if (user == null)
-            //{
-            //    var cookie = httpContext.Request.Cookies["AuthCookie"];
-            //    if (cookie != null)
-            //    {
-            //        string encryptData = cookie.Value;
-            //        string userJson = Security.Decrypt(encryptData);
-            //        user = JsonConvert.DeserializeObject<User>(userJson);
-
-            //        httpContext.Session["User"] = user;
-            //    }
-            //}
-
             if (user == null || string.IsNullOrEmpty(user.Role) || string.IsNullOrEmpty(Roles))
             {
                 return false;
