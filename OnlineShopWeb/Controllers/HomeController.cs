@@ -12,14 +12,9 @@ namespace OnlineShopWeb.Controllers
     {
         private ApplicationDbContext db = new ApplicationDbContext();
         [AuthenticateUser]
-        public ActionResult Index(int? id)
+        public ActionResult Index()
         {
-            var items = db.Products.ToList();
-            if (id != null)
-            {
-                items = items.Where(x => x.ProductId == id).ToList();
-            }
-            return View(items);
+            return View();
         }
 
     }

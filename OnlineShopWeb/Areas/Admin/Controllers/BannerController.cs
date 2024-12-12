@@ -10,6 +10,7 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthenticateUser]
     [AuthorizeUser(Roles = "Admin")]
     public class BannerController : Controller
     {
