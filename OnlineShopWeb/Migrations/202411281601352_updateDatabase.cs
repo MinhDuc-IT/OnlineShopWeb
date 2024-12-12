@@ -41,7 +41,7 @@
             AlterColumn("dbo.Users", "Gender", c => c.Int());
             AlterColumn("dbo.Users", "BirthDay", c => c.DateTime());
             AlterColumn("dbo.Users", "Avatar", c => c.Binary());
-            DropColumn("dbo.Users", "userName");
+            //DropColumn("dbo.Users", "userName");
         }
         
         public override void Down()

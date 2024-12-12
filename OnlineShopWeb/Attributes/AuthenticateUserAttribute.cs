@@ -1,74 +1,91 @@
-﻿using System;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using OnlineShopWeb.Helpers;
 using OnlineShopWeb.Models;
-using System.Text.RegularExpressions;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Web;
+using System.Web.Mvc;
 
 namespace OnlineShopWeb.Attributes
 {
-    public class AuthenticateUserAttribute : ActionFilterAttribute
+    public class AuthenticateUserAttribute : AuthorizeAttribute
     {
-        public override void OnActionExecuting(ActionExecutingContext filterContext)
+        protected override bool AuthorizeCore(HttpContextBase httpContext)
+        {
+            string currentUrl = httpContext.Request.Url.AbsolutePath;
+            string currentController = httpContext.Request.RequestContext.RouteData.Values["controller"].ToString();
+            string currentAction = httpContext.Request.RequestContext.RouteData.Values["action"].ToString();
+
+            var user = httpContext.Session["User"] as User;
+            if (user == null)
+            {
+                var cookie = httpContext.Request.Cookies["AuthCookie"];
+                if (cookie != null)
+                {
+                    string encryptData = cookie.Value;
+                    string userJson = Security.Decrypt(encryptData);
+                    user = JsonConvert.DeserializeObject<User>(userJson);
+                    httpContext.Session["User"] = user;
+                    if (user.Role == "Admin")
+                    {
+                        return false;
+                    }
+                }
+            }
+
+            if (user == null)
+            {
+                if (currentController == "Home" && currentAction == "Index")
+                {
+                    return true;
+                }
+                return false;
+            }
+
+            if (user.Role == "Admin" &&
+                !currentUrl.StartsWith("/admin") &&
+                !currentUrl.StartsWith("/Admin") &&
+                !currentUrl.StartsWith("/Account"))
+            {
+                return false;
+            }
+
+            return true;
+        }
+
+        protected override void HandleUnauthorizedRequest(AuthorizationContext filterContext)
         {
             string currentUrl = filterContext.HttpContext.Request.Url.AbsolutePath;
             string currentController = filterContext.ActionDescriptor.ControllerDescriptor.ControllerName;
             string currentAction = filterContext.ActionDescriptor.ActionName;
 
-            if (filterContext.HttpContext.Session["User"] == null)
+            var user = filterContext.HttpContext.Session["User"] as User;
+            if (user != null)
             {
-                var cookie = filterContext.HttpContext.Request.Cookies["AuthCookie"];
-                if (cookie != null)
+                if (user.Role == "Admin")
                 {
-                    string encryptData = cookie.Value;
-                    string userJson = Security.Decrypt(encryptData);
-                    var user = JsonConvert.DeserializeObject<User>(userJson);
-                    filterContext.HttpContext.Session["User"] = user;
-                    if (user.Role == "Admin")
+                    if (!currentUrl.StartsWith("/Admin"))
                     {
-                        if (!currentUrl.StartsWith("/Admin"))
-                        {
-                            filterContext.Result = new RedirectResult("/Admin");
-                            return;
-                        }
-                    }
-                    else
-                    {
-                        base.OnActionExecuting(filterContext);
-                    }
-                }
-                else
-                {
-                    if (currentController == "Home" && currentAction == "Index")
-                    {
-                        base.OnActionExecuting(filterContext);
+                        filterContext.Result = new RedirectResult("/Admin");
                         return;
                     }
-
-                    if (currentController != "Account" && currentAction != "Login")
+                }
+            }
+            else
+            {
+                if (currentController != "Account" || currentAction != "Login")
+                {
+                    if (currentController != "Cart" || currentAction != "ShowCount")
                     {
                         filterContext.HttpContext.Session["CurrentUrl"] = "/" + currentController + "/" + currentAction;
                         filterContext.Result = new RedirectResult("/Account/Login");
                     }
                 }
             }
-            else
-            {
-                var user = filterContext.HttpContext.Session["User"] as User;
-                if (user != null && user.Role == "Admin")
-                {
-                    if (!currentUrl.StartsWith("/Admin") && !currentUrl.StartsWith("/admin") && !currentUrl.StartsWith("/Account"))
-                    {
-                        if (currentController != "Error" && currentAction != "PageNotFound")
-                        {
-                            filterContext.Result = new RedirectResult("/Error/PageNotFound");
-                        }
-                    }
-                }
-            }
-            base.OnActionExecuting(filterContext);
+
+            filterContext.Result = new RedirectResult("/Account/Login");
         }
     }
 }

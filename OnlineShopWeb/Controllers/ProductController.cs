@@ -112,7 +112,7 @@ namespace OnlineShopWeb.Controllers
                                 b.ProductId,
                                 b.Price,
                                 b.Name,
-                                ImageUrl = Url.Content("~/Content/images/home/product1.jpg") 
+                                b.Image
                             }).ToList();
 
             bool hasMore = _context.Products.Count() > page * pageSize;

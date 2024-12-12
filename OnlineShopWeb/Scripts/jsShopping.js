@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    //ShowCount();
+    ShowCount();
     $('body').on('click', '.btnAddToCart', function (e) {
         e.preventDefault();
         var id = $(this).data('id');

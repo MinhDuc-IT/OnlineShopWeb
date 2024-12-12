@@ -17,25 +17,27 @@
                             @for (int j = i; j < i + 3 && j < productCount; j++) 
                             {
                                 var product = productList[j];
-                                <a href="#">
+                                
                                     <div class="col-sm-4">
                                         <div class="product-image-wrapper">
                                             <div class="single-products">
                                                 <div class="productinfo text-center">
-                                                    <img src="~/Content/images/home/recommend1.jpg" alt="" />
+                                                    <a href="/Product/Details/@product.ProductId">
+                                                        <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                                        <p>@product.Name</p>
+                                                    </a>
                                                     <h2>@product.Price</h2>
-                                                    <p>@product.Name</p>
-                                                    <button class="btn btn-default add-to-cart">
-                                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                                    <button class="btn btn-default add-to-cart btnAddToCart" data-id="@product.ProductId">
+                                                        <i class="fa fa-shopping-cart " ></i>Add to cart
                                                     </button>
                                                     @*<a class="btn btn-default add-to-cart">
-                                                        <i class="fa fa-shopping-cart"></i>Add to cart
-                                                    </a>*@
+            <i class="fa fa-shopping-cart"></i>Add to cart
+        </a>*@
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
-                                </a>
+                                
                             }
                         </div>
                     }

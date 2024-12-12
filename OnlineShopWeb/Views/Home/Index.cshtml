@@ -2,15 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-    @Html.Partial("_SliderPartial")
+@Html.Partial("_SliderPartial")
 
 <div class="col-sm-3">
     @Html.Partial("_SidebarPartial")
 </div>
 
-<div class="col-sm-9">
+@*<div class="col-sm-9">
     @Html.Partial("_ProductListPartial")
-</div>
+</div>*@
 
 
 @Html.Action("GetRecommenProducts", "UserProduct")
@@ -25,248 +25,251 @@
     </div>
 </div>
 
-<script>
-    let currentPage = 1;
-    const pageSize = 3;
+@section Scripts {
+    <script>
+        let currentPage = 1;
+        const pageSize = 3;
 
-    function LoadMoreProducts(page) {
-        $.ajax({
-            type: 'GET',
-            url: '/Product/loadMoreProducts',
-            data: { page: page, pageSize: pageSize },
-            dataType: 'json',
-            success: function (response) {
-                if (response.success) {
-                    let products = response.products;
-                    let listProducts = products.map((product) => {
-                        return `
-                        <div class="col-sm-4 product-conatiner" data-id = ${product.ProductId}>
-                            <div class="product-image-wrapper product-hover">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <img src="${product.ImageUrl}" alt="Product Image">
-                                        <h2>${product.Price}</h2>
-                                        <p>${product.Name}</p>
-                                        <a href="#" class="btn btn-default add-to-cart">
-                                            <i class="fa fa-shopping-cart"></i> Add to cart
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>`;
-                    });
-                    $(".wrapper-product").append(listProducts.join(""));
-
-                    if (!response.hasMore) {
-                        $('#btn_LoadMore').hide();
-                    }
-                }
-            },
-            error: function () {
-                alert('Không thể tải thêm sản phẩm. Vui lòng thử lại sau.');
-            }
-        });
-    }
-    $(document).ready(function () {
-        LoadMoreProducts(currentPage);
-        $('.wrapper-product').on('click', '.product-conatiner', function () {
-            let id = $(this).data('id');
+        function LoadMoreProducts(page) {
             $.ajax({
-                type: 'POST',
-                url: '/UserProduct/UpdateViewNum',
-                data: { id: id },
-                dataType: 'Json',
+                type: 'GET',
+                url: '/Product/loadMoreProducts',
+                data: { page: page, pageSize: pageSize },
+                dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        alert(`Cap nhat thanh cong cho san pham co id: ${id}`)
-                    }
-                }
-            })
-        });
-        $('#btn_LoadMore').on('click', function () {
-            currentPage++;
-            LoadMoreProducts(currentPage);
-        });
-    });
-</script>
-
-      
-      <!-- NDThanh -->
-        <!-- Main Content Area -->
-        @*<div class="col-sm-9 padding-right">
-            <!-- Features Items -->
-            <div class="features_items">
-                <h2 class="title text-center">Features Items</h2>
-                @if (Model != null && Model.Any())
-                {
-                    foreach (var product in Model)
-                    {
-                        <div class="col-sm-4">
-                            <div class="product-image-wrapper product-hover">
-                                <div class="single-products">
-                                    <div class="productinfo text-center">
-                                        <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
-                                            <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                                            <h2>@product.Price.ToString("N0") VNĐ</h2>
-                                            <p>@product.Name</p>
-                                        </a>
-                                        <a href="#" class="btn btn-default cart btnAddToCart" data-id="@product.ProductId">
-                                            <i class="fa fa-shopping-cart"></i>Add to cart
-                                        </a>
+                        let products = response.products;
+                        let listProducts = products.map((product) => {
+                            return `
+                            <div class="col-sm-4 product-conatiner" data-id = ${product.ProductId}>
+                                <div class="product-image-wrapper product-hover">
+                                    <div class="single-products">
+                                        <div class="productinfo text-center">
+                                            <a href="/Product/Details/${product.ProductId}">
+                                                <img src="data:image/jpeg;base64,${product.Image}" alt="${product.Name}" style="width:150px;height:150px;object-fit:cover;" />
+                                                <p>${product.Name}</p>
+                                            </a>
+                                            <h2>${product.Price}</h2>
+                                            <a href="#" class="btn btn-default add-to-cart btnAddToCart" data-id="${product.ProductId}">
+                                                <i class="fa fa-shopping-cart " ></i>Add to cart
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
+                            </div>`;
+                        });
+                        $(".wrapper-product").append(listProducts.join(""));
+
+                        if (!response.hasMore) {
+                            $('#btn_LoadMore').hide();
+                        }
                     }
+                },
+                error: function () {
+                    alert('Không thể tải thêm sản phẩm. Vui lòng thử lại sau.');
                 }
-                else
-                {
-                    <div class="col-sm-12">
-                        <p class="text-center">No products found.</p>
-                    </div>
-                }
-            </div><!--/features_items-->
-            <!-- Recommended Items -->
-            <div class="recommended_items">
-                <h2 class="title text-center">recommended items</h2>
-                <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        @{
-                            var products = Model.ToList();
-                            var totalProducts = products.Count;
-                            var itemsPerSlide = 3;
-                            var totalSlides = Math.Ceiling((double)totalProducts / itemsPerSlide);
+            });
+        }
+        $(document).ready(function () {
+            LoadMoreProducts(currentPage);
+            $('.wrapper-product').on('click', '.product-conatiner', function () {
+                let id = $(this).data('id');
+                $.ajax({
+                    type: 'POST',
+                    url: '/UserProduct/UpdateViewNum',
+                    data: { id: id },
+                    dataType: 'Json',
+                    success: function (response) {
+                        if (response.success) {
+                            alert(`Cap nhat thanh cong cho san pham co id: ${id}`)
+                        }
+                    }
+                })
+            });
+            $('#btn_LoadMore').on('click', function () {
+                currentPage++;
+                LoadMoreProducts(currentPage);
+            });
+        });
+    </script>
+}
 
-                            for (int slideIndex = 0; slideIndex < totalSlides; slideIndex++)
+    <!-- NDThanh -->
+    <!-- Main Content Area -->
+    @*<div class="col-sm-9 padding-right">
+                    <!-- Features Items -->
+                    <div class="features_items">
+                        <h2 class="title text-center">Features Items</h2>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var product in Model)
                             {
-                                var isActive = slideIndex == 0;
-                                <div class="item @(isActive ? "active" : "")">
-                                    @{
-                                        var slideProducts = products
-                                            .Skip(slideIndex * itemsPerSlide)
-                                            .Take(itemsPerSlide);
-
-                                        foreach (var product in slideProducts)
-                                        {
-                                            <div class="col-sm-4">
-                                                <div class="product-image-wrapper">
-                                                    <div class="single-products">
-                                                        <div class="productinfo text-center">
-                                                            <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
-                                                                <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                                                                <h2>@product.Price.ToString("N0") VNĐ</h2>
-                                                                <p>@product.Name</p>
-                                                            </a>
-                                                            <a href="#" class="btn btn-default add-to-cart">
-                                                                <i class="fa fa-shopping-cart"></i>Add to cart
-                                                            </a>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                <div class="col-sm-4">
+                                    <div class="product-image-wrapper product-hover">
+                                        <div class="single-products">
+                                            <div class="productinfo text-center">
+                                                <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
+                                                    <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                                    <h2>@product.Price.ToString("N0") VNĐ</h2>
+                                                    <p>@product.Name</p>
+                                                </a>
+                                                <a href="#" class="btn btn-default cart btnAddToCart" data-id="@product.ProductId">
+                                                    <i class="fa fa-shopping-cart"></i>Add to cart
+                                                </a>
                                             </div>
-                                        }
-                                    }
-
+                                        </div>
+                                    </div>
                                 </div>
                             }
                         }
-                    </div>
-                    <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
+                        else
+                        {
+                            <div class="col-sm-12">
+                                <p class="text-center">No products found.</p>
+                            </div>
+                        }
+                    </div><!--/features_items-->
+                    <!-- Recommended Items -->
+                    <div class="recommended_items">
+                        <h2 class="title text-center">recommended items</h2>
+                        <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
+                            <div class="carousel-inner">
+                                @{
+                                    var products = Model.ToList();
+                                    var totalProducts = products.Count;
+                                    var itemsPerSlide = 3;
+                                    var totalSlides = Math.Ceiling((double)totalProducts / itemsPerSlide);
+
+                                    for (int slideIndex = 0; slideIndex < totalSlides; slideIndex++)
+                                    {
+                                        var isActive = slideIndex == 0;
+                                        <div class="item @(isActive ? "active" : "")">
+                                            @{
+                                                var slideProducts = products
+                                                    .Skip(slideIndex * itemsPerSlide)
+                                                    .Take(itemsPerSlide);
+
+                                                foreach (var product in slideProducts)
+                                                {
+                                                    <div class="col-sm-4">
+                                                        <div class="product-image-wrapper">
+                                                            <div class="single-products">
+                                                                <div class="productinfo text-center">
+                                                                    <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })" style="text-decoration: none;">
+                                                                        <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                                                        <h2>@product.Price.ToString("N0") VNĐ</h2>
+                                                                        <p>@product.Name</p>
+                                                                    </a>
+                                                                    <a href="#" class="btn btn-default add-to-cart">
+                                                                        <i class="fa fa-shopping-cart"></i>Add to cart
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
+                                            }
+
+                                        </div>
+                                    }
+                                }
+                            </div>
+                            <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                            <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </div><!--/recommended_items-->
+
                 </div>
-            </div><!--/recommended_items-->
-
+            </div>
         </div>
-    </div>
-</div>
 
-@section Scripts {
-    <script>
-        $(document).ready(function () {
-            // Handle click on brand
-            $(document).on('click', '.brands-name a, .panel-body a', function (e) {
-                e.preventDefault(); // Prevent the default anchor click behavior
-                var brandId = $(this).data('brand-id');
-                if (brandId) {
-                    loadProductsByBrand(brandId);
-                    $('.brands-name a, .panel-body a').removeClass('active');
-                    $(this).addClass('active');
-                }
-                return false; // Prevent any further action
-            });
+        @section Scripts {
+            <script>
+                $(document).ready(function () {
+                    // Handle click on brand
+                    $(document).on('click', '.brands-name a, .panel-body a', function (e) {
+                        e.preventDefault(); // Prevent the default anchor click behavior
+                        var brandId = $(this).data('brand-id');
+                        if (brandId) {
+                            loadProductsByBrand(brandId);
+                            $('.brands-name a, .panel-body a').removeClass('active');
+                            $(this).addClass('active');
+                        }
+                        return false; // Prevent any further action
+                    });
 
-            // Handle click on category
-            $(document).on('click', '.panel-title a[data-category-id]', function (e) {
-                e.preventDefault(); // Prevent the default anchor click behavior
-                var categoryId = $(this).data('category-id');
-                if (categoryId) {
-                    loadProductsByCategory(categoryId);
-                    $('.panel-title a').removeClass('active');
-                    $(this).addClass('active');
-                }
-                return false; // Prevent any further action
-            });
+                    // Handle click on category
+                    $(document).on('click', '.panel-title a[data-category-id]', function (e) {
+                        e.preventDefault(); // Prevent the default anchor click behavior
+                        var categoryId = $(this).data('category-id');
+                        if (categoryId) {
+                            loadProductsByCategory(categoryId);
+                            $('.panel-title a').removeClass('active');
+                            $(this).addClass('active');
+                        }
+                        return false; // Prevent any further action
+                    });
 
-            function loadProductsByBrand(brandId) {
-                $.ajax({
-                    url: '/Home/GetProductsByBrand',
-                    data: { brandId: brandId },
-                    type: 'GET',
-                    beforeSend: function () {
-                        $('.features_items').html('<div class="loading">Loading...</div>');
-                    },
-                    success: function (result) {
-                        $('.features_items').html(result);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log('Error:', error);
-                        $('.features_items').html('<div class="error">Error loading products: ' + error + '</div>');
+                    function loadProductsByBrand(brandId) {
+                        $.ajax({
+                            url: '/Home/GetProductsByBrand',
+                            data: { brandId: brandId },
+                            type: 'GET',
+                            beforeSend: function () {
+                                $('.features_items').html('<div class="loading">Loading...</div>');
+                            },
+                            success: function (result) {
+                                $('.features_items').html(result);
+                            },
+                            error: function (xhr, status, error) {
+                                console.log('Error:', error);
+                                $('.features_items').html('<div class="error">Error loading products: ' + error + '</div>');
+                            }
+                        });
+                    }
+
+                    function loadProductsByCategory(categoryId) {
+                        $.ajax({
+                            url: '/Home/GetProductsByCategory',
+                            data: { categoryId: categoryId },
+                            type: 'GET',
+                            beforeSend: function () {
+                                $('.features_items').html('<div class="loading">Loading...</div>');
+                            },
+                            success: function (result) {
+                                $('.features_items').html(result);
+                            },
+                            error: function (xhr, status, error) {
+                                console.log('Error:', error);
+                                $('.features_items').html('<div class="error">Error loading products: ' + error + '</div>');
+                            }
+                        });
                     }
                 });
-            }
+            </script>
 
-            function loadProductsByCategory(categoryId) {
-                $.ajax({
-                    url: '/Home/GetProductsByCategory',
-                    data: { categoryId: categoryId },
-                    type: 'GET',
-                    beforeSend: function () {
-                        $('.features_items').html('<div class="loading">Loading...</div>');
-                    },
-                    success: function (result) {
-                        $('.features_items').html(result);
-                    },
-                    error: function (xhr, status, error) {
-                        console.log('Error:', error);
-                        $('.features_items').html('<div class="error">Error loading products: ' + error + '</div>');
-                    }
-                });
-            }
-        });
-    </script>
+            <style>
+                .brands-name a.active,
+                .panel-title a.active,
+                .panel-body a.active {
+                    color: #FE980F !important;
+                    font-weight: bold;
+                }
 
-    <style>
-        .brands-name a.active,
-        .panel-title a.active,
-        .panel-body a.active {
-            color: #FE980F !important;
-            font-weight: bold;
-        }
+                .loading {
+                    text-align: center;
+                    padding: 20px;
+                }
 
-        .loading {
-            text-align: center;
-            padding: 20px;
-        }
-
-        .error {
-            color: red;
-            text-align: center;
-            padding: 20px;
-        }
-    </style>
-}*@
+                .error {
+                    color: red;
+                    text-align: center;
+                    padding: 20px;
+                }
+            </style>
+        }*@
 
