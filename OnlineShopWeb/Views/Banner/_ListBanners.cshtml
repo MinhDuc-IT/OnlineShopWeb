@@ -1,0 +1,36 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Banner>
+@{
+    ViewBag.Title = "_ListBanners";
+    var banners = Model.ToList();
+    var totalBanners = banners.Count;
+}
+
+<div class="slide-show">
+    <div class="list-sliders">
+        @foreach (var banner in Model)
+        {
+            <div class="slider-Inner">
+                <div class="col-sm-6">
+                    <h1><span>e</span>-shopper</h1>
+                    <h2>@banner.title</h2>
+                    <p>@banner.description</p>
+                </div>
+                <div class="col-sm-6 slider_image">
+                    <img src="@(banner.Image != null && banner.Image.Length > 0 ? "data:image/png;base64," + Convert.ToBase64String(banner.Image) : "")" class="css_Image" alt="Banner-Image" />
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="btns">
+        <div class="btn btn-left"><i class="fa-solid fa-angle-left"></i></div>
+        <div class="btn btn-right"><i class="fa-solid fa-angle-right"></i></div>
+    </div>
+
+    <div class="index-sliders">
+        @for (var i = 0; i < totalBanners; i++)
+        {
+            <div class="index-item index-item-@i @(i == 0 ? "active" : "")"></div>
+        }
+    </div>
+</div>

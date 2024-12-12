@@ -1,4 +1,4 @@
-﻿
+﻿@model IEnumerable<OnlineShopWeb.ViewModels.OrderItem>
 @{
     ViewBag.Title = "Checkout";
 }
@@ -45,10 +45,27 @@
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
                                     <th scope="col">Total</th>
-                                    <th scope="col">Handle</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                @foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <th scope="row">
+                                            <div class="d-flex align-items-center mt-2">
+                                                <a href="#"><img src="@item.Img" class="img-fluid rounded-circle" alt=""></a>
+                                            </div>
+                                        </th>
+                                        <td class="py-5"><a href="#">@item.Name</a></td>
+                                        <td class="py-5" data-price="@item.Price">@item.Price</td>
+                                        <td class="py-5">
+                                            <div class="input-group quantity mt-4" style="width: 100px;">
+                                                <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="@item.Quantity" readonly>
+                                            </div>
+                                        </td>
+                                        <td class="py-5 total-price">@item.TotalPrice</td>
+                                    </tr>
+                                }
                                 <tr>
                                     <th scope="row">
                                     </th>
@@ -68,14 +85,6 @@
                     <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
                         <div class="col-12">
                             <div class="form-check text-start my-3">
-                                <input type="radio" class="form-check-input bg-primary border-0" id="Delivery-1" name="PaymentMethod" value="Delivery">
-                                <label class="form-check-label" for="Delivery-1">Cash On Delivery</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row g-4 align-items-center justify-content-center border-bottom py-3" style="margin:0px;">
-                        <div class="col-12">
-                            <div class="form-check text-start my-3">
                                 <input type="radio" class="form-check-input bg-primary border-0" id="NCB-1" name="PaymentMethod" value="NCB">
                                 <label class="form-check-label" for="NCB-1">NCB</label>
                             </div>
@@ -92,7 +101,6 @@
 <!-- Checkout Page End -->
 @section Scripts {
     <script>
-
         $(document).ready(function () {
             $('#userInfo').change(function () {
                 if (this.checked) {
@@ -102,6 +110,7 @@
                     $('#Email').val("demo@gmail.com");
 
                     $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
+
                 }
                 else {
                     $('#FullName, #Address, #Mobile, #Email').val("");
@@ -109,12 +118,13 @@
                 }
             });
 
+            UpdateTotal();
 
-            const checkoutRequests = [
-            //    { productId: 1, quantity: 2 }
-            ];
+            //const checkoutRequests = Object.values(
+            //    JSON.parse(sessionStorage.getItem('selectedItems')) || {}
+            //);
 
-            $.ajax({
+            @*$.ajax({
                 url: '@Url.Action("GetOrderItem", "Order")',
                 type: 'POST',
                 data: JSON.stringify(checkoutRequests),
@@ -138,11 +148,6 @@
                                         </div>
                                     </td>
                                     <td class="py-5 total-price">${item.Total}</td>
-                                    <td>
-                                        <button class="btn btn-md rounded-circle bg-light border mt-4 button-handle">
-                                            <i class="fa fa-times text-danger"></i>
-                                        </button>
-                                    </td>
                                 </tr>
                             `);
 
@@ -155,7 +160,7 @@
                 error: function (response) {
                     alert("An error occurred: " + response.statusText);
                 }
-            });
+            });*@
 
             $('form').on('submit', function (event) {
                 var paymentMethodSelected = $('input[name="PaymentMethod"]:checked');
@@ -163,10 +168,6 @@
                     alert("Please select a payment method.");
                     event.preventDefault();
                 }
-
-                //if (someCondition) {
-                //    event.preventDefault();
-                //}
             });
         });
 

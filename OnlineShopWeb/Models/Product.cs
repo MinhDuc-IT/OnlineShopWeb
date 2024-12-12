@@ -34,6 +34,10 @@ namespace OnlineShopWeb.Models
 
         [Required]
         public int CategoryId { get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Click count must be a non-negative integer.")]
+        public int Click { get; set; }
+
         public bool IsDeleted { get; set; }
 
         [Required]
@@ -47,5 +51,6 @@ namespace OnlineShopWeb.Models
         public virtual Brand Brand { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<UserProduct> UserProducts { get; set; }
     }
 }

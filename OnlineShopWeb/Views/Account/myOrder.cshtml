@@ -2,6 +2,43 @@
     ViewBag.Title = "myOrder";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
-<div class="p_content">
-    đơn hàng của bạn sẽ ở đây
+<div class="order-wrapper">
+    <div class="ow-header">
+        <div class="owh-item owh-item-active" data-content="All">Tất cả đơn hàng</div>
+        <div class="owh-item" data-content="Processing">Đang xử lý</div>
+        <div class="owh-item" data-content="Shipping">Đang vận chuyển</div>
+        <div class="owh-item" data-content="Delivered">Đã giao</div>
+    </div>
+    <div class="ow_mainContent">
+        đơn hàng của bạn sẽ ở đây
+    </div>
 </div>
+
+<script>
+    let items = document.getElementsByClassName('owh-item');
+    let contentArea = document.querySelector('.ow_mainContent');
+    for (let i = 0; i < items.length; i++) {
+        items[i].addEventListener('click', function () {
+            document.querySelector('.owh-item-active')?.classList.remove('owh-item-active');
+            items[i].classList.add('owh-item-active');
+            let status = items[i].getAttribute('data-content');
+
+            // Gửi yêu cầu AJAX đến server để lấy dữ liệu đơn hàng theo trạng thái
+            $.ajax({
+                url: '/Account/GetOrdersByStatus',  // URL đến API trong Controller
+                type: 'GET',
+                data: { status: status },          // Gửi trạng thái làm tham số
+                success: function (response) {
+                    // Chèn nội dung trả về vào phần .ow_mainContent
+                    contentArea.innerHTML = response;
+                },
+                error: function () {
+                    contentArea.textContent = "Không thể tải dữ liệu đơn hàng.";
+                }
+            });
+        });
+    }
+    $('document').ready(function () {
+
+    })
+</script>

@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -8,14 +9,38 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthorizeUser(Roles = "Admin")]
     public class CategoryController : Controller
     {
-        // GET: Admin/Category
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
             IEnumerable<Category> categories = db.Categories.ToList();
             return View(categories);
+        }
+        public ActionResult GetCategoryByPage(int crrPage, int pageSize)
+        {
+            var categories = db.Categories
+                            .OrderBy(b => b.CategoryId)
+                            .Skip((crrPage - 1) * pageSize)
+                            .Take(pageSize)
+                            .Select(c => new
+                            {
+                                c.CategoryId,
+                                c.Name,
+                                c.Description,
+                                c.IsDeleted
+                            })
+                   .ToList();
+
+            var totalRecords = db.Categories.Count();
+            return Json(new
+            {
+                success = true,
+                data = categories,
+                totalRecords = totalRecords,
+                totalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
+            }, JsonRequestBehavior.AllowGet);
         }
         public ActionResult Create()
         {

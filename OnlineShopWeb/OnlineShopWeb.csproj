@@ -55,10 +55,35 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Core, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Core.2.2.4\lib\net45\Microsoft.AspNet.Identity.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.EntityFramework, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.EntityFramework.2.2.4\lib\net45\Microsoft.AspNet.Identity.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.Identity.Owin, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.Identity.Owin.2.2.4\lib\net45\Microsoft.AspNet.Identity.Owin.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.Owin, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.4.2.2\lib\net45\Microsoft.Owin.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.4.2.2\lib\net45\Microsoft.Owin.Security.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.Cookies, Version=4.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.Cookies.4.2.2\lib\net45\Microsoft.Owin.Security.Cookies.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Owin.Security.OAuth, Version=3.0.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Owin.Security.OAuth.3.0.1\lib\net45\Microsoft.Owin.Security.OAuth.dll</HintPath>
+    </Reference>
+    <Reference Include="Owin, Version=1.0.0.0, Culture=neutral, PublicKeyToken=f0ebd12fd5e55cc5, processorArchitecture=MSIL">
+      <HintPath>..\packages\Owin.1.0\lib\net40\Owin.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.DynamicData" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
@@ -131,15 +156,18 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
+    <Compile Include="Areas\Admin\Controllers\BannerController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
-
+    <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
+    <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
-
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
-
+    <Compile Include="Controllers\BannerController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
+    <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\FileController.cs" />
     <Compile Include="Controllers\FileManagerController.cs" />
     <Compile Include="Controllers\FileSystemController.cs" />
@@ -148,10 +176,12 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductController.cs" />
     <Compile Include="Controllers\SearchController.cs" />
+    <Compile Include="Controllers\UserProductController.cs" />
     <Compile Include="Data\ApplicationDbContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\Security.cs" />
     <Compile Include="Helpers\VNPayError.cs" />
     <Compile Include="Helpers\VnPayLibrary.cs" />
     <Compile Include="Migrations\202410271453084_InitialCreate.cs" />
@@ -162,8 +192,50 @@
     <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.Designer.cs">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202411151400071_CreateBanner.cs" />
+    <Compile Include="Migrations\202411151400071_CreateBanner.Designer.cs">
+      <DependentUpon>202411151400071_CreateBanner.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411171431010_Add Banners.cs" />
+    <Compile Include="Migrations\202411171431010_Add Banners.Designer.cs">
+      <DependentUpon>202411171431010_Add Banners.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411240955370_Add Table UserProduct.cs" />
+    <Compile Include="Migrations\202411240955370_Add Table UserProduct.Designer.cs">
+      <DependentUpon>202411240955370_Add Table UserProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411141424312_update.cs" />
+    <Compile Include="Migrations\202411141424312_update.Designer.cs">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.cs" />
+    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.Designer.cs">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411251519377_updateorder.cs" />
+    <Compile Include="Migrations\202411251519377_updateorder.Designer.cs">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411140402075_updatedModels.cs" />
+    <Compile Include="Migrations\202411140402075_updatedModels.designer.cs">
+      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411141251186_updateNewModel.cs" />
+    <Compile Include="Migrations\202411141251186_updateNewModel.designer.cs">
+      <DependentUpon>202411141251186_updateNewModel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411251433216_updateCart.cs" />
+    <Compile Include="Migrations\202411251433216_updateCart.designer.cs">
+      <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202411281601352_updateDatabase.cs" />
+    <Compile Include="Migrations\202411281601352_updateDatabase.designer.cs">
+      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Brand.cs" />
+    <Compile Include="Models\BrandViewModel.cs" />
     <Compile Include="Models\Cart.cs" />
     <Compile Include="Models\CartItem.cs" />
     <Compile Include="Models\Category.cs" />
@@ -172,14 +244,17 @@
     <Compile Include="Models\OrderDetail.cs" />
     <Compile Include="Models\Product.cs" />
     <Compile Include="Models\User.cs" />
+    <Compile Include="Models\UserProduct.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\VnPayService.cs" />
     <Compile Include="ViewModels\CheckoutRequest.cs" />
     <Compile Include="ViewModels\PaymentRequest.cs" />
     <Compile Include="ViewModels\OrderItem.cs" />
+    <Compile Include="ViewModels\SelectedItem.cs" />
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\Admin_Lib\CustomizeCss\CustomizeLayout.css" />
     <Content Include="Content\Admin_Lib\dist\css\adminlte.css" />
     <Content Include="Content\Admin_Lib\dist\css\adminlte.min.css" />
     <Content Include="Content\Admin_Lib\dist\css\alt\adminlte.components.css" />
@@ -2108,17 +2183,18 @@
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\css\animate.css" />
     <Content Include="Content\css\bootstrap.min.css" />
-
     <Content Include="Content\css\Customize.css" />
-
     <Content Include="Content\css\checkoutcustom.css" />
-
     <Content Include="Content\css\font-awesome.min.css" />
     <Content Include="Content\css\footerCart.css" />
     <Content Include="Content\css\main.css" />
+    <Content Include="Content\Admin_Lib\CustomizeCss\ManageBanner.css" />
     <Content Include="Content\css\prettyPhoto.css" />
     <Content Include="Content\css\price-range.css" />
     <Content Include="Content\css\responsive.css" />
+    <Content Include="Content\css\SearchPage.css" />
+    <Content Include="Content\css\Slider.css" />
+    <Content Include="Content\css\Login.css" />
     <Content Include="Content\fonts\fontawesome-webfont.svg" />
     <Content Include="Content\fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Content\images\404\404.png" />
@@ -2133,11 +2209,11 @@
     <Content Include="Content\images\cart\one.png" />
     <Content Include="Content\images\cart\three.png" />
     <Content Include="Content\images\cart\two.png" />
-
+    <Content Include="Content\images\CustomImage\Avatar_user.jpg" />
     <Content Include="Content\images\CustomImage\bill.png" />
     <Content Include="Content\images\CustomImage\icon_search.png" />
+    <Content Include="Content\images\CustomImage\logoSearch.png" />
     <Content Include="Content\images\CustomImage\user.png" />
-
     <Content Include="Content\images\home\bg_border.png" />
     <Content Include="Content\images\home\gallery1.jpg" />
     <Content Include="Content\images\home\gallery2.jpg" />
@@ -2184,6 +2260,7 @@
     <Content Include="Content\images\shop\product7.jpg" />
     <Content Include="Content\images\shop\product8.jpg" />
     <Content Include="Content\images\shop\product9.jpg" />
+    <Content Include="Content\js\Slider.js" />
     <Content Include="Content\js\bootstrap.min.js" />
     <Content Include="Content\js\contact.js" />
     <Content Include="Content\js\gmaps.js" />
@@ -2910,9 +2987,15 @@
     <Content Include="Content\Admin_Lib\plugins\summernote\summernote.js.map" />
     <Content Include="Content\Admin_Lib\plugins\summernote\summernote.min.js.map" />
     <Content Include="Content\Admin_Lib\plugins\toastr\toastr.js.map" />
-
     <Content Include="Areas\Admin\Views\Statistical\StatisticalCategory.cshtml" />
-
+    <Content Include="Areas\Admin\Views\Banner\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\AddBanner.cshtml" />
+    <Content Include="Areas\Admin\Views\Banner\EditBanner.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Details.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
+    <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -2944,18 +3027,16 @@
     <Content Include="Views\Cart\Index.cshtml" />
     <Content Include="Views\Product\Index.cshtml" />
     <Content Include="Views\Checkout\Index.cshtml" />
-
+    <Content Include="Views\Home\_ProductListPartial.cshtml" />
     <Content Include="Views\Search\Index.cshtml" />
     <Content Include="Views\Category\_ListCategory.cshtml" />
     <Content Include="Views\Product\ProductCategory.cshtml" />
-    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
     <Content Include="Views\Shared\_Header.cshtml" />
     <Content Include="Views\Shared\_Footer.cshtml" />
     <Content Include="Views\Account\profile.cshtml" />
     <Content Include="Views\Account\Address.cshtml" />
     <Content Include="Views\Account\changePassword.cshtml" />
     <Content Include="Views\Account\myOrder.cshtml" />
-
     <Content Include="Views\Shared\_SliderPartial.cshtml" />
     <Content Include="Views\Order\Create.cshtml" />
     <Content Include="Views\Order\Delete.cshtml" />
@@ -2968,16 +3049,23 @@
     <Content Include="Views\FileManager\Index.cshtml" />
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
-
+    <Content Include="Views\Banner\_ListBanners.cshtml" />
+    <Content Include="Views\Account\_OrderList.cshtml" />
+    <Content Include="Views\Account\Login.cshtml" />
+    <Content Include="Views\Account\SignUp.cshtml" />
+    <Content Include="Views\Error\PageNotFound.cshtml" />
+    <Content Include="Views\Shared\_LayoutAccount.cshtml" />
+    <Content Include="Views\Shared\_EmptyLayout.cshtml" />
+    <Content Include="Views\UserProduct\_RecommenProducts.cshtml" />
+    <Content Include="Views\Shared\_OtherLayout.cshtml" />
+    <Content Include="Views\Product\Detail.cshtml" />
+    <Content Include="Views\Cart\_CartItemsList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
-
-    <Folder Include="Content\images\" />
     <Folder Include="Views\FileSystem\" />
     <Folder Include="Views\File\" />
-
     <Folder Include="Views\Login\" />
   </ItemGroup>
   <ItemGroup>
@@ -2999,6 +3087,36 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202411051127211_AddCostPriceToProducts.resx">
       <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411151400071_CreateBanner.resx">
+      <DependentUpon>202411151400071_CreateBanner.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411171431010_Add Banners.resx">
+      <DependentUpon>202411171431010_Add Banners.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411240955370_Add Table UserProduct.resx">
+      <DependentUpon>202411240955370_Add Table UserProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411141424312_update.resx">
+      <DependentUpon>202411141424312_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251320093_AddFieldClickInProduct.resx">
+      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251519377_updateorder.resx">
+      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411140402075_updatedModels.resx">
+      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411141251186_updateNewModel.resx">
+      <DependentUpon>202411141251186_updateNewModel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411251433216_updateCart.resx">
+      <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202411281601352_updateDatabase.resx">
+      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
