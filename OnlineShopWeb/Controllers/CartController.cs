@@ -34,17 +34,20 @@ namespace OnlineShopWeb.Controllers
         {
             var db = new ApplicationDbContext();
 
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             return View(cart.CartItems);
         }
 
         public ActionResult GetCartItems()
         {
             var db = new ApplicationDbContext();
-            int userId = 5; // Hoặc lấy userId từ session hoặc authentication
-
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             var cartItems = cart.CartItems; // Lấy danh sách các sản phẩm trong giỏ hàng
 
             // Trả về một partial view chỉ có danh sách sản phẩm
@@ -57,8 +60,10 @@ namespace OnlineShopWeb.Controllers
             //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
 
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             if (cart != null)
             {
                 return Json(new { Count = cart.CartItems.Count }, JsonRequestBehavior.AllowGet);
@@ -70,14 +75,17 @@ namespace OnlineShopWeb.Controllers
         [HttpPost]
         public ActionResult AddToCart(int id, int quantity)
         {
-            int userId = 5;
-            var code = new { success = false, msg = "", code = -1, count = 0 };
             var db = new ApplicationDbContext();
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            
+            var code = new { success = false, msg = "", code = -1, count = 0 };
+            
             var checkProduct = db.Products.FirstOrDefault(x => x.ProductId == id);
             if (checkProduct != null)
             {
-                //Cart cart = (Cart)Session["Cart"];
-                Cart cart = GetCartFromDatabase(db, userId);
+                var cart = GetCartFromDatabase(db, user.CustomerId);
                 if (cart == null)
                 {
                     cart = new Cart();
@@ -106,14 +114,16 @@ namespace OnlineShopWeb.Controllers
             var code = new { success = false, msg = "", code = -1, count = 0 };
             //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             if (cart != null)
             {
                 var checkProduct = cart.CartItems.FirstOrDefault(x => x.ProductId == id);
                 if (checkProduct != null)
                 {
-                    cart.Remove(id, userId);
+                    cart.Remove(id, user.CustomerId);
                     code = new { success = true, msg = "", code = 1, count = cart.CartItems.Count };
                 }
 
@@ -128,8 +138,10 @@ namespace OnlineShopWeb.Controllers
         {
             //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             var cartItem = cart.CartItems.FirstOrDefault(i => i.ProductId == id);
             if (cartItem != null)
             {
@@ -146,9 +158,11 @@ namespace OnlineShopWeb.Controllers
         {
             //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
-            var cartItem = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
+            var cartItem = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == user.CustomerId);
             if (cartItem != null && cartItem.Quantity > 0)
             {
                 cartItem.Quantity--;
@@ -181,14 +195,16 @@ namespace OnlineShopWeb.Controllers
 
             //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
-            int userId = 5;
-            var cart = GetCartFromDatabase(db, userId);
+            var SessionUser = Session["User"] as User;
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+            //int userId = 5;
+            var cart = GetCartFromDatabase(db, user.CustomerId);
             if (cart != null && ids != null && ids.Any())
             {
                 // Xóa tất cả sản phẩm có trong danh sách ids
                 foreach (var id in ids)
                 {
-                    cart.Remove(id, userId);
+                    cart.Remove(id, user.CustomerId);
                 }
 
                 code = new { success = true, msg = "Items were removed successfully", code = 1, count = cart.CartItems.Count };
