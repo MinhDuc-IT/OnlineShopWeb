@@ -2,13 +2,15 @@
     ViewBag.Title = "Home Page";
 }
 
-<div class="container">
-    <div class="row">
-        <!-- Left Sidebar -->
-        <div class="col-sm-3">
-            @Html.Partial("_SidebarPartial")
-        </div>
+    @Html.Partial("_SliderPartial")
 
+<div class="col-sm-3">
+    @Html.Partial("_SidebarPartial")
+</div>
+
+<div class="col-sm-9">
+    @Html.Partial("_ProductListPartial")
+</div>
 
 
 @Html.Action("GetRecommenProducts", "UserProduct")

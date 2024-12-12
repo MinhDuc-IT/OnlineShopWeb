@@ -26,7 +26,7 @@
                 <tr id="trow_@item.ProductId">
                     <td class="cart_product">
                         <input type="checkbox" class="item-select" data-price="@item.TotalPrice" data-id="@item.ProductId">
-                        <a href=""><img src="@item.Product.Image" alt="ProductImage"></a>
+                        <img src="data:image/jpeg;base64,@item.Product.Image" alt="@item.Product.Name" style="width:150px;height:150px;object-fit:cover;" />
                     </td>
                     <td class="cart_description">
                         <h4><a href="">@item.Product.Name</a></h4>

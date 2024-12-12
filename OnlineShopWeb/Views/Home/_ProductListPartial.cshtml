@@ -14,11 +14,12 @@ else
             <div class="product-image-wrapper">
                 <div class="single-products">
                     <div class="productinfo text-center">
-                        <img src="@Url.Content(product.Image)" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                        
+                        <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
                         <h2>@product.Price.ToString("N0") VNĐ</h2>
                         <p>@product.Name</p>
-                        <a href="#" class="btn btn-default add-to-cart">
-                            <i class="fa fa-shopping-cart btnAddToCart"></i>Add to cart
+                        <a href="#" class="btn btn-default add-to-cart btnAddToCart" data-id="@product.ProductId">
+                            <i class="fa fa-shopping-cart " ></i>Add to cart
                         </a>
                     </div>
                 </div>
