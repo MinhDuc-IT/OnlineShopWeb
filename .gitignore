@@ -1,4 +1,6 @@
-# Ignore build results
+
+﻿# Ignore build results
+
 [Dd]ebug/
 [Dd]ebugPublic/
 [Dd]istro/
@@ -42,6 +44,8 @@ Desktop.ini
 .idea/
 
 # Microsoft Azure Web Apps Publish
-
 Publish/
+
+# Ignore upgrade log files
+UpgradeLog*.htm
 

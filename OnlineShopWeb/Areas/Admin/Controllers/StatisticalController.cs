@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,8 @@ using System.Web.Mvc;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthenticateUser]
+    [AuthorizeUser(Roles = "Admin")]
     public class StatisticalController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -32,13 +35,14 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         public ActionResult Top5Products()
         {
             var topProducts = db.Products
-                .OrderByDescending(p => p.OrderDetails.Sum(od => od.Quantity))
+                .OrderByDescending(p => p.OrderDetails.Sum(od => (int?)od.Quantity) ?? 0)
                 .Take(5)
                 .Select(p => new
                 {
                     Name = p.Name,
-                    TotalQuantity = p.OrderDetails.Sum(od => od.Quantity)
-                }).ToList();
+                    TotalQuantity = p.OrderDetails.Sum(od => (int?)od.Quantity) ?? 0
+                })
+                .ToList();
 
             return Json(topProducts, JsonRequestBehavior.AllowGet);
         }

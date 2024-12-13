@@ -130,6 +130,27 @@ namespace OnlineShopWeb.Controllers
             return View(order);
         }
 
+        public ActionResult GetOrdersByStatus(string status = "All")
+        {
+            ViewBag.Status = status;
+
+            if (Enum.TryParse(status, out OrderStatus parsedStatus))
+            {
+                if(parsedStatus == OrderStatus.All)
+                {
+                    var orders = db.Orders.Include(o => o.OrderDetails).OrderByDescending(o => o.OrderDate).ToList();
+                    return PartialView("_OrderList", orders);
+                }
+
+                var orderByStatus = db.Orders.Include(o => o.OrderDetails).Where(o => o.Status == parsedStatus).OrderByDescending(o => o.OrderDate).ToList();
+                return PartialView("_OrderList", orderByStatus);
+            }
+
+            var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
+            return PartialView("_OrderList", allOrders);
+        }
+
+
         // Giải phóng tài nguyên
         protected override void Dispose(bool disposing)
         {
@@ -183,10 +204,11 @@ namespace OnlineShopWeb.Controllers
                     {
                         CustomerId = userId,
                         OrderDate = DateTime.Now,
-                        ToTalAmount = amount ?? 0,
+                        ToTalAmount = amount/100 ?? 0,
                         RecipientName = orderInfo.FullName,
                         RecipientAddress = orderInfo.Address,
-                        RecipientPhoneNumber = orderInfo.Mobile
+                        RecipientPhoneNumber = orderInfo.Mobile,
+                        Status = OrderStatus.Processing
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
@@ -284,7 +306,9 @@ namespace OnlineShopWeb.Controllers
         // Lấy ID người dùng hiện tại
         private int GetUserId()
         {
-            return db.Users.FirstOrDefault(u => u.Name == "test")?.CustomerId ?? 0;
+            var user = Session["User"] as User;
+
+            return db.Users.FirstOrDefault(u => u.CustomerId == user.CustomerId)?.CustomerId ?? 0;
         }
 
         #endregion

@@ -1,40 +1,234 @@
 ﻿using OnlineShopWeb.Data;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
+using System.Data.Entity; // Thêm namespace này
+using OnlineShopWeb.Models;
+using OnlineShopWeb.Data;
+using OnlineShopWeb.ViewModels;
 
 namespace OnlineShopWeb.Controllers
 {
     public class ProductController : Controller
     {
-        private ApplicationDbContext db = new ApplicationDbContext();
+
+        private readonly ApplicationDbContext _context;
+
+        public ProductController()
+        {
+            _context = new ApplicationDbContext();
+        }
+
         // GET: Product
+
         public ActionResult Index(int? id)
         {
-            var items = db.Products.ToList();
-            if (id != null)
+            var products = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .ToList();
+
+            if (id.HasValue)
             {
-                items = items.Where(x => x.ProductId == id).ToList();
+                products = products.Where(p => p.ProductId == id).ToList();
             }
-            return View(items);
+
+            return View(products);
         }
+
         public ActionResult ProductCategory(int id)
         {
-            var items = db.Products.ToList();
-            if (id > 0)
+            var products = _context.Products
+                .Include(p => p.Brand)
+                .Include(p => p.Category)
+                .Where(p => p.CategoryId == id)
+                .ToList();
+
+            var category = _context.Categories.Find(id);
+            if (category != null)
             {
-                items = items.Where(x => x.CategoryId == id).ToList();
-            }
-            var cate = db.Categories.Find(id);
-            if (cate != null)
-            {
-                ViewBag.CateName = cate.Name;
+                ViewBag.CateName = category.Name;
             }
 
             ViewBag.CateId = id;
-            return View(items);
+            return View(products);
         }
+
+        public ActionResult GetProductsByBrand(int brandId)
+        {
+            try
+            {
+                var products = _context.Products
+                    .Where(p => p.BrandId == brandId)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .ToList();
+
+                return PartialView("_ProductListPartial", products);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public ActionResult GetProductsByCategory(int categoryId)
+        {
+            try
+            {
+                var products = _context.Products
+                    .Where(p => p.CategoryId == categoryId)
+                    .Include(p => p.Brand)
+                    .Include(p => p.Category)
+                    .ToList();
+
+                return PartialView("_ProductListPartial", products);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { error = ex.Message }, JsonRequestBehavior.AllowGet);
+            }
+        }
+
+        public List<Product> GetHotProducts(DateTime startDate, DateTime endDate)
+        {
+            var viewedProducts = _context.Products
+                .Where(p => p.LastViewed >= startDate && p.LastViewed <= endDate)
+                .Select(p => new ViewedProduct
+                {
+                    ProductId = p.ProductId,
+                    ViewCount = p.Click 
+                })
+                .ToList(); 
+
+            var orderedProducts = _context.Orders
+                .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
+                .SelectMany(o => o.OrderDetails)
+                .GroupBy(od => od.ProductId)
+                .Select(g => new OrderedProduct
+                {
+                    ProductId = g.Key,
+                    OrderCount = g.Count() 
+                })
+                .ToList();
+
+            // Combine the results in-memory
+            var hotProducts = viewedProducts
+                .Join(
+                    orderedProducts,
+                    vp => vp.ProductId,
+                    op => op.ProductId,
+                    (vp, op) => new HotProduct
+                    {
+                        ProductId = vp.ProductId,
+                        HotScore = vp.ViewCount * 0.3 + op.OrderCount * 0.7
+                    })
+                .OrderByDescending(p => p.HotScore)
+                .Take(10)
+                .ToList();
+
+            //var result = _context.Products
+            //    .Where(p => hotProducts.Select(hp => hp.ProductId).Contains(p.ProductId))
+            //    .ToList();
+
+            var result = new List<Product>();
+
+            foreach (var item in hotProducts)
+            {
+                var product = _context.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
+                if(product != null)
+                {
+                    result.Add(product);
+                }
+            }
+
+            return result;
+        }
+
+        public ActionResult HotProducts()
+        {
+            // Tính sản phẩm hot trong tuần
+            var hotProductsThisWeek = GetHotProducts(DateTime.Now.AddDays(-7), DateTime.Now);
+
+            if (hotProductsThisWeek.Count < 10)
+            {
+                var hotProductsThisMonth = GetHotProducts(DateTime.Now.AddMonths(-1), DateTime.Now);
+                hotProductsThisWeek.AddRange(hotProductsThisMonth);
+            }
+
+            return PartialView("_HotProducts", hotProductsThisWeek.Distinct().ToList());
+        }
+
+        protected override void Dispose(bool disposing)
+        {
+            if (disposing)
+            {
+                _context.Dispose();
+            }
+            base.Dispose(disposing);
+        }
+
+        public ActionResult loadMoreProducts(int page = 1, int pageSize = 3) 
+        {
+            var products = _context.Products
+                            .OrderBy(b => b.ProductId)
+                            .Skip((page - 1) * pageSize)
+                            .Take(pageSize)
+                            .ToList()
+                            .Select(b => new {
+                                b.ProductId,
+                                b.Price,
+                                b.Name,
+                                b.Image
+                            }).ToList();
+
+            bool hasMore = _context.Products.Count() > page * pageSize;
+
+            return Json(new { success = true, products = products, hasMore = hasMore }, JsonRequestBehavior.AllowGet);
+        }
+
+        public ActionResult Detail(int id)
+        {
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
+            if (product == null)
+            {
+                return HttpNotFound();
+            }
+
+            product.Click += 1;
+            product.LastViewed = DateTime.Now;
+
+
+            var user = Session["User"] as User;
+
+            if(user != null)
+            {
+                int userId = user.CustomerId;
+                var userProduct = _context.UserProducts.FirstOrDefault(x => x.UserId == userId && x.ProductId == id);
+                if (userProduct != null)
+                {
+                    userProduct.ViewNum += userProduct.ViewNum + 1;
+                    userProduct.LastViewed = DateTime.Now;
+
+                    return View(product);
+                }
+                var obj = new UserProduct
+                {
+                    UserId = userId,
+                    ProductId = id,
+                    ViewNum = 1,
+                    LastViewed = DateTime.Now,
+                };
+
+                _context.UserProducts.Add(obj);
+                _context.SaveChanges();
+            }
+
+            return View(product);
+        }
+
     }
 }

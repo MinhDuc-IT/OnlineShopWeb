@@ -39,80 +39,15 @@
                 </ol>
             </div>
             <div class="table-responsive cart_info" id="load_data">
-                <table class="table table-condensed">
-                    <thead>
-                        <tr class="cart_menu">
-                            <td class="image">Item</td>
-                            <td class="description"></td>
-                            <td class="price">Price</td>
-                            <td class="quantity">Quantity</td>
-                            <td class="total">Total</td>
-                            <td></td>
-                        </tr>
-                    </thead>
-                    <tbody>
 
-                        @{
-                            var sum = decimal.Zero;
-                        }
+                @Html.Partial("_CartItemsList", Model)
 
-                        @if (Model != null && Model.Any())
-                        {
 
-                            foreach (var item in Model)
-                            {
-                                <tr id="trow_@item.ProductId">
-                                    <td class="cart_product">
-                                        <input type="checkbox" class="item-select" data-price="@item.TotalPrice" data-id="@item.ProductId">
-                                        <a href=""><img src="@item.Product.Image" alt="ProductImage"></a>
-                                    </td>
-                                    <td class="cart_description">
-                                        <h4><a href="">@item.Product.Name</a></h4>
-                                    </td>
-                                    <td class="cart_price">
-                                        <p>@item.Price</p>
-                                    </td>
-                                    <td class="cart_quantity">
-                                        <div class="cart_quantity_button">
-                                            <a class="cart_quantity_up" data-id="@item.ProductId" href=""> + </a>
-                                            <input class="cart_quantity_input" type="text" name="quantity" value="@item.Quantity" autocomplete="off" size="2">
-                                            <a class="cart_quantity_down" data-id="@item.ProductId" href=""> - </a>
-                                        </div>
-                                    </td>
-                                    <th class="cart_total">
-                                        <p class="cart_total_price">@item.TotalPrice</p>
-                                    </th>
-                                    <td class="cart_delete">
-                                        <a data-id="@item.ProductId" class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="7">Your cart is empty!</td>
-                            </tr>
-                        }
-
-                        <div class="fixed-footer">
-                            <div class="actions">
-                                <input type="checkbox" id="selectAll"> <label for="selectAll">Select All</label>
-                                <div class="btn-group">
-                                    <button class="btn btn-danger btnDeleteSelected">Delete Selected</button>
-                                    <button class="btn btn-success btnPurchase">Checkout</button>
-                                </div>
-                            </div>
-                            <div class="sum">
-                                <strong>Sum:</strong> <span id="sum">@sum</span> VND
-                            </div>
-                        </div>
-
-                    </tbody>
-                </table>
             </div>
         </div>
     </section> <!--/#cart_items-->
+
+    
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>
