@@ -7,13 +7,13 @@ namespace OnlineShopWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class updateDatabase : IMigrationMetadata
+    public sealed partial class CreateUserTable : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(CreateUserTable));
         
         string IMigrationMetadata.Id
         {
-            get { return "202411281601352_updateDatabase"; }
+            get { return "202412130452219_CreateUserTable"; }
         }
         
         string IMigrationMetadata.Source

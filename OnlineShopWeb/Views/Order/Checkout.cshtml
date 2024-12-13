@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<OnlineShopWeb.ViewModels.OrderItem>
 @{
     ViewBag.Title = "Checkout";
+    var userInfo = @Session["User"] as OnlineShopWeb.Models.User;
 }
 
 <!-- Checkout Page Start -->
@@ -28,7 +29,7 @@
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email Address<sup>*</sup></label>
-                        <input type="email" class="form-control" name="Email" id="Email" required>
+                        <input type="email" class="form-control" name="Email" id="Email">
                     </div>
                     <hr>
                     <div class="form-item">
@@ -101,16 +102,24 @@
 <!-- Checkout Page End -->
 @section Scripts {
     <script>
+        const userInfo = {
+            Name: '@(userInfo?.Name ?? "")',
+            Address: '@(userInfo?.Address ?? "")',
+            Phone: '@(userInfo?.Phone ?? "")',
+            Email: '@(userInfo?.Email ?? "")'
+        };
+
         $(document).ready(function () {
             $('#userInfo').change(function () {
                 if (this.checked) {
-                    $('#FullName').val("Demo");
-                    $('#Address').val("Demo");
-                    $('#Mobile').val("0123456789");
-                    $('#Email').val("demo@gmail.com");
-
-                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
-
+                    if (userInfo) {
+                        $('#FullName').val(userInfo.Name || "");
+                        $('#Address').val(userInfo.Address || "");
+                        $('#Mobile').val(userInfo.Phone || "");
+                        $('#Email').val(userInfo.Email || "");
+                    } else {
+                        alert("User information is not available.");
+                    }
                 }
                 else {
                     $('#FullName, #Address, #Mobile, #Email').val("");

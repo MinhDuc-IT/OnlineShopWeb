@@ -259,9 +259,13 @@
     <Compile Include="Migrations\202411251433216_updateCart.designer.cs">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202411281601352_updateDatabase.cs" />
-    <Compile Include="Migrations\202411281601352_updateDatabase.designer.cs">
-      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202412130444320_DropUsersTable.cs" />
+    <Compile Include="Migrations\202412130444320_DropUsersTable.Designer.cs">
+      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412130452219_CreateUserTable.cs" />
+    <Compile Include="Migrations\202412130452219_CreateUserTable.Designer.cs">
+      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
@@ -3146,8 +3150,11 @@
     <EmbeddedResource Include="Migrations\202411251433216_updateCart.resx">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411281601352_updateDatabase.resx">
-      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202412130444320_DropUsersTable.resx">
+      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412130452219_CreateUserTable.resx">
+      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
