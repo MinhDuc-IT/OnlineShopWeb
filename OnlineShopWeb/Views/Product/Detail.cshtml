@@ -5,10 +5,7 @@
 
 <div class="container">
     <div class="row">
-        <!-- Left Sidebar -->
-        <div class="col-sm-3">
-            @*@Html.Partial("_SidebarPartial")*@
-        </div>
+        
 
         <div class="container">
             <div class="row">
@@ -80,7 +77,7 @@
                     <!-- Thêm phần mô tả sản phẩm -->
                     <div class="product-description">
                         <h3>Product Description</h3>
-                        <p>@Model.Description</p>
+                        <p>@Html.Raw(@Model.Description)</p>
                     </div><!--/product-description-->
 
                 </div>
