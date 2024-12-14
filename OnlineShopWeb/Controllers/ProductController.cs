@@ -93,17 +93,74 @@ namespace OnlineShopWeb.Controllers
             }
         }
 
+        //public List<Product> GetHotProducts(DateTime startDate, DateTime endDate)
+        //{
+        //    var viewedProducts = _context.Products
+        //        .Where(p => p.LastViewed >= startDate && p.LastViewed <= endDate)
+        //        .Select(p => new ViewedProduct
+        //        {
+        //            ProductId = p.ProductId,
+        //            ViewCount = p.Click 
+        //        })
+        //        .ToList(); 
+
+        //    var orderedProducts = _context.Orders
+        //        .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
+        //        .SelectMany(o => o.OrderDetails)
+        //        .GroupBy(od => od.ProductId)
+        //        .Select(g => new OrderedProduct
+        //        {
+        //            ProductId = g.Key,
+        //            OrderCount = g.Count() 
+        //        })
+        //        .ToList();
+
+        //    // Combine the results in-memory
+        //    var hotProducts = viewedProducts
+        //        .Join(
+        //            orderedProducts,
+        //            vp => vp.ProductId,
+        //            op => op.ProductId,
+        //            (vp, op) => new HotProduct
+        //            {
+        //                ProductId = vp.ProductId,
+        //                HotScore = vp.ViewCount * 0.3 + op.OrderCount * 0.7
+        //            })
+        //        .OrderByDescending(p => p.HotScore)
+        //        .Take(10)
+        //        .ToList();
+
+        //    //var result = _context.Products
+        //    //    .Where(p => hotProducts.Select(hp => hp.ProductId).Contains(p.ProductId))
+        //    //    .ToList();
+
+        //    var result = new List<Product>();
+
+        //    foreach (var item in hotProducts)
+        //    {
+        //        var product = _context.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
+        //        if(product != null)
+        //        {
+        //            result.Add(product);
+        //        }
+        //    }
+
+        //    return result;
+        //}
+
         public List<Product> GetHotProducts(DateTime startDate, DateTime endDate)
         {
+            // Fetch viewed products, handle null case
             var viewedProducts = _context.Products
                 .Where(p => p.LastViewed >= startDate && p.LastViewed <= endDate)
                 .Select(p => new ViewedProduct
                 {
                     ProductId = p.ProductId,
-                    ViewCount = p.Click 
+                    ViewCount = p.Click
                 })
-                .ToList(); 
+                .ToList() ?? new List<ViewedProduct>();
 
+            // Fetch ordered products, handle null case
             var orderedProducts = _context.Orders
                 .Where(o => o.OrderDate >= startDate && o.OrderDate <= endDate)
                 .SelectMany(o => o.OrderDetails)
@@ -111,9 +168,9 @@ namespace OnlineShopWeb.Controllers
                 .Select(g => new OrderedProduct
                 {
                     ProductId = g.Key,
-                    OrderCount = g.Count() 
+                    OrderCount = g.Count()
                 })
-                .ToList();
+                .ToList() ?? new List<OrderedProduct>();
 
             // Combine the results in-memory
             var hotProducts = viewedProducts
@@ -126,25 +183,34 @@ namespace OnlineShopWeb.Controllers
                         ProductId = vp.ProductId,
                         HotScore = vp.ViewCount * 0.3 + op.OrderCount * 0.7
                     })
+                .Union(viewedProducts
+                    .Where(vp => !orderedProducts.Any(op => op.ProductId == vp.ProductId))
+                    .Select(vp => new HotProduct
+                    {
+                        ProductId = vp.ProductId,
+                        HotScore = vp.ViewCount * 0.3
+                    }))
+                .Union(orderedProducts
+                    .Where(op => !viewedProducts.Any(vp => vp.ProductId == op.ProductId))
+                    .Select(op => new HotProduct
+                    {
+                        ProductId = op.ProductId,
+                        HotScore = op.OrderCount * 0.7
+                    }))
                 .OrderByDescending(p => p.HotScore)
                 .Take(10)
                 .ToList();
-
-            //var result = _context.Products
-            //    .Where(p => hotProducts.Select(hp => hp.ProductId).Contains(p.ProductId))
-            //    .ToList();
 
             var result = new List<Product>();
 
             foreach (var item in hotProducts)
             {
                 var product = _context.Products.FirstOrDefault(p => p.ProductId == item.ProductId);
-                if(product != null)
+                if (product != null)
                 {
                     result.Add(product);
                 }
             }
-
             return result;
         }
 
