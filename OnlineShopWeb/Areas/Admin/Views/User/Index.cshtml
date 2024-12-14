@@ -1,5 +1,7 @@
-﻿@{
-    ViewBag.Title = "Danh sách Banner";
+﻿
+@{
+    ViewBag.Title = "Danh sách người dùng";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
 }
 
 @section naviheader{
@@ -12,7 +14,7 @@
             <a href="/admin/Home" class="nav-link">Trang chủ</a>
         </li>
         <li class="nav-item d-none d-sm-inline-block">
-            <a href="/admin/banner" class="nav-link">Banner</a>
+            <a href="/admin/user" class="nav-link">Người dùng</a>
         </li>
     </ul>
 }
@@ -26,7 +28,7 @@
             </div>
 
             <div class="card-tools">
-                <a href="/admin/Banner/AddBanner" class="btn btn-primary">Thêm mới</a>
+                <a href="/admin/User/AddUser" class="btn btn-primary">Thêm mới</a>
             </div>
         </div>
         <div class="card-body">
@@ -34,10 +36,14 @@
                 <thead>
                     <tr>
                         <th>STT</th>
-                        <th>Title</th>
-                        <th>Description</th>
-                        <th style="text-align: center">Image</th>
-                        <th>IsDelete</th>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>Address</th>
+                        <th>Role</th>
+                        <th>Gender</th>
+                        <th>BirthDay</th>
+                        <th style="text-align: center">Avatar</th>
                         <th style="text-align: center">Actions</th>
                     </tr>
                 </thead>
@@ -53,40 +59,43 @@
 @section scripts {
     <script>
         function Paging(crrPage, searchText) {
-            let pageSize = 2;
+            let pageSize = 4;
             $.ajax({
                 type: 'GET',
-                url: '/Admin/Banner/GetBannerByPage',
+                url: '/Admin/User/GetUserByPage',
                 data: { crrPage: crrPage, pageSize: pageSize, searchText: searchText },
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
-                        let banners = response.data;
+                        let users = response.data;
                         let totalPages = response.totalPages;
                         let tbody = $('tbody');
                         tbody.empty();
 
-                        if (banners.length > 0) {
-                            banners.forEach((item, index) => {
+                        if (users.length > 0) {
+                            users.forEach((item, index) => {
                                 let row = `
-                                        <tr id="trow_${item.Id}">
-                                            <td>${(crrPage - 1) * pageSize + index + 1}</td>
-                                            <td>${item.title}</td>
-                                            <td>${item.description}</td>
-                                            <td><img style="height: 70px" src="data:image/png;base64,${item.ImageBase64}" alt="Prev Image" /></td>
-                                            <td class="is-delete-column">${item.IsDeleted}</td>
-                                            <td style="display: flex; gap: 10px;">
-                                                <a href="/admin/banner/editBanner/${item.Id}" class="btn btn-sm btn-primary">Edit</a>
-                                                <a href="#" data-id="${item.Id}" class="btn btn-sm btn-danger btnDelete">Delete</a>
-                                            </td>
-                                        </tr>`;
+                                    <tr id="trow_${item.CustomerId}">
+                                        <td>${(crrPage - 1) * pageSize + index + 1}</td>
+                                        <td>${item.Name}</td>
+                                        <td>${item.Email}</td>
+                                        <td>${item.Phone}</td>
+                                        <td>${item.Address}</td>
+                                        <td>${item.Role}</td>
+                                        <td>${item.Gender == 0 ? 'Nam' : item.Gender == 1 ? 'Nữ' : item.Gender == 2 ? 'Khác' : null}</td >
+                                        <td>${item.BirthDay}</td>
+                                        <td><img style="height: 70px" src="data:image/png;base64,${item.ImageBase64}" alt="Prev Image" /></td>
+                                        <td style="display: flex; gap: 10px;">
+                                            <a href="/admin/user/EditUser/${item.CustomerId}" class="btn btn-sm btn-primary">Edit</a>
+                                            <a href="#" data-id="${item.CustomerId}" class="btn btn-sm btn-danger btnDelete">Delete</a>
+                                        </td>
+                                    </tr>`;
                                 tbody.append(row);
                             });
                         } else {
-                            tbody.html('<tr><td colspan="6">Không có bản ghi nào!!!</td></tr>');
+                            tbody.html('<tr><td colspan="10">Không có bản ghi nào!!!</td></tr>');
                         }
 
-                        // Render pagination buttons
                         RenderPagination(crrPage, totalPages);
                     }
                 }
@@ -133,15 +142,20 @@
         $(document).ready(function () {
             $('body').on('click', '.btnDelete', function () {
                 var id = $(this).data("id");
+                var page = $(this).data('page');
                 var cof = confirm('Bạn có muốn xóa bản ghi này không?');
                 if (cof) {
                     $.ajax({
-                        url: '/admin/banner/deleteBanner',
+                        url: '/admin/User/deleteUser',
                         type: 'POST',
                         data: { id: id },
                         success: function (rs) {
                             if (rs.success) {
-                                $('#trow_' + id).find('.is-delete-column').text("True");
+                                $('#trow_' + id).remove();
+                                Paging(page);
+                            }
+                            else {
+                                alert(rs.message);
                             }
                         }
                     })
@@ -170,5 +184,3 @@
         })
     </script>
 }
-
-

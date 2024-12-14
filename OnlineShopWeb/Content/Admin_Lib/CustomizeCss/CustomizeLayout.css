@@ -8,3 +8,14 @@
 .Ad_css_card{
     padding: 10px !important;
 }
+
+.search-container {
+    float: left;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-container button{
+    width: 120px;
+}

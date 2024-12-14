@@ -3,32 +3,28 @@
   "WorkspaceRootPath": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\shared\\_header.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\areas\\admin\\controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\controllers\\bannercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\shared\\_layout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\areas\\admin\\views\\banner\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\views\\banner\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\views\\order\\checkout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\order\\checkout.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\controllers\\categorycontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\home\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\areas\\admin\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\controllers\\usercontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\views\\shared\\_layoutaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\views\\shared\\_layoutaccount.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\onlineshopweb\\areas\\admin\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\views\\user\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\attributes\\authenticateuserattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\attributes\\authenticateuserattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\attributes\\authorizeuserattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\attributes\\authorizeuserattribute.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|d:\\semester_5_2024\\doan_web\\onlineshopweb\\onlineshopweb\\areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}",
+      "RelativeMoniker": "D:0:0:{740E2CC5-8601-492F-B3DA-15671F9E9B1C}|OnlineShopWeb\\OnlineShopWeb.csproj|solutionrelative:onlineshopweb\\areas\\admin\\views\\category\\index.cshtml||{40D31677-CBC0-4297-A9EF-89D907823A98}"
     }
   ],
   "DocumentGroupContainers": [
@@ -38,7 +34,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 3,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -46,93 +42,80 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "Index.cshtml",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Home\\Index.cshtml",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Home\\Index.cshtml",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Home\\Index.cshtml*",
-              "RelativeToolTip": "OnlineShopWeb\\Views\\Home\\Index.cshtml*",
-              "ViewState": "AQIAAA8AAAAAAAAAAAAAABsAAAASAAAA",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\Banner\\Index.cshtml",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Views\\Banner\\Index.cshtml",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\Banner\\Index.cshtml",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Views\\Banner\\Index.cshtml",
+              "ViewState": "AQIAAHkAAAAAAAAAAAAUwLkAAAAaAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T15:51:47.523Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Checkout.cshtml",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Order\\Checkout.cshtml",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Order\\Checkout.cshtml",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Order\\Checkout.cshtml",
-              "RelativeToolTip": "OnlineShopWeb\\Views\\Order\\Checkout.cshtml",
-              "ViewState": "AQIAAFEAAAAAAAAAAAAAAGUAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T15:43:35.851Z",
+              "WhenOpened": "2024-12-14T05:12:32.498Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "_Header.cshtml",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Header.cshtml",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\_Header.cshtml",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Header.cshtml",
-              "RelativeToolTip": "OnlineShopWeb\\Views\\Shared\\_Header.cshtml",
-              "ViewState": "AQIAACoAAAAAAAAAAAAswDkAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T15:35:15.287Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "_Layout.cshtml",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "RelativeToolTip": "OnlineShopWeb\\Views\\Shared\\_Layout.cshtml",
-              "ViewState": "AQIAABIAAAAAAAAAAAAAAB8AAABuAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T15:35:06.348Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "_LayoutAccount.cshtml",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_LayoutAccount.cshtml",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Views\\Shared\\_LayoutAccount.cshtml",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Views\\Shared\\_LayoutAccount.cshtml",
-              "RelativeToolTip": "OnlineShopWeb\\Views\\Shared\\_LayoutAccount.cshtml",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
-              "WhenOpened": "2024-12-12T15:35:04.511Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AuthorizeUserAttribute.cs",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Attributes\\AuthorizeUserAttribute.cs",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Attributes\\AuthorizeUserAttribute.cs",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Attributes\\AuthorizeUserAttribute.cs",
-              "RelativeToolTip": "OnlineShopWeb\\Attributes\\AuthorizeUserAttribute.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABAAAAA7AAAA",
+              "Title": "BannerController.cs",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\BannerController.cs",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Controllers\\BannerController.cs",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\BannerController.cs",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Controllers\\BannerController.cs",
+              "ViewState": "AQIAADkAAAAAAAAAAAAiwEYAAAAoAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T15:21:53.109Z",
+              "WhenOpened": "2024-12-14T05:12:28.043Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 5,
-              "Title": "AuthenticateUserAttribute.cs",
-              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Attributes\\AuthenticateUserAttribute.cs",
-              "RelativeDocumentMoniker": "OnlineShopWeb\\Attributes\\AuthenticateUserAttribute.cs",
-              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Attributes\\AuthenticateUserAttribute.cs",
-              "RelativeToolTip": "OnlineShopWeb\\Attributes\\AuthenticateUserAttribute.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAADwAAAAMAAAA",
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Views\\Category\\Index.cshtml",
+              "ViewState": "AQIAAC4AAAAAAAAAAAAUwEwAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-14T05:07:58.31Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CategoryController.cs",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\CategoryController.cs",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Controllers\\CategoryController.cs",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\CategoryController.cs*",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Controllers\\CategoryController.cs*",
+              "ViewState": "AQIAACwAAAAAAAAAAAAiwDAAAAAAAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-12-12T14:31:17.145Z",
+              "WhenOpened": "2024-12-14T05:07:41.661Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Index.cshtml",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Views\\User\\Index.cshtml",
+              "ViewState": "AQIAAEwAAAAAAAAAAAAUwLAAAAAaAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000759|",
+              "WhenOpened": "2024-12-13T15:19:08.491Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "UserController.cs",
+              "DocumentMoniker": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\UserController.cs",
+              "RelativeDocumentMoniker": "OnlineShopWeb\\Areas\\Admin\\Controllers\\UserController.cs",
+              "ToolTip": "D:\\Semester_5_2024\\DOAN_WEB\\OnlineShopWeb\\OnlineShopWeb\\Areas\\Admin\\Controllers\\UserController.cs",
+              "RelativeToolTip": "OnlineShopWeb\\Areas\\Admin\\Controllers\\UserController.cs",
+              "ViewState": "AQIAAEEAAAAAAAAAAAAiwEMAAAAtAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-12-13T08:08:48.672Z",
               "EditorCaption": ""
             }
           ]

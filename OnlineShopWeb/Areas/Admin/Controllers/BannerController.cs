@@ -20,10 +20,19 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             IEnumerable<Banner> Banners = db.Banners.ToList();
             return View(Banners);
         }
-        public ActionResult GetBannerByPage(int crrPage, int pageSize)
+        public ActionResult GetBannerByPage(int crrPage, int pageSize, string searchText = "")
         {
-            var banners = db.Banners
-                            .OrderBy(b => b.Id) 
+            var query = db.Banners.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(u => u.title.Contains(searchText));
+            }
+
+            var totalRecords = query.Count();
+
+            var banners = query
+                            .OrderBy(b => b.Id)
                             .Skip((crrPage - 1) * pageSize)
                             .Take(pageSize)
                             .ToList()
@@ -34,8 +43,6 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                                 ImageBase64 = b.Image != null ? Convert.ToBase64String(b.Image) : null,
                                 b.IsDeleted
                             }).ToList();
-
-            var totalRecords = db.Banners.Count();
 
             return Json(new
             {
