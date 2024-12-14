@@ -7,13 +7,13 @@ namespace OnlineShopWeb.Migrations
     using System.Resources;
     
     [GeneratedCode("EntityFramework.Migrations", "6.4.4")]
-    public sealed partial class updateDatabase : IMigrationMetadata
+    public sealed partial class AddLastViewedToUserProduct : IMigrationMetadata
     {
-        private readonly ResourceManager Resources = new ResourceManager(typeof(updateDatabase));
+        private readonly ResourceManager Resources = new ResourceManager(typeof(AddLastViewedToUserProduct));
         
         string IMigrationMetadata.Id
         {
-            get { return "202411281601352_updateDatabase"; }
+            get { return "202412131030327_AddLastViewedToUserProduct"; }
         }
         
         string IMigrationMetadata.Source

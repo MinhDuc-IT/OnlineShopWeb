@@ -40,6 +40,8 @@ namespace OnlineShopWeb.Models
         [Range(0, int.MaxValue, ErrorMessage = "Click count must be a non-negative integer.")]
         public int Click { get; set; }
 
+        public DateTime? LastViewed { get; set; }
+
         public bool IsDeleted { get; set; }
 
         [Required]

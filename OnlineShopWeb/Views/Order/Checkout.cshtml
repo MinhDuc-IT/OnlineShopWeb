@@ -1,6 +1,7 @@
 ﻿@model IEnumerable<OnlineShopWeb.ViewModels.OrderItem>
 @{
     ViewBag.Title = "Checkout";
+    var userInfo = @Session["User"] as OnlineShopWeb.Models.User;
 }
 
 <!-- Checkout Page Start -->
@@ -28,7 +29,7 @@
                     </div>
                     <div class="form-item">
                         <label class="form-label my-3">Email Address<sup>*</sup></label>
-                        <input type="email" class="form-control" name="Email" id="Email" required>
+                        <input type="email" class="form-control" name="Email" id="Email">
                     </div>
                     <hr>
                     <div class="form-item">
@@ -57,13 +58,13 @@
                                             </div>
                                         </th>
                                         <td class="py-5"><a href="#">@item.Name</a></td>
-                                        <td class="py-5" data-price="@item.Price">@item.Price</td>
+                                        <td class="py-5" data-price="@item.Price">@item.Price.ToString("0,0")</td>
                                         <td class="py-5">
                                             <div class="input-group quantity mt-4" style="width: 100px;">
                                                 <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="@item.Quantity" readonly>
                                             </div>
                                         </td>
-                                        <td class="py-5 total-price">@item.TotalPrice</td>
+                                        <td class="py-5 total-price">@item.TotalPrice.ToString("0,0") đ</td>
                                     </tr>
                                 }
                                 <tr>
@@ -101,16 +102,24 @@
 <!-- Checkout Page End -->
 @section Scripts {
     <script>
+        const userInfo = {
+            Name: '@(userInfo?.Name ?? "")',
+            Address: '@(userInfo?.Address ?? "")',
+            Phone: '@(userInfo?.Phone ?? "")',
+            Email: '@(userInfo?.Email ?? "")'
+        };
+
         $(document).ready(function () {
             $('#userInfo').change(function () {
                 if (this.checked) {
-                    $('#FullName').val("Demo");
-                    $('#Address').val("Demo");
-                    $('#Mobile').val("0123456789");
-                    $('#Email').val("demo@gmail.com");
-
-                    $('#FullName, #Address, #Mobile, #Email').attr('readonly', true);
-
+                    if (userInfo) {
+                        $('#FullName').val(userInfo.Name || "");
+                        $('#Address').val(userInfo.Address || "");
+                        $('#Mobile').val(userInfo.Phone || "");
+                        $('#Email').val(userInfo.Email || "");
+                    } else {
+                        alert("User information is not available.");
+                    }
                 }
                 else {
                     $('#FullName, #Address, #Mobile, #Email').val("");
@@ -174,10 +183,10 @@
         function UpdateTotal() {
             var total = 0;
             $('.total-price').each(function () {
-                var subTotal = parseFloat($(this).text()) || 0;
+                var subTotal = parseFloat($(this).text().replace(/[^0-9.-]+/g, "")) || 0;
                 total += subTotal;
             });
-            $('.total').val(total.toFixed(2));
+            $('.total').val(total.toFixed(0));
         }
     </script>
 }

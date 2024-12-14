@@ -259,9 +259,25 @@
     <Compile Include="Migrations\202411251433216_updateCart.designer.cs">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\202411281601352_updateDatabase.cs" />
-    <Compile Include="Migrations\202411281601352_updateDatabase.designer.cs">
-      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
+    <Compile Include="Migrations\202412130444320_DropUsersTable.cs" />
+    <Compile Include="Migrations\202412130444320_DropUsersTable.Designer.cs">
+      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412130452219_CreateUserTable.cs" />
+    <Compile Include="Migrations\202412130452219_CreateUserTable.Designer.cs">
+      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412130638128_AddOrderStatusColumn.cs" />
+    <Compile Include="Migrations\202412130638128_AddOrderStatusColumn.Designer.cs">
+      <DependentUpon>202412130638128_AddOrderStatusColumn.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412131030327_AddLastViewedToUserProduct.cs" />
+    <Compile Include="Migrations\202412131030327_AddLastViewedToUserProduct.Designer.cs">
+      <DependentUpon>202412131030327_AddLastViewedToUserProduct.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202412131051322_AddLastViewedToProducts.cs" />
+    <Compile Include="Migrations\202412131051322_AddLastViewedToProducts.Designer.cs">
+      <DependentUpon>202412131051322_AddLastViewedToProducts.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
@@ -282,6 +298,7 @@
     <Compile Include="ViewModels\PaymentRequest.cs" />
     <Compile Include="ViewModels\OrderItem.cs" />
     <Compile Include="ViewModels\SelectedItem.cs" />
+    <Compile Include="ViewModels\ViewedProduct.cs" />
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3081,7 +3098,6 @@
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
     <Content Include="Views\Banner\_ListBanners.cshtml" />
-    <Content Include="Views\Account\_OrderList.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
@@ -3091,6 +3107,8 @@
     <Content Include="Views\Shared\_OtherLayout.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Cart\_CartItemsList.cshtml" />
+    <Content Include="Views\Order\_OrderList.cshtml" />
+    <Content Include="Views\Product\_HotProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3146,8 +3164,20 @@
     <EmbeddedResource Include="Migrations\202411251433216_updateCart.resx">
       <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411281601352_updateDatabase.resx">
-      <DependentUpon>202411281601352_updateDatabase.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202412130444320_DropUsersTable.resx">
+      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412130452219_CreateUserTable.resx">
+      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412130638128_AddOrderStatusColumn.resx">
+      <DependentUpon>202412130638128_AddOrderStatusColumn.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412131030327_AddLastViewedToUserProduct.resx">
+      <DependentUpon>202412131030327_AddLastViewedToUserProduct.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412131051322_AddLastViewedToProducts.resx">
+      <DependentUpon>202412131051322_AddLastViewedToProducts.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

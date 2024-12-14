@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel;
 using System.Linq;
 using System.Web;
 
@@ -35,9 +36,27 @@ namespace OnlineShopWeb.Models
         [StringLength(200, ErrorMessage = "Recipient address must not exceed 200 characters.")]
         public string RecipientAddress { get; set; }
 
+        [Required]
+        public OrderStatus Status { get; set; }
+
         [ForeignKey("CustomerId")]
         public virtual User Customer { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+    }
+
+    public enum OrderStatus
+    {
+        [Description("All")]
+        All,
+
+        [Description("Processing")]
+        Processing,
+
+        [Description("Shipping")]
+        Shipping,
+
+        [Description("Delivered")]
+        Delivered
     }
 }

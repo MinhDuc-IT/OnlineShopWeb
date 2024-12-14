@@ -23,11 +23,21 @@ namespace OnlineShopWeb.Controllers
             {
                 return Json(new { success = false });
             }
+
+            var product = db.Products.FirstOrDefault(p => p.ProductId == id);
+            if(product != null)
+            {
+                product.Click += 1;
+                product.LastViewed = DateTime.Now;
+            }
+
             int userId = user.CustomerId;
             var userProduct = db.UserProducts.FirstOrDefault(x => x.UserId == userId && x.ProductId == id);
             if (userProduct != null)
             {
                 userProduct.ViewNum += userProduct.ViewNum + 1;
+                userProduct.LastViewed = DateTime.Now;
+
                 db.SaveChanges();
                 return Json(new { success = true });
             }
@@ -36,6 +46,7 @@ namespace OnlineShopWeb.Controllers
                 UserId = userId,
                 ProductId = id,
                 ViewNum = 1,
+                LastViewed = DateTime.Now,
             };
             db.UserProducts.Add(obj);
             db.SaveChanges();
@@ -46,14 +57,38 @@ namespace OnlineShopWeb.Controllers
             var userSession = Session["User"] as User;
             if (userSession != null)
             {
-                var user = db.Users.Find(userSession.CustomerId);
-                var recommendedProducts = user.UserProducts
-                                       .Where(up => up.ViewNum > 0)
-                                       .OrderByDescending(up => up.ViewNum)
+                var user = db.Users.FirstOrDefault(u => u.CustomerId == userSession.CustomerId);
+
+                if(user != null)
+                {
+                    var recommendedProducts = user.UserProducts
+                                       .Where(up => up.ViewNum > 0 ||
+                            (up.LastViewed.HasValue && up.LastViewed.Value >= DateTime.Now.AddDays(-7)))
+                                       .OrderByDescending(up => up.ViewNum) 
+                                       .ThenByDescending(up => up.LastViewed)
                                        .Select(up => up.Product)
+                                       .Take(10)
                                        .ToList();
-                return PartialView("_RecommenProducts", recommendedProducts);
+
+                    if (recommendedProducts.Count < 10)
+                    {
+                        var additionalProducts = user.UserProducts
+                            .Where(up => up.ViewNum > 0 ||
+                            (up.LastViewed.HasValue && up.LastViewed.Value >= DateTime.Now.AddDays(-30)))
+                            .OrderByDescending(up => up.ViewNum)
+                            .ThenByDescending(up => up.LastViewed)
+                            .Select(up => up.Product)
+                            .Take(10)
+                            .ToList();
+
+                        recommendedProducts.AddRange(additionalProducts);
+                    }
+                    return PartialView("_RecommenProducts", recommendedProducts.Distinct().ToList());
+                }
+
+                return PartialView("_RecommenProducts", null);
             }
+
             return PartialView("_RecommenProducts", null);
         }
     }
