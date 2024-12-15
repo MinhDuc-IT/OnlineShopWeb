@@ -1,0 +1,13 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Brand>
+@{
+    ViewBag.Title = "_ListBrand";
+}
+
+@foreach (var brand in Model)
+    {
+        <li>
+            <a href="/Home/GetProductsByBrand?brandId=@brand.BrandId">
+                <span class="pull-right">(@brand.Products.Count)</span>@brand.Name
+            </a>
+        </li>
+    }
