@@ -1,5 +1,4 @@
-﻿@*@model IEnumerable<OnlineShopWeb.Models.Banner>*@
-@{
+﻿@{
     ViewBag.Title = "Danh sách Banner";
 }
 
@@ -18,27 +17,13 @@
     </ul>
 }
 
-<!-- Content Header (Page header) -->
-@*<section class="content-header">
-        <div class="container-fluid">
-            <div class="row mb-2">
-                <div class="col-sm-6">
-                    <h1>Quản lý Banner</h1>
-                </div>
-                <div class="col-sm-6">
-                    <ol class="breadcrumb float-sm-right">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item active">Banner</li>
-                    </ol>
-                </div>
-            </div>
-        </div>
-    </section>*@
-
 <section class="content Ad_css_card">
     <div class="card">
         <div class="card-header">
-            <h3 class="card-title">Danh sách Banner</h3>
+            <div class="search-container">
+                <input type="Text" class="form-control" placeholder="Nhập vào từ khóa tìm kiếm" />
+                <button class="btn btn-warning btnu-Search">Tìm kiếm</button>
+            </div>
 
             <div class="card-tools">
                 <a href="/admin/Banner/AddBanner" class="btn btn-primary">Thêm mới</a>
@@ -67,12 +52,12 @@
 
 @section scripts {
     <script>
-        function Paging(crrPage) {
-            let pageSize = 1;
+        function Paging(crrPage, searchText) {
+            let pageSize = 2;
             $.ajax({
                 type: 'GET',
                 url: '/Admin/Banner/GetBannerByPage',
-                data: { crrPage: crrPage, pageSize: pageSize },
+                data: { crrPage: crrPage, pageSize: pageSize, searchText: searchText },
                 dataType: 'json',
                 success: function (response) {
                     if (response.success) {
@@ -162,12 +147,26 @@
                     })
                 }
             })
-            $('body').on('click', '.btnPage', function () {
-                let page = $(this).data('page');
-                Paging(page);
+
+            $('.btnu-Search').on('click', function () {
+                let searchText = $('.search-container input').val();
+                Paging(1, searchText);
             });
 
-            Paging(1);
+            $('.search-container input').on('keydown', function (e) {
+                if (e.key === 'Enter') {
+                    let searchText = $(this).val();
+                    Paging(1, searchText);
+                }
+            });
+
+            $('body').on('click', '.btnPage', function () {
+                let page = $(this).data('page');
+                let searchText = $('.search-container input').val();
+                Paging(page, searchText);
+            });
+
+            Paging(1, '');
         })
     </script>
 }

@@ -1,4 +1,4 @@
-﻿﻿@{
+﻿@{
     ViewBag.Title = "myOrder";
     Layout = "~/Views/Shared/_LayoutAccount.cshtml";
 }
@@ -10,7 +10,7 @@
         <div class="owh-item" data-content="Delivered">Đã giao</div>
     </div>
     <div class="ow_mainContent">
-        đơn hàng của bạn sẽ ở đây
+        <!-- Nội dung sẽ được tải động qua AJAX -->
     </div>
 </div>
 
@@ -23,22 +23,186 @@
             items[i].classList.add('owh-item-active');
             let status = items[i].getAttribute('data-content');
 
-            // Gửi yêu cầu AJAX đến server để lấy dữ liệu đơn hàng theo trạng thái
+            // Hiển thị trạng thái đang tải
+            contentArea.innerHTML = "<p>Đang tải dữ liệu...</p>";
+
             $.ajax({
-                url: '/Account/GetOrdersByStatus',  // URL đến API trong Controller
+                url: '/Order/GetOrdersByStatus',  // URL đến API trong Controller
                 type: 'GET',
                 data: { status: status },          // Gửi trạng thái làm tham số
                 success: function (response) {
                     // Chèn nội dung trả về vào phần .ow_mainContent
                     contentArea.innerHTML = response;
                 },
-                error: function () {
+                error: function (xhr, status, error) {
+                    console.error("Lỗi khi tải đơn hàng:", status, error);
                     contentArea.textContent = "Không thể tải dữ liệu đơn hàng.";
                 }
             });
         });
     }
-    $('document').ready(function () {
 
-    })
+    $(document).ready(function () {
+        let contentArea = $('.ow_mainContent');
+
+        // Hiển thị trạng thái đang tải
+        contentArea.html("<p>Đang tải dữ liệu...</p>");
+
+        // Gửi yêu cầu AJAX ban đầu để tải tất cả đơn hàng
+        $.ajax({
+            url: '/Order/GetOrdersByStatus',  // URL đến API trong Controller
+            type: 'GET',
+            data: { status: "All" },          // Gửi trạng thái "All"
+            success: function (response) {
+                contentArea.html(response);
+            },
+            error: function (xhr, status, error) {
+                console.error("Lỗi khi tải đơn hàng:", status, error);
+                contentArea.text("Không thể tải dữ liệu đơn hàng.");
+            }
+        });
+    });
 </script>
+
+<style>
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+    }
+
+    .store-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .store-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .order-status {
+        font-size: 14px;
+        color: #888;
+    }
+
+    .order-review-status {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .review-status {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .product-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .product-item {
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .product-image img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-info {
+        flex-grow: 1;
+        padding: 0 10px;
+    }
+
+        .product-info h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .product-quantity, .product-price {
+        font-size: 14px;
+        color: #777;
+    }
+
+        .product-price span {
+            color: #e63946;
+            font-weight: bold;
+        }
+
+    .order-summary {
+        text-align: right;
+    }
+
+        .order-summary p {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    .button-group {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+    }
+
+    .buy-again {
+        background-color: #e63946;
+        color: white;
+        padding: 8px 16px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+        .buy-again:hover {
+            background-color: #d32f2f;
+        }
+
+    .order-details {
+        display: none;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+    }
+
+    /* Hiệu ứng hover cho tab trạng thái */
+    .owh-item:hover {
+        cursor: pointer;
+        background-color: #f0f0f0;
+    }
+
+    /* Nổi bật tab đang chọn */
+    .owh-item-active {
+        font-weight: bold;
+        color: #e63946;
+        border-bottom: 2px solid #e63946;
+    }
+
+    .ow_mainContent {
+        max-height: 500px; /* Giới hạn chiều cao tối đa */
+        overflow-y: auto; /* Thêm thanh cuộn dọc khi nội dung vượt quá chiều cao */
+        padding: 15px;
+        box-sizing: border-box;
+    }
+
+</style>

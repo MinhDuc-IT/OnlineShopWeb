@@ -54,17 +54,17 @@
                                     <tr>
                                         <th scope="row">
                                             <div class="d-flex align-items-center mt-2">
-                                                <a href="#"><img src="@item.Img" class="img-fluid rounded-circle" alt=""></a>
+                                                <img src="data:image/jpeg;base64,@item.Img" alt="@item.Name" style="width:150px;height:150px;object-fit:cover;" />
                                             </div>
                                         </th>
                                         <td class="py-5"><a href="#">@item.Name</a></td>
-                                        <td class="py-5" data-price="@item.Price">@item.Price</td>
+                                        <td class="py-5" data-price="@item.Price">@item.Price.ToString("0,0")</td>
                                         <td class="py-5">
                                             <div class="input-group quantity mt-4" style="width: 100px;">
                                                 <input type="text" class="form-control form-control-sm text-center border-0 input-quantity" value="@item.Quantity" readonly>
                                             </div>
                                         </td>
-                                        <td class="py-5 total-price">@item.TotalPrice</td>
+                                        <td class="py-5 total-price">@item.TotalPrice.ToString("0,0") đ</td>
                                     </tr>
                                 }
                                 <tr>
@@ -183,10 +183,10 @@
         function UpdateTotal() {
             var total = 0;
             $('.total-price').each(function () {
-                var subTotal = parseFloat($(this).text()) || 0;
+                var subTotal = parseFloat($(this).text().replace(/[^0-9.-]+/g, "")) || 0;
                 total += subTotal;
             });
-            $('.total').val(total.toFixed(2));
+            $('.total').val(total.toFixed(0));
         }
     </script>
 }

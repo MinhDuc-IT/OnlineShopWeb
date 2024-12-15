@@ -3,41 +3,51 @@
     ViewBag.Title = "Kết quả tìm kiếm";
 }
 
-@if (Model != null && Model.Any())
-{
-    <div class="bg_fullScreen">
-        <div class="container">
-        <div class="ps_header">
-            <span><a href="/">Trang chủ</a>></span>
-            <p>Kết quả tìm kiếm "@ViewBag.Query"</p>
-        </div>
-            @foreach (var product in Model)
-            {
-                <div class="col-sm-3" >
-                    <div class="product-image-wrapper product-hover" >
-                        <div class="single-products" >
-                            <div class="productinfo text-center">
-                                <a href="/Product/Detail/@product.ProductId">
-                                    <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                                    <p>@product.Name</p>
-                                </a>
-                                <h2>@product.Price</h2>
-                                <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+<h2 class="title text-center"></h2>
+<div class="col-sm-3">
+    @Html.Partial("_SidebarPartial", new ViewDataDictionary(ViewData))
+</div>
+<div class="col-sm-9">
+    <h2 class="title text-center">List products</h2>
+
+    @if (Model != null && Model.Any())
+    {
+        <div>
+            <div class="container">
+                <div class="ps_header">
+                    <span><a href="/">Trang chủ</a>></span>
+                    <p>Kết quả tìm kiếm "@ViewBag.Query"</p>
+                </div>
+                @foreach (var product in Model)
+                {
+                    <div class="col-sm-3">
+                        <div class="product-image-wrapper product-hover">
+                            <div class="single-products">
+                                <div class="productinfo text-center">
+                                    <a href="/Product/Detail/@product.ProductId">
+                                        <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                        <p>@product.Name</p>
+                                    </a>
+                                    <h2>@product.Price</h2>
+                                    <a href="#" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Add to cart</a>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
+            </div>
         </div>
-    </div>
-}
-else
-{
-    <div class="bg_fullScreen">
-        <div class="sp_empty">
-            <img src="~/Content/images/CustomImage/logoSearch.png" />
-            <div class="spe_title">Không tìm thấy kết quả nào</div>
-            <div class="spe_hint">Hãy thử sử dụng các từ khóa chung chung hơn</div>
+    }
+    else
+    {
+        <div class="bg_fullScreen">
+            <div class="sp_empty">
+                <img src="~/Content/images/CustomImage/logoSearch.png" />
+                <div class="spe_title">Không tìm thấy kết quả nào</div>
+                <div class="spe_hint">Hãy thử sử dụng các từ khóa chung chung hơn</div>
+            </div>
         </div>
-    </div>
-}
+    }
+</div>
+
+

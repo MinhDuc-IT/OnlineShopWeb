@@ -1,0 +1,120 @@
+﻿@{
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="order-wrapper">
+    <div class="ow-header">
+        <div class="owh-item owh-item-active" data-content="All">Tất cả đơn hàng</div>
+        <div class="owh-item" data-content="Processing">Đang xử lý</div>
+        <div class="owh-item" data-content="Shipping">Đang vận chuyển</div>
+        <div class="owh-item" data-content="Delivered">Đã giao</div>
+    </div>
+    <div class="ow_mainContent">
+        <!-- Nội dung sẽ được tải động qua AJAX -->
+    </div>
+</div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            const contentArea = $('.ow_mainContent');
+
+            // Tải đơn hàng theo trạng thái
+            function loadOrders(status) {
+                contentArea.html("<p>Đang tải dữ liệu...</p>");
+
+                $.ajax({
+                    url: '/Admin/Order/GetOrdersByStatus',
+                    type: 'GET',
+                    data: { status: status },
+                    success: function (response) {
+                        contentArea.html(response);
+                    },
+                    error: function () {
+                        contentArea.text("Không thể tải dữ liệu đơn hàng.");
+                    }
+                });
+            }
+
+            // Tải dữ liệu mặc định (tất cả đơn hàng)
+            loadOrders("All");
+
+            // Xử lý khi thay đổi trạng thái
+            $('.owh-item').on('click', function () {
+                $('.owh-item-active').removeClass('owh-item-active');
+                $(this).addClass('owh-item-active');
+                let status = $(this).data('content');
+                loadOrders(status);
+            });
+
+            // Xử lý khi click vào .order-header
+            contentArea.on('click', '.order-header', function () {
+                var orderId = $(this).data('order-id');
+                var orderDetails = $('.order-details[data-order-id="' + orderId + '"]');
+
+                // Ẩn/hiện chi tiết đơn hàng
+                orderDetails.toggle();
+
+                // Xác nhận đơn hàng
+                var button = orderDetails.find('.buy-confirm');
+
+                // Gán sự kiện nếu chưa được gán
+                if (!button.data('click-bound')) {
+                    button.data('click-bound', true); // Đánh dấu sự kiện đã được gán
+                    button.on('click', function () {
+                        $.ajax({
+                            url: '/Admin/Order/ConfirmOrder',
+                            type: 'GET',
+                            data: { orderId: orderId },
+                            success: function (response) {
+                                alert(response.message);
+                                if (response.success) {
+                                    location.reload();
+                                }
+                            },
+                            error: function () {
+                                alert("Đã xảy ra lỗi khi xác nhận đơn hàng.");
+                            }
+                        });
+                    });
+                }
+            });
+
+        });
+    </script>
+}
+
+
+
+<style>
+    .ow-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: nowrap;
+    }
+
+    .owh-item {
+        flex: 1 1 25%;
+        text-align: center;
+        padding: 10px;
+        cursor: pointer;
+    }
+
+        .owh-item:hover {
+            background-color: #f0f0f0;
+        }
+
+    .owh-item-active {
+        font-weight: bold;
+        color: #e63946;
+        border-bottom: 2px solid #e63946;
+    }
+
+    .ow_mainContent {
+        max-height: 500px;
+        overflow-y: auto;
+        padding: 15px;
+        box-sizing: border-box;
+    }
+</style>

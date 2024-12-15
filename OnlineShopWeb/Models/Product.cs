@@ -38,7 +38,9 @@ namespace OnlineShopWeb.Models
         public int CategoryId { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "Click count must be a non-negative integer.")]
-        public int Click { get; set; }
+        public int Click { get; set; } = 1;
+
+        public DateTime? LastViewed { get; set; } = DateTime.Now;
 
         public bool IsDeleted { get; set; }
 

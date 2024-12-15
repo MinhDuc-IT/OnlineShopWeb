@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" />
   <Import Project="..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -56,10 +56,10 @@
       <HintPath>..\packages\ElFinder.Net.1.0.0\lib\net45\ElFinder.Net.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.dll</HintPath>
     </Reference>
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
-      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+      <HintPath>..\packages\EntityFramework.6.5.1\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
     <Reference Include="HtmlAgilityPack, Version=1.11.71.0, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
       <HintPath>..\packages\HtmlAgilityPack.1.11.71\lib\Net45\HtmlAgilityPack.dll</HintPath>
@@ -188,9 +188,12 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Areas\Admin\AdminAreaRegistration.cs" />
     <Compile Include="Areas\Admin\Controllers\BannerController.cs" />
+    <Compile Include="Areas\Admin\Controllers\BrandController.cs" />
     <Compile Include="Areas\Admin\Controllers\CategoryController.cs" />
     <Compile Include="Areas\Admin\Controllers\HomeController.cs" />
+    <Compile Include="Areas\Admin\Controllers\OrderController.cs" />
     <Compile Include="Areas\Admin\Controllers\ProductController.cs" />
+    <Compile Include="Areas\Admin\Controllers\UserController.cs" />
     <Compile Include="Attributes\AuthenticateUserAttribute.cs" />
     <Compile Include="Attributes\AuthorizeUserAttribute.cs" />
     <Compile Include="Controllers\AccountController.cs" />
@@ -215,57 +218,9 @@
     <Compile Include="Helpers\Security.cs" />
     <Compile Include="Helpers\VNPayError.cs" />
     <Compile Include="Helpers\VnPayLibrary.cs" />
-    <Compile Include="Migrations\202410271453084_InitialCreate.cs" />
-    <Compile Include="Migrations\202410271453084_InitialCreate.designer.cs">
-      <DependentUpon>202410271453084_InitialCreate.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.cs" />
-    <Compile Include="Migrations\202411051127211_AddCostPriceToProducts.Designer.cs">
-      <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411151400071_CreateBanner.cs" />
-    <Compile Include="Migrations\202411151400071_CreateBanner.Designer.cs">
-      <DependentUpon>202411151400071_CreateBanner.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411171431010_Add Banners.cs" />
-    <Compile Include="Migrations\202411171431010_Add Banners.Designer.cs">
-      <DependentUpon>202411171431010_Add Banners.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411240955370_Add Table UserProduct.cs" />
-    <Compile Include="Migrations\202411240955370_Add Table UserProduct.Designer.cs">
-      <DependentUpon>202411240955370_Add Table UserProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411141424312_update.cs" />
-    <Compile Include="Migrations\202411141424312_update.Designer.cs">
-      <DependentUpon>202411141424312_update.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.cs" />
-    <Compile Include="Migrations\202411251320093_AddFieldClickInProduct.Designer.cs">
-      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411251519377_updateorder.cs" />
-    <Compile Include="Migrations\202411251519377_updateorder.Designer.cs">
-      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411140402075_updatedModels.cs" />
-    <Compile Include="Migrations\202411140402075_updatedModels.designer.cs">
-      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411141251186_updateNewModel.cs" />
-    <Compile Include="Migrations\202411141251186_updateNewModel.designer.cs">
-      <DependentUpon>202411141251186_updateNewModel.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202411251433216_updateCart.cs" />
-    <Compile Include="Migrations\202411251433216_updateCart.designer.cs">
-      <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202412130444320_DropUsersTable.cs" />
-    <Compile Include="Migrations\202412130444320_DropUsersTable.Designer.cs">
-      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\202412130452219_CreateUserTable.cs" />
-    <Compile Include="Migrations\202412130452219_CreateUserTable.Designer.cs">
-      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
+    <Compile Include="Migrations\202412140942483_InitialCreate.cs" />
+    <Compile Include="Migrations\202412140942483_InitialCreate.designer.cs">
+      <DependentUpon>202412140942483_InitialCreate.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
@@ -286,6 +241,7 @@
     <Compile Include="ViewModels\PaymentRequest.cs" />
     <Compile Include="ViewModels\OrderItem.cs" />
     <Compile Include="ViewModels\SelectedItem.cs" />
+    <Compile Include="ViewModels\ViewedProduct.cs" />
     <Compile Include="ViewModels\VnPaymentResponseModel.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -3031,6 +2987,15 @@
     <Content Include="Areas\Admin\Views\Product\Create.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Edit.cshtml" />
     <Content Include="Areas\Admin\Views\Product\Delete.cshtml" />
+
+    <Content Include="Areas\Admin\Views\Brand\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\Order\_OrderList.cshtml" />
+
+    <Content Include="Areas\Admin\Views\User\AddUser.cshtml" />
+    <Content Include="Areas\Admin\Views\User\Index.cshtml" />
+    <Content Include="Areas\Admin\Views\User\EditUser.cshtml" />
+
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -3085,7 +3050,6 @@
     <Content Include="Views\Shared\_FileManagerLayout.cshtml" />
     <Content Include="Views\FileManager\Upload.cshtml" />
     <Content Include="Views\Banner\_ListBanners.cshtml" />
-    <Content Include="Views\Account\_OrderList.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\SignUp.cshtml" />
     <Content Include="Views\Error\PageNotFound.cshtml" />
@@ -3095,6 +3059,8 @@
     <Content Include="Views\Shared\_OtherLayout.cshtml" />
     <Content Include="Views\Product\Detail.cshtml" />
     <Content Include="Views\Cart\_CartItemsList.cshtml" />
+    <Content Include="Views\Order\_OrderList.cshtml" />
+    <Content Include="Views\Product\_HotProducts.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -3117,44 +3083,8 @@
     <Content Include="Scripts\jquery-3.4.1.min.map" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\202410271453084_InitialCreate.resx">
-      <DependentUpon>202410271453084_InitialCreate.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411051127211_AddCostPriceToProducts.resx">
-      <DependentUpon>202411051127211_AddCostPriceToProducts.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411151400071_CreateBanner.resx">
-      <DependentUpon>202411151400071_CreateBanner.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411171431010_Add Banners.resx">
-      <DependentUpon>202411171431010_Add Banners.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411240955370_Add Table UserProduct.resx">
-      <DependentUpon>202411240955370_Add Table UserProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411141424312_update.resx">
-      <DependentUpon>202411141424312_update.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411251320093_AddFieldClickInProduct.resx">
-      <DependentUpon>202411251320093_AddFieldClickInProduct.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411251519377_updateorder.resx">
-      <DependentUpon>202411251519377_updateorder.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411140402075_updatedModels.resx">
-      <DependentUpon>202411140402075_updatedModels.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411141251186_updateNewModel.resx">
-      <DependentUpon>202411141251186_updateNewModel.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202411251433216_updateCart.resx">
-      <DependentUpon>202411251433216_updateCart.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202412130444320_DropUsersTable.resx">
-      <DependentUpon>202412130444320_DropUsersTable.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\202412130452219_CreateUserTable.resx">
-      <DependentUpon>202412130452219_CreateUserTable.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\202412140942483_InitialCreate.resx">
+      <DependentUpon>202412140942483_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
@@ -3190,10 +3120,10 @@
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
     <Error Condition="!Exists('..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
-    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.5.1\build\EntityFramework.targets'))" />
   </Target>
-  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
+  <Import Project="..\packages\EntityFramework.6.5.1\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.5.1\build\EntityFramework.targets')" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

@@ -4,7 +4,7 @@
         e.preventDefault();
         var id = $(this).data('id');
         var quantity = 1;
-        var tQuantity = $('#quantity_value').text();
+        var tQuantity = $('#quantity_value').val();
         if (tQuantity != '') {
             quantity = parseInt(tQuantity);
         }

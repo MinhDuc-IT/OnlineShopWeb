@@ -18,6 +18,9 @@ namespace OnlineShopWeb.Models
         [Required]
         public int ProductId { get; set; }
         public int ViewNum { get; set; }
+
+        public DateTime? LastViewed { get; set; }
+
         [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
