@@ -19,7 +19,7 @@
                 @foreach (var brand in brands)
                 {
                     <li>
-                        <a href="#" data-brand-id="@brand.BrandId">
+                        <a href="/Home/GetProductsByBrand?brandId=@brand.BrandId">
                             <span class="pull-right">(@brand.ProductCount)</span>@brand.BrandName
                         </a>
                     </li>

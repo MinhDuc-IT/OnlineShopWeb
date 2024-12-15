@@ -19,9 +19,18 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             IEnumerable<Category> categories = db.Categories.ToList();
             return View(categories);
         }
-        public ActionResult GetCategoryByPage(int crrPage, int pageSize)
+        public ActionResult GetCategoryByPage(int crrPage, int pageSize, string searchText = "")
         {
-            var categories = db.Categories
+            var query = db.Categories.AsQueryable();
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(u => u.Name.Contains(searchText));
+            }
+
+            var totalRecords = query.Count();
+
+            var categories = query
                             .OrderBy(b => b.CategoryId)
                             .Skip((crrPage - 1) * pageSize)
                             .Take(pageSize)
@@ -34,7 +43,6 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                             })
                    .ToList();
 
-            var totalRecords = db.Categories.Count();
             return Json(new
             {
                 success = true,
