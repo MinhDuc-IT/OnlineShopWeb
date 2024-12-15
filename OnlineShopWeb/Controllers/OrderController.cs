@@ -130,26 +130,48 @@ namespace OnlineShopWeb.Controllers
             return View(order);
         }
 
+        //public ActionResult GetOrdersByStatus(string status = "All")
+        //{
+        //    ViewBag.Status = status;
+
+        //    if (Enum.TryParse(status, out OrderStatus parsedStatus))
+        //    {
+        //        if(parsedStatus == OrderStatus.All)
+        //        {
+        //            var orders = db.Orders.Include(o => o.OrderDetails).OrderByDescending(o => o.OrderDate).ToList();
+        //            return PartialView("_OrderList", orders);
+        //        }
+
+        //        var orderByStatus = db.Orders.Include(o => o.OrderDetails).Where(o => o.Status == parsedStatus).OrderByDescending(o => o.OrderDate).ToList();
+        //        return PartialView("_OrderList", orderByStatus);
+        //    }
+
+        //    var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
+        //    return PartialView("_OrderList", allOrders);
+        //}
+
         public ActionResult GetOrdersByStatus(string status = "All")
         {
             ViewBag.Status = status;
+            var userId = GetUserId();
 
             if (Enum.TryParse(status, out OrderStatus parsedStatus))
             {
-                if(parsedStatus == OrderStatus.All)
+                if (parsedStatus == OrderStatus.All)
                 {
-                    var orders = db.Orders.Include(o => o.OrderDetails).OrderByDescending(o => o.OrderDate).ToList();
+                    var orders = db.Orders.Include(o => o.OrderDetails)
+                        .Where(o => o.CustomerId == userId).OrderByDescending(o => o.OrderDate).ToList();
                     return PartialView("_OrderList", orders);
                 }
 
-                var orderByStatus = db.Orders.Include(o => o.OrderDetails).Where(o => o.Status == parsedStatus).OrderByDescending(o => o.OrderDate).ToList();
+                var orderByStatus = db.Orders.Include(o => o.OrderDetails)
+                    .Where(o => o.CustomerId == userId && o.Status == parsedStatus).OrderByDescending(o => o.OrderDate).ToList();
                 return PartialView("_OrderList", orderByStatus);
             }
 
-            var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
+            var allOrders = db.Orders.Where(o => o.CustomerId == userId).OrderByDescending(o => o.OrderDate).ToList();
             return PartialView("_OrderList", allOrders);
         }
-
 
         // Giải phóng tài nguyên
         protected override void Dispose(bool disposing)
