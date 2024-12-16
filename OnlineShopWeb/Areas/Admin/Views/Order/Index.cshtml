@@ -64,7 +64,7 @@
                                         ${item.OrderNotes ? ` -  ${item.OrderNotes}` : ''}
                                     </span>
                                 </div>
-                                <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span>
+                                <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span><br>
                                 <span class="payment-method">Phương thức thanh toán: ${item.PaymentMethod}</span>
                                 <div class="order-review-status">
                                     <strong>Tổng số tiền: <span class="review-status">${item.TotalAmount.toLocaleString()} đ</span></strong>
@@ -359,7 +359,6 @@
     }
 
     .order-header {
-        display: flex;
         justify-content: space-between;
         padding: 15px;
         background-color: #f9f9f9;

@@ -107,8 +107,8 @@
 @section Scripts {
     <script>
         const userInfo = {
-            Name: '@(userInfo?.Name ?? "")',
-            Address: '@(userInfo?.Address ?? "")',
+            Name: '@Html.Raw(userInfo?.Name ?? "")',
+            Address: '@Html.Raw(userInfo?.Address ?? "")',
             Phone: '@(userInfo?.Phone ?? "")',
             Email: '@(userInfo?.Email ?? "")'
         };
