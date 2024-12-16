@@ -199,6 +199,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Areas\Admin\Controllers\StatisticalController.cs" />
     <Compile Include="Controllers\BannerController.cs" />
+    <Compile Include="Controllers\BrandController.cs" />
     <Compile Include="Controllers\CartController.cs" />
     <Compile Include="Controllers\CategoryController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
@@ -2198,6 +2199,7 @@
     <Content Include="Content\Admin_Lib\CustomizeCss\ManageBanner.css" />
     <Content Include="Content\css\prettyPhoto.css" />
     <Content Include="Content\css\price-range.css" />
+    <Content Include="Content\css\ProductDetail.css" />
     <Content Include="Content\css\responsive.css" />
     <Content Include="Content\css\SearchPage.css" />
     <Content Include="Content\css\Slider.css" />
@@ -3021,6 +3023,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jsShopping.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
+    <Content Include="Scripts\ProductDetail.js" />
     <Content Include="Web.config" />
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -3074,6 +3077,8 @@
     <Content Include="Views\Cart\_CartItemsList.cshtml" />
     <Content Include="Views\Order\_OrderList.cshtml" />
     <Content Include="Views\Product\_HotProducts.cshtml" />
+    <Content Include="Views\Brand\Index.cshtml" />
+    <Content Include="Views\Brand\_ListBrand.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

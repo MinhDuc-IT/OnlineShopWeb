@@ -19,6 +19,8 @@ namespace OnlineShopWeb.Models
 
         public string Description { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         public virtual ICollection<Product> Products { get; set; }
     }
 }

@@ -4,7 +4,7 @@
 }
 <h2 class="title text-center"></h2>
 <div class="col-sm-3">
-    @Html.Partial("_SidebarPartial", new ViewDataDictionary(ViewData))
+    @Html.Partial("_SidebarPartial")
 </div>
 <div class="col-sm-9">
     <h2 class="title text-center">List products</h2>
@@ -12,7 +12,11 @@
     @if (Model == null || !Model.Any())
     {
         <div class="col-sm-12">
-            <p class="text-center">Không tồn tại sản phẩm trong kho.</p>
+            <div class="sp_empty">
+                <img src="~/Content/images/CustomImage/logoSearch.png" />
+                <div class="spe_title">Không có sản phẩm nào</div>
+                <div class="spe_hint">Hãy chọn mục khác và đợi các sản phẩm mới từ shop nhé</div>
+            </div>
         </div>
     }
     else
@@ -21,7 +25,7 @@
         foreach (var product in Model)
         {
             <div class="col-sm-4">
-                <div class="product-image-wrapper">
+                <div class="product-image-wrapper product-hover">
                     <div class="single-products">
                         <div class="productinfo text-center">
 

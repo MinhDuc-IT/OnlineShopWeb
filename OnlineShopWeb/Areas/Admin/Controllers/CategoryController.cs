@@ -16,12 +16,13 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         private ApplicationDbContext db = new ApplicationDbContext();
         public ActionResult Index()
         {
-            IEnumerable<Category> categories = db.Categories.ToList();
+            IEnumerable<Category> categories = db.Categories.Where(c => c.IsDeleted == false).ToList();
             return View(categories);
         }
         public ActionResult GetCategoryByPage(int crrPage, int pageSize, string searchText = "")
         {
             var query = db.Categories.AsQueryable();
+            query = query.Where(c => c.IsDeleted == false);
 
             if (!string.IsNullOrEmpty(searchText))
             {
