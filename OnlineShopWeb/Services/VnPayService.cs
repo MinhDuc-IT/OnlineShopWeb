@@ -43,12 +43,14 @@ namespace OnlineShopWeb.Helpers
                 }
             }
 
-            var vnp_orderId = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
+            var vnp_orderCode = Convert.ToInt64(vnpay.GetResponseData("vnp_TxnRef"));
             var vnp_amount = Convert.ToDouble(vnpay.GetResponseData("vnp_Amount"));
             var vnp_TransactionId = Convert.ToInt64(vnpay.GetResponseData("vnp_TransactionNo"));
             var vnp_SecureHash = collections["vnp_SecureHash"];
             var vnp_ResponseCode = vnpay.GetResponseData("vnp_ResponseCode");
             var vnp_OrderInfo = vnpay.GetResponseData("vnp_OrderInfo");
+            var vnp_PayDate = Convert.ToInt64(vnpay.GetResponseData("vnp_PayDate"));
+            var vnp_BankCode = vnpay.GetResponseData("vnp_BankCode");
 
             bool checkSignature = vnpay.ValidateSignature(vnp_SecureHash, ConfigurationManager.AppSettings["VnPay:HashSecret"]);
             if (!checkSignature)
@@ -62,13 +64,14 @@ namespace OnlineShopWeb.Helpers
             return new VnPaymentResponseModel
             {
                 Success = true,
-                PaymentMethod = "VnPay",
+                PaymentMethod = vnp_BankCode,
                 OrderDescription = vnp_OrderInfo,
-                OrderId = vnp_orderId.ToString(),
+                OrderCode = vnp_orderCode.ToString(),
                 Amount = vnp_amount,
                 TransactionId = vnp_TransactionId.ToString(),
                 Token = vnp_SecureHash,
-                VnPayResponseCode = vnp_ResponseCode
+                VnPayResponseCode = vnp_ResponseCode,
+                TransactionDate = vnp_PayDate.ToString(),
             };
         }
     }
