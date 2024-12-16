@@ -137,9 +137,49 @@ namespace OnlineShopWeb.Controllers
 
         public ActionResult CancelOrder(int orderId)
         {
-            // chuyển ỏder status = cancel, client lấy danh sách đơn hàng  thêm mục cancel
-            // hiển thị thêm tình trạng thanh toán và phương thức thanh toán
-            return PartialView("_OrderList");
+            // Tìm kiếm đơn hàng dựa trên orderId
+            var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+            // Kiểm tra nếu đơn hàng không tồn tại
+            if (order == null)
+            {
+                return Json(new { success = false, message = "Đơn hàng không tồn tại." });
+            }
+
+            // Kiểm tra nếu trạng thái đơn hàng không phải là "Processing"
+            if (order.Status != OrderStatus.Processing)
+            {
+                return Json(new { success = false, message = "Chỉ có thể hủy đơn hàng đang xử lý." });
+            }
+
+            // Xử lý ghi chú đơn hàng dựa trên trạng thái thanh toán và phương thức thanh toán
+            if (order.PaymentStatus == PaymentStatus.Completed && order.PaymentMethod == "NCB")
+            {
+                order.OrderNotes = "Đang xử lí hoàn tiền. Vui lòng chờ";
+            }
+            else if (order.PaymentStatus == PaymentStatus.Pending && order.PaymentMethod == "COD")
+            {
+                order.OrderNotes = "Hủy đơn hàng thành công";
+            }
+            else
+            {
+                // Nếu không thuộc các trường hợp trên
+                return Json(new { success = false, message = "Không thể hủy đơn hàng với trạng thái hiện tại." });
+            }
+
+            // Cập nhật trạng thái đơn hàng
+            order.Status = OrderStatus.Canceled;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            try
+            {
+                db.SaveChanges();
+                return Json(new { success = true, message = "Hủy đơn hàng thành công." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Lỗi khi hủy đơn hàng: {ex.Message}" }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult GetOrdersByStatus(string status = "All")

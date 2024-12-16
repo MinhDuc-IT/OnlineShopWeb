@@ -7,8 +7,17 @@
             <!-- Header Section -->
             <div class="order-header" data-order-id="@item.OrderId">
                 <div class="store-info">
-                    <span class="store-name">@item.OrderId</span>
-                    <span class="order-status">@item.Status</span>
+                    <div class="store-info">
+                        <span class="store-name">
+                            @item.OrderId - <span class="order-status">@item.Status</span>
+                            @if (!string.IsNullOrEmpty(item.OrderNotes))
+                            {
+                                <span> -  @item.OrderNotes</span>
+                            }
+                        </span>
+                    </div>
+                    <span class="payment-status">Trạng thái thanh toán: @item.PaymentStatus.ToString()</span>
+                    <span class="payment-method">Phương thức thanh toán: @item.PaymentMethod</span>
                 </div>
                 <div class="order-review-status">
                     <strong>Tổng số tiền: <span class="review-status">@item.ToTalAmount.ToString("0,0") đ</span></strong>
@@ -65,7 +74,24 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        gap: 5px; /* Thêm khoảng cách giữa các dòng */
     }
+
+    .payment-status, .payment-method {
+        font-size: 14px;
+        color: #555; /* Màu chữ trung tính */
+    }
+
+    .payment-status {
+        font-weight: bold; /* In đậm trạng thái thanh toán */
+        color: #007bff; /* Màu xanh dương */
+    }
+
+    .payment-method {
+        font-style: italic; /* Nghiêng để phân biệt phương thức */
+        color: #6c757d; /* Màu xám nhạt */
+    }
+
 
     .store-name {
         font-size: 18px;
