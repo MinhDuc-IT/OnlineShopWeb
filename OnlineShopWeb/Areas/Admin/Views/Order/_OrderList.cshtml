@@ -7,9 +7,16 @@
             <!-- Header Section -->
             <div class="order-header" data-order-id="@item.OrderId">
                 <div class="store-info">
-                    <span class="store-name">@item.OrderId</span>
-                    <span class="order-status">@item.Status</span>
+                    <span class="store-name">
+                        @item.OrderId - <span class="order-status">@item.Status</span>
+                        @if (!string.IsNullOrEmpty(item.OrderNotes))
+                        {
+                            <span> -  @item.OrderNotes</span>
+                        }
+                    </span>
                 </div>
+                <span class="payment-status">Trạng thái thanh toán: @item.PaymentStatus.ToString()</span>
+                <span class="payment-method">Phương thức thanh toán: @item.PaymentMethod</span>
                 <div class="order-review-status">
                     <strong>Tổng số tiền: <span class="review-status">@item.ToTalAmount.ToString("0,0") đ</span></strong>
                 </div>
@@ -39,102 +46,125 @@
                 @if (item.Status == OnlineShopWeb.Models.OrderStatus.Processing)
                 {
                     <button class="buy-confirm">Xác nhận</button>
+                    <button class="buy-cancel">Hủy</button>
+                }
+
+                @if (item.Status == OnlineShopWeb.Models.OrderStatus.Canceled && item.PaymentStatus == OnlineShopWeb.Models.PaymentStatus.Completed && item.PaymentMethod == "NCB")
+                {
+                    <button class="transaction-query">Truy vấn giao dịch</button>
+                    <button class="refund-request">Hoàn tiền</button>
                 }
             </div>
         </div>
-    </div> 
+    </div>
 }
 
 <style>
-        .order-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
 
-        .order-header {
-            display: flex;
-            justify-content: space-between;
-            padding: 15px;
-            background-color: #f9f9f9;
-            border-radius: 8px;
-            cursor: pointer; /* Thêm hiệu ứng con trỏ khi di chuột */
-        }
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        cursor: pointer; /* Thêm hiệu ứng con trỏ khi di chuột */
+    }
 
-        .store-info {
-            display: flex;
-            flex-direction: column;
-            align-items: flex-start;
-        }
+    .store-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px; /* Thêm khoảng cách giữa các dòng */
+    }
 
-        .store-name {
-            font-size: 18px;
-            font-weight: bold;
-            color: #333;
-        }
+    .payment-status, .payment-method {
+        font-size: 14px;
+        color: #555; /* Màu chữ trung tính */
+    }
 
-        .order-status {
-            font-size: 14px;
-            color: #888;
-        }
+    .payment-status {
+        font-weight: bold; /* In đậm trạng thái thanh toán */
+        color: #007bff; /* Màu xanh dương */
+    }
 
-        .order-review-status {
-            display: flex;
-            justify-content: flex-end;
-            align-items: center;
-        }
+    .payment-method {
+        font-style: italic; /* Nghiêng để phân biệt phương thức */
+        color: #6c757d; /* Màu xám nhạt */
+    }
 
-        .review-status {
-            font-size: 14px;
-            font-weight: bold;
-        }
+    .store-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
 
-        .product-list {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
+    .order-status {
+        font-size: 14px;
+        color: #888;
+    }
 
-        .product-item {
-            display: flex;
-            background-color: #fff;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            flex-direction: row;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
+    .order-review-status {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
 
-        .product-image-1 img {
-            max-width: 100px;
-            height: auto;
-            border-radius: 8px;
-        }
+    .review-status {
+        font-size: 14px;
+        font-weight: bold;
+    }
 
-        .product-info {
-            flex-grow: 1;
-            padding: 0 10px;
-        }
+    .product-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .product-item {
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .product-image-1 img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-info {
+        flex-grow: 1;
+        padding: 0 10px;
+    }
 
         .product-info h3 {
             font-size: 18px;
             font-weight: bold;
         }
 
-        .product-quantity, .product-price {
-            font-size: 14px;
-            color: #777;
-        }
+    .product-quantity, .product-price {
+        font-size: 14px;
+        color: #777;
+    }
 
         .product-price span {
             color: #e63946;
             font-weight: bold;
         }
 
-        .order-summary {
-            text-align: right;
-        }
+    .order-summary {
+        text-align: right;
+    }
 
         .order-summary p {
             font-size: 16px;
@@ -142,31 +172,31 @@
             margin-bottom: 10px;
         }
 
-        .order-header:hover {
-            background-color: #f0f0f0;
-        }
+    .order-header:hover {
+        background-color: #f0f0f0;
+    }
 
-        .order-details {
-            display: none;
-            transition: max-height 0.3s ease-in-out;
-            overflow: hidden;
-            position: relative; /* Thêm vị trí tương đối để đặt button bên trong */
-            padding-bottom: 60px; /* Dành không gian cho nút ở phía dưới */
-        }
+    .order-details {
+        display: none;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+        position: relative; /* Thêm vị trí tương đối để đặt button bên trong */
+        padding-bottom: 60px; /* Dành không gian cho nút ở phía dưới */
+    }
 
-        .buy-confirm {
-            position: absolute;
-            bottom: 10px; /* Đặt nút ở phía dưới */
-            right: 10px; /* Đặt nút ở phía bên phải */
-            background-color: #e63946; /* Màu nền đỏ */
-            color: white; /* Màu chữ trắng */
-            border: none;
-            border-radius: 5px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            transition: background-color 0.3s ease, transform 0.2s ease;
-        }
+    .buy-confirm {
+        position: absolute;
+        bottom: 10px; /* Đặt nút ở phía dưới */
+        right: 10px; /* Đặt nút ở phía bên phải */
+        background-color: #e63946; /* Màu nền đỏ */
+        color: white; /* Màu chữ trắng */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
 
         .buy-confirm:hover {
             background-color: #d62828; /* Màu nền khi hover */
@@ -176,5 +206,49 @@
         .buy-confirm:active {
             background-color: #c51717; /* Màu nền khi nhấn */
             transform: scale(1); /* Quay lại kích thước ban đầu */
+        }
+
+    /* Nút Truy vấn giao dịch */
+    .transaction-query {
+        background-color: #007bff; /* Màu nền xanh dương */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .transaction-query:hover {
+            background-color: #0056b3; /* Màu nền xanh dương đậm hơn khi hover */
+            transform: scale(1.05); /* Tăng kích thước khi hover */
+        }
+
+        .transaction-query:active {
+            background-color: #004085; /* Màu nền khi nhấn */
+            transform: scale(1);
+        }
+
+    /* Nút Hoàn tiền */
+    .refund-request {
+        background-color: #e63946; /* Màu nền đỏ */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .refund-request:hover {
+            background-color: #d62828; /* Màu nền đỏ đậm hơn khi hover */
+            transform: scale(1.05); /* Tăng kích thước khi hover */
+        }
+
+        .refund-request:active {
+            background-color: #c51717; /* Màu nền khi nhấn */
+            transform: scale(1);
         }
 </style>

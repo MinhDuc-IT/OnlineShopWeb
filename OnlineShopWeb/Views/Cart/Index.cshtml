@@ -29,7 +29,12 @@
 </head><!--/head-->
 
 <body>
-    <h1>@TempData["Message"]</h1>
+    @if (TempData["Message"] != null)
+    {
+        <script>
+        alert(@Html.Raw(Json.Encode(TempData["Message"])));
+        </script>
+    }
     <section id="cart_items">
         <div class="container">
             <div class="breadcrumbs">
@@ -47,7 +52,7 @@
         </div>
     </section> <!--/#cart_items-->
 
-    
+
 
     <script src="js/jquery.js"></script>
     <script src="js/bootstrap.min.js"></script>

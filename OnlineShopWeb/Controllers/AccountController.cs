@@ -107,6 +107,35 @@ namespace OnlineShopWeb.Controllers
         {
             return View();
         }
+
+        [HttpPost]
+        public JsonResult UpdateAddress(string province, string district, string ward, string details)
+        {
+            var sessionUser = Session["User"] as User;
+            if (sessionUser == null)
+            {
+                return Json(new { success = false, message = "User not found." });
+            }
+
+            var user = db.Users.FirstOrDefault(x => x.CustomerId == sessionUser.CustomerId);
+            if (user != null)
+            {
+                user.Address = $"{province}, {district}, {ward}, {details}";
+
+                db.SaveChanges();
+
+                user.Orders = null;
+                user.UserProducts = null;
+                user.Password = null;
+
+                Session["User"] = user;
+
+                return Json(new { success = true, message = "Địa chỉ đã được cập nhật." });
+            }
+
+            return Json(new { success = false, message = "Không tìm thấy người dùng." });
+        }
+
         public ActionResult myOrder()
         {
             return View();
@@ -155,7 +184,7 @@ namespace OnlineShopWeb.Controllers
             else
             {
                 user.Password = null;
-                user.Email = null;
+                //user.Email = null;
                 user.Avatar = null;
 
                 Session["User"] = user;

@@ -9,6 +9,8 @@
 [Dd]ebug/
 bin/
 obj/
+/obj/
+*.cache
 
 # User-specific files
 # Windows Installer files

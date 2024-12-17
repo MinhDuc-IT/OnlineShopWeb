@@ -39,6 +39,16 @@ namespace OnlineShopWeb.Models
         [Required]
         public OrderStatus Status { get; set; }
 
+        [StringLength(50)]
+        public string OrderCode { get; set; }
+
+        public string OrderNotes { get; set; }
+
+        [Required]
+        public string PaymentMethod {  get; set; }
+
+        public PaymentStatus PaymentStatus { get; set; }
+
         [ForeignKey("CustomerId")]
         public virtual User Customer { get; set; }
 
@@ -57,6 +67,16 @@ namespace OnlineShopWeb.Models
         Shipping,
 
         [Description("Delivered")]
-        Delivered
+        Delivered,
+
+        [Description("Canceled")]
+        Canceled,
+    }
+
+    public enum PaymentStatus
+    {
+        Pending, // Đang chờ thanh toán
+        Completed, // Thanh toán thành công
+        Refunded
     }
 }
