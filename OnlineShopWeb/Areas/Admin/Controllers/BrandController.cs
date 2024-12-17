@@ -23,7 +23,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         public JsonResult GetBrands(string searchTerm )
         {
             var branches = db.Brands
-                .Where(b => string.IsNullOrEmpty(searchTerm) || b.Name.Contains(searchTerm)&&b.IsDeleted==false)
+                .Where(b => string.IsNullOrEmpty(searchTerm) && b.IsDeleted == false || b.Name.Contains(searchTerm)&&b.IsDeleted==false)
                 .Select(b => new { b.BrandId, b.Name, b.Description })
                 .ToList();
 

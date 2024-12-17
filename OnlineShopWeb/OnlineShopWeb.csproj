@@ -227,6 +227,10 @@
     <Compile Include="Migrations\202412160349256_AddIsDeletedToBrand.designer.cs">
       <DependentUpon>202412160349256_AddIsDeletedToBrand.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412170234144_update.cs" />
+    <Compile Include="Migrations\202412170234144_update.designer.cs">
+      <DependentUpon>202412170234144_update.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -3094,6 +3098,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412160349256_AddIsDeletedToBrand.resx">
       <DependentUpon>202412160349256_AddIsDeletedToBrand.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412170234144_update.resx">
+      <DependentUpon>202412170234144_update.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
