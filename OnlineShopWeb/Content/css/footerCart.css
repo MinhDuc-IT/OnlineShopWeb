@@ -25,7 +25,7 @@
     }
 
     .fixed-footer #selectAll {
-        margin-right: 5px;
+        margin: 0 5px 0 0;
     }
 
     .fixed-footer .btn-group {
@@ -40,9 +40,13 @@
         color: white;
     }
 
-    .fixed-footer .btnDeleteSelected {
-        background-color: #ff4d4f;
-    }
+.fixed-footer label{
+    margin-bottom: 0px
+}
+
+.fixed-footer .btnDeleteSelected {
+    background-color: #ff4d4f;
+}
 
     .fixed-footer .btnPurchase {
         background-color: #4CAF50;

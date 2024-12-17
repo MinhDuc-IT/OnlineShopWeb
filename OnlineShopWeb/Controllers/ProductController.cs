@@ -246,7 +246,7 @@ namespace OnlineShopWeb.Controllers
                             .ToList()
                             .Select(b => new {
                                 b.ProductId,
-                                b.Price,
+                                price = b.Price.ToString("N0"),
                                 b.Name,
                                 b.Image
                             }).ToList();

@@ -36,16 +36,16 @@ namespace OnlineShopWeb.Controllers
             }
 
             // Tải danh sách thương hiệu
-            var brands = _context.Brands
-                .Select(b => new BrandViewModel
-                {
-                    BrandId = b.BrandId,
-                    BrandName = b.Name,
-                    ProductCount = _context.Products.Count(p => p.BrandId == b.BrandId)
-                })
-                .ToList();
+            //var brands = _context.Brands
+            //    .Select(b => new BrandViewModel
+            //    {
+            //        BrandId = b.BrandId,
+            //        BrandName = b.Name,
+            //        ProductCount = _context.Products.Count(p => p.BrandId == b.BrandId)
+            //    })
+            //    .ToList();
 
-            ViewData["Brands"] = brands;
+            //ViewData["Brands"] = brands;
             return View(products);
         }
 

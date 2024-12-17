@@ -1625,7 +1625,7 @@ h2.title {
 
 
 #cart_items .cart_info .cart_description h4 {
-    margin-bottom: 0
+    margin: 0
 }
 
     #cart_items .cart_info .cart_description h4 a {
@@ -1642,13 +1642,15 @@ h2.title {
 
 #cart_items .cart_info .cart_price p {
     color: #696763;
-    font-size: 18px
+    font-size: 18px;
+    margin: 0
 }
 
 
 #cart_items .cart_info .cart_total_price {
     color: #FE980F;
     font-size: 24px;
+    margin: 0px;
 }
 
 .cart_product {
