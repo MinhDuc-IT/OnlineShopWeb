@@ -33,84 +33,166 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             return View();
         }
 
-        public ActionResult GetOrdersByStatus(string status = "All")
+        //public ActionResult GetOrdersByStatus(string status = "All")
+        //{
+        //    // Kiểm tra nếu status có thể được chuyển đổi thành một giá trị hợp lệ của enum OrderStatus
+        //    if (Enum.TryParse(status, out OrderStatus parsedStatus))
+        //    {
+        //        // Nếu trạng thái là "All", lấy tất cả các đơn hàng và chuyển đổi sang OrderDTO
+        //        if (parsedStatus == OrderStatus.All)
+        //        {
+        //            var orders = db.Orders.Include(o => o.OrderDetails)
+        //                                  .OrderByDescending(o => o.OrderDate)
+        //                                  .ToList();
+        //            //return PartialView("_OrderList", orders);
+        //            var orderDTOs = orders.Select(order => new OrderDTO
+        //            {
+        //                OrderId = order.OrderId,
+        //                Status = order.Status.ToString(),
+        //                PaymentStatus = order.PaymentStatus.ToString(),
+        //                PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
+        //                TotalAmount = order.ToTalAmount,
+        //                OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
+        //                OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+        //                {
+        //                    ProductName = od.Product.Name,
+        //                    Quantity = od.Quantity,
+        //                    Price = od.Price,
+        //                    ProductImage = od.Product.Image  // Chuyển đổi ảnh thành base64
+        //                }).ToList()
+        //            }).ToList();
+        //            var jsonResult = JsonConvert.SerializeObject(orderDTOs, Formatting.Indented);
+        //            return Content(jsonResult, "application/json");
+        //        }
+
+        //        // Nếu trạng thái là một giá trị hợp lệ trong enum, lấy đơn hàng theo trạng thái đó
+        //        var orderByStatus = db.Orders.Include(o => o.OrderDetails)
+        //                                     .Where(o => o.Status == parsedStatus)
+        //                                     .OrderByDescending(o => o.OrderDate)
+        //                                     .ToList();
+
+        //        var orderByStatusDTOs = orderByStatus.Select(order => new OrderDTO
+        //        {
+        //            OrderId = order.OrderId,
+        //            Status = order.Status.ToString(),
+        //            PaymentStatus = order.PaymentStatus.ToString(),
+        //            PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
+        //            TotalAmount = order.ToTalAmount,
+        //            OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
+        //            OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+        //            {
+        //                ProductName = od.Product.Name,
+        //                Quantity = od.Quantity,
+        //                Price = od.Price,
+        //                ProductImage = od.Product.Image  // Chuyển đổi ảnh thành base64
+        //            }).ToList()
+        //        }).ToList();
+
+        //        var jsonResultByStatus = JsonConvert.SerializeObject(orderByStatusDTOs, Formatting.Indented);
+        //        return Content(jsonResultByStatus, "application/json");
+        //        //return Json(orderByStatusDTOs, JsonRequestBehavior.AllowGet);
+        //    }
+
+        //    // Nếu không truyền tham số trạng thái hợp lệ, trả về tất cả đơn hàng
+        //    var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
+        //    var allOrderDTOs = allOrders.Select(order => new OrderDTO
+        //    {
+        //        OrderId = order.OrderId,
+        //        Status = order.Status.ToString(),
+        //        PaymentStatus = order.PaymentStatus.ToString(),
+        //        PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
+        //        TotalAmount = order.ToTalAmount,
+        //        OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
+        //        OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+        //        {
+        //            ProductName = od.Product.Name,
+        //            Quantity = od.Quantity,
+        //            Price = od.Price,
+        //            ProductImage = od.Product.Image // Chuyển đổi ảnh thành base64
+        //        }).ToList()
+        //    }).ToList();
+        //    var jsonResultAll = JsonConvert.SerializeObject(allOrderDTOs, Formatting.Indented);
+        //    return Content(jsonResultAll, "application/json");
+        //    //return Json(allOrderDTOs, JsonRequestBehavior.AllowGet);
+        //}
+
+        public ActionResult GetOrdersByStatus(string status = "All", int page = 1, int pageSize = 4)
         {
-            // Kiểm tra nếu status có thể được chuyển đổi thành một giá trị hợp lệ của enum OrderStatus
-            if (Enum.TryParse(status, out OrderStatus parsedStatus))
+            try
             {
-                // Nếu trạng thái là "All", lấy tất cả các đơn hàng và chuyển đổi sang OrderDTO
-                if (parsedStatus == OrderStatus.All)
+                if (Enum.TryParse(status, out OrderStatus parsedStatus))
                 {
-                    var orders = db.Orders.Include(o => o.OrderDetails)
-                                          .OrderByDescending(o => o.OrderDate)
-                                          .ToList();
-                    //return PartialView("_OrderList", orders);
-                    var orderDTOs = orders.Select(order => new OrderDTO
+                    IQueryable<Order> query = db.Orders.Include(o => o.OrderDetails);
+
+                    // Nếu không phải "All", lọc theo trạng thái
+                    if (parsedStatus != OrderStatus.All)
+                    {
+                        query = query.Where(o => o.Status == parsedStatus);
+                    }
+
+                    // Tổng số đơn hàng
+                    int totalItems = query.Count();
+
+                    // Phân trang
+                    var pagedOrders = query.OrderByDescending(o => o.OrderDate)
+                                           .Skip((page - 1) * pageSize)
+                                           .Take(pageSize)
+                                           .ToList();
+
+                    // Chuyển đổi sang DTO
+                    var orderDTOs = pagedOrders.Select(order => new OrderDTO
                     {
                         OrderId = order.OrderId,
                         Status = order.Status.ToString(),
                         PaymentStatus = order.PaymentStatus.ToString(),
-                        PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
+                        PaymentMethod = order.PaymentMethod,
                         TotalAmount = order.ToTalAmount,
-                        OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
+                        OrderNotes = order.OrderNotes,
                         OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
                         {
                             ProductName = od.Product.Name,
                             Quantity = od.Quantity,
                             Price = od.Price,
-                            ProductImage = od.Product.Image  // Chuyển đổi ảnh thành base64
+                            ProductImage = od.Product.Image
                         }).ToList()
                     }).ToList();
 
-                    return Json(orderDTOs, JsonRequestBehavior.AllowGet);
+                    // Tạo object kết quả
+                    var result = new
+                    {
+                        success = true, // Trạng thái thành công
+                        message = "Lấy danh sách đơn hàng thành công.", // Thông báo
+                        data = new
+                        {
+                            CurrentPage = page,
+                            PageSize = pageSize,
+                            TotalItems = totalItems,
+                            TotalPages = (int)Math.Ceiling((double)totalItems / pageSize),
+                            Orders = orderDTOs
+                        }
+                    };
+
+                    var jsonResult = JsonConvert.SerializeObject(result, Formatting.Indented);
+                    return Content(jsonResult, "application/json");
+                    //return Json(result, JsonRequestBehavior.AllowGet);
                 }
 
-                // Nếu trạng thái là một giá trị hợp lệ trong enum, lấy đơn hàng theo trạng thái đó
-                var orderByStatus = db.Orders.Include(o => o.OrderDetails)
-                                             .Where(o => o.Status == parsedStatus)
-                                             .OrderByDescending(o => o.OrderDate)
-                                             .ToList();
-
-                var orderByStatusDTOs = orderByStatus.Select(order => new OrderDTO
+                // Trạng thái không hợp lệ
+                return Json(new
                 {
-                    OrderId = order.OrderId,
-                    Status = order.Status.ToString(),
-                    PaymentStatus = order.PaymentStatus.ToString(),
-                    PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
-                    TotalAmount = order.ToTalAmount,
-                    OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
-                    OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
-                    {
-                        ProductName = od.Product.Name,
-                        Quantity = od.Quantity,
-                        Price = od.Price,
-                        ProductImage = od.Product.Image  // Chuyển đổi ảnh thành base64
-                    }).ToList()
-                }).ToList();
-
-                return Json(orderByStatusDTOs, JsonRequestBehavior.AllowGet);
+                    success = false,
+                    message = "Tham số trạng thái không hợp lệ."
+                }, JsonRequestBehavior.AllowGet);
             }
-
-            // Nếu không truyền tham số trạng thái hợp lệ, trả về tất cả đơn hàng
-            var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
-            var allOrderDTOs = allOrders.Select(order => new OrderDTO
+            catch (Exception ex)
             {
-                OrderId = order.OrderId,
-                Status = order.Status.ToString(),
-                PaymentStatus = order.PaymentStatus.ToString(),
-                PaymentMethod = order.PaymentMethod,  // Thêm phương thức thanh toán
-                TotalAmount = order.ToTalAmount,
-                OrderNotes = order.OrderNotes,  // Thêm ghi chú đơn hàng
-                OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+                // Xử lý lỗi và trả về thông báo lỗi
+                return Json(new
                 {
-                    ProductName = od.Product.Name,
-                    Quantity = od.Quantity,
-                    Price = od.Price,
-                    ProductImage = od.Product.Image // Chuyển đổi ảnh thành base64
-                }).ToList()
-            }).ToList();
-
-            return Json(allOrderDTOs, JsonRequestBehavior.AllowGet);
+                    success = false,
+                    message = "Đã xảy ra lỗi khi lấy danh sách đơn hàng: " + ex.Message
+                }, JsonRequestBehavior.AllowGet);
+            }
         }
 
         public ActionResult ConfirmOrder(int orderId)
