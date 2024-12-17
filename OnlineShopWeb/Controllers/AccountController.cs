@@ -199,7 +199,13 @@ namespace OnlineShopWeb.Controllers
             Session["User"] = user;
             if (remember)
             {
-                string userJson = JsonConvert.SerializeObject(user);
+                var userData = new
+                {
+                    user.CustomerId,
+                    user.Name,
+                    user.Role
+                };
+                string userJson = JsonConvert.SerializeObject(userData);
                 var encryptData = Security.Encrypt(userJson);
                 HttpCookie authCookie = new HttpCookie("AuthCookie", encryptData)
                 {
