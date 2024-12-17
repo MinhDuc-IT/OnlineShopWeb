@@ -23,43 +23,10 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         {
             return View();
         }
-        //public ActionResult GetUserByPage(int crrPage, int pageSize, string searchText = "")
-        //{
-        //    var users = db.Users
-        //                    .OrderBy(b => b.CustomerId)
-        //                    .Skip((crrPage - 1) * pageSize)
-        //                    .Take(pageSize)
-        //                    .ToList()
-        //                    .Select(u => new
-        //                    {
-        //                        u.CustomerId,
-        //                        u.Name,
-        //                        u.Email,
-        //                        u.Phone,
-        //                        u.Address,
-        //                        u.Role,
-        //                        u.Gender,
-        //                        BirthDay = u.BirthDay.HasValue
-        //                         ? u.BirthDay.Value.ToString("dd/MM/yyyy")
-        //                         : null,
-        //                        ImageBase64 = u.Avatar != null ? Convert.ToBase64String(u.Avatar) : null,
-        //                    })
-        //           .ToList();
-
-        //    var totalRecords = db.Users.Count();
-        //    return Json(new
-        //    {
-        //        success = true,
-        //        data = users,
-        //        totalRecords = totalRecords,
-        //        totalPages = (int)Math.Ceiling((double)totalRecords / pageSize)
-        //    }, JsonRequestBehavior.AllowGet);
-        //}
         public ActionResult GetUserByPage(int crrPage, int pageSize, string searchText = "")
         {
             var query = db.Users.AsQueryable();
 
-            // Thêm điều kiện tìm kiếm nếu có từ khóa
             if (!string.IsNullOrEmpty(searchText))
             {
                 query = query.Where(u => u.Email.Contains(searchText));
@@ -133,12 +100,12 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                     DateTimeStyles.None,
                     out birthDate
                 );
-
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(Password);
                 var user = new User
                 {
                     Name = Name,
                     Email = Email,
-                    Password = Password,
+                    Password = hashedPassword,
                     Phone = Phone,
                     Address = Address,
                     Role = Role,

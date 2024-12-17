@@ -51,7 +51,7 @@ namespace OnlineShopWeb.Controllers
                 userInfo = new
                 {
                     Name = user.Name,
-                    Avatar = avatarBase64 
+                    Avatar = avatarBase64
                 }
             }, JsonRequestBehavior.AllowGet);
         }
@@ -64,7 +64,7 @@ namespace OnlineShopWeb.Controllers
             if (Request.Form["gender"] != null)
             {
                 int gender = int.Parse(Request.Form["gender"]);
-            user.Gender = gender;
+                user.Gender = gender;
             }
             string birthDay = Request.Form["birthDay"];
 
@@ -130,64 +130,70 @@ namespace OnlineShopWeb.Controllers
             string password = Request.Form["password"];
             string newPassord = Request.Form["newPassword"];
 
-            var user = db.Users.FirstOrDefault(u => u.Email == Email && u.Password == password);
-            if (user != null)
+            var user = db.Users.FirstOrDefault(u => u.Email == Email);
+            if (user == null)
             {
-                user.Password = newPassord;
-                db.SaveChanges();
-                return Json(new { success = true });
+                return Json(new { success = false, message = "Thông tin người dùng không chính xác" });
             }
-            return Json(new { success = false });
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return Json(new { success = false, message = "Thông tin người dùng không chính xác" });
+            }
+            var hashedPassword = BCrypt.Net.BCrypt.HashPassword(newPassord);
+            user.Password = hashedPassword;
+            db.SaveChanges();
+            return Json(new { success = true });
         }
         public ActionResult Login()
         {
             return View();
         }
         [HttpPost]
-        public ActionResult Login(string name, string password, bool remember)
+        public ActionResult Login(string email, string password, bool remember)
         {
-            var user = db.Users.FirstOrDefault(account => account.Email == name && account.Password == password);
+            var user = db.Users.FirstOrDefault(account => account.Email == email);
 
             if (user == null)
             {
                 return Json(new { success = false, message = "Sai thông tin đăng nhập" });
             }
+            if (!BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return Json(new { success = false, message = "Sai thông tin đăng nhập" });
+            }
+            user.Password = null;
+            user.Email = null;
+            user.Avatar = null;
+
+            Session["User"] = user;
+            if (remember)
+            {
+                string userJson = JsonConvert.SerializeObject(user);
+                var encryptData = Security.Encrypt(userJson);
+                HttpCookie authCookie = new HttpCookie("AuthCookie", encryptData)
+                {
+                    Expires = DateTime.Now.AddMinutes(30),
+                    HttpOnly = true,
+                };
+                Response.Cookies.Add(authCookie);
+            }
+            string redirectUrl = Session["CurrentUrl"] as string;
+
+            if (string.IsNullOrEmpty(redirectUrl))
+            {
+                redirectUrl = Url.Action("Index", "Home");
+            }
+            if (user.Role == "Admin")
+            {
+                return Json(new { success = true, name = user.Name, redirectUrl = Url.Action("Index", "Admin/Home") });
+            }
+            else if (user.Role == "User")
+            {
+                return Json(new { success = true, name = user.Name, redirectUrl = redirectUrl });
+            }
             else
             {
-                user.Password = null;
-                user.Email = null;
-                user.Avatar = null;
-
-                Session["User"] = user;
-                if (remember)
-                {
-                    string userJson = JsonConvert.SerializeObject(user);
-                    var encryptData = Security.Encrypt(userJson);
-                    HttpCookie authCookie = new HttpCookie("AuthCookie", encryptData)
-                    {
-                        Expires = DateTime.Now.AddMinutes(30),
-                        HttpOnly = true,
-                    };
-                    Response.Cookies.Add(authCookie);
-                }
-                string redirectUrl = Session["CurrentUrl"] as string;
-
-                if (string.IsNullOrEmpty(redirectUrl))
-                {
-                    redirectUrl = Url.Action("Index", "Home");
-                }
-                if (user.Role == "Admin")
-                {
-                    return Json(new { success = true, name = user.Name, redirectUrl = Url.Action("Index", "Admin/Home") });
-                }
-                else if (user.Role == "User")
-                {
-                    return Json(new { success = true, name = user.Name, redirectUrl = redirectUrl });
-                }
-                else
-                {
-                    return Json(new { success = false, message = "Vai trò không hợp lệ" });
-                }
+                return Json(new { success = false, message = "Vai trò không hợp lệ" });
             }
         }
         public ActionResult SignUp()
@@ -200,15 +206,16 @@ namespace OnlineShopWeb.Controllers
             var user = db.Users.FirstOrDefault(account => account.Email == email);
             if (user == null)
             {
-                if(password != confirmPassword)
+                if (password != confirmPassword)
                 {
                     return Json(new { success = false, Message = "Mật khẩu xác thực không chính xác" });
                 }
+                var hashedPassword = BCrypt.Net.BCrypt.HashPassword(password);
                 var newUser = new User
                 {
                     Name = name,
                     Email = email,
-                    Password = password,
+                    Password = hashedPassword,
                     Phone = phone,
                     Role = "User"
                 };
@@ -221,7 +228,7 @@ namespace OnlineShopWeb.Controllers
                 return Json(new { success = false, Message = "Email đã tồn tại" });
             }
         }
-        
+
         [HttpPost]
         public ActionResult logout()
         {

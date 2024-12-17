@@ -44,9 +44,9 @@
                             <a class="cart_quantity_down" data-id="@item.ProductId" href=""> - </a>
                         </div>
                     </td>
-                    <th class="cart_total">
-                        <p class="cart_total_price">@item.TotalPrice</p>
-                    </th>
+                    <td class="cart_total">
+                        <p class="cart_total_price">@item.TotalPrice.ToString("N0")<sup>đ</sup></p>
+                    </td>
                     <td class="cart_delete">
                         <a data-id="@item.ProductId" class="cart_quantity_delete" href="#"><i class="fa fa-times"></i></a>
                     </td>
