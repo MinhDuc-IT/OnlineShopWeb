@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
@@ -23,7 +23,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         public JsonResult GetBrands(string searchTerm )
         {
             var branches = db.Brands
-                .Where(b => string.IsNullOrEmpty(searchTerm) || b.Name.Contains(searchTerm))
+                .Where(b => string.IsNullOrEmpty(searchTerm) || b.Name.Contains(searchTerm)&&b.IsDeleted==false)
                 .Select(b => new { b.BrandId, b.Name, b.Description })
                 .ToList();
 
@@ -64,7 +64,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             var branch = db.Brands.FirstOrDefault(b => b.BrandId == branchId);
             if (branch != null)
             {
-                db.Brands.Remove(branch);
+                 branch.IsDeleted=true;
                 db.SaveChanges();
                 return Json(new { success = true });
             }
