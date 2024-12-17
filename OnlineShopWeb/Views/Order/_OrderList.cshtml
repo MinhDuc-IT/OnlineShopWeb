@@ -2,58 +2,57 @@
 
 @foreach (var item in Model)
 {
-    <div class="order-list">
-        <!-- Header Section -->
-        <div class="order-header" data-order-id="@item.OrderId">
-            <div class="store-info">
-                <span class="store-name">@item.OrderId</span>
-                <span class="order-status">@item.Status</span>
+    <div class="OrderListPartialView">
+        <div class="order-list">
+            <!-- Header Section -->
+            <div class="order-header" data-order-id="@item.OrderId">
+                <div class="store-info">
+                    <div class="store-info">
+                        <span class="store-name">
+                            @item.OrderId - <span class="order-status">@item.Status</span>
+                            @if (!string.IsNullOrEmpty(item.OrderNotes))
+                            {
+                                <span> -  @item.OrderNotes</span>
+                            }
+                        </span>
+                    </div>
+                    <span class="payment-status">Trạng thái thanh toán: @item.PaymentStatus.ToString()</span>
+                    <span class="payment-method">Phương thức thanh toán: @item.PaymentMethod</span>
+                </div>
+                <div class="order-review-status">
+                    <strong>Tổng số tiền: <span class="review-status">@item.ToTalAmount.ToString("0,0") đ</span></strong>
+                </div>
             </div>
-            <div class="order-review-status">
-                <strong>Tổng số tiền: <span class="review-status">@item.ToTalAmount.ToString("0,0") đ</span></strong>
-            </div>
-        </div>
 
-        <!-- Order Details Section (Initially Hidden) -->
-        <div class="order-details" data-order-id="@item.OrderId" style="display:none;">
-            @foreach (var orderItem in item.OrderDetails)
-            {
-                <div class="product-list">
-                    <div class="product-item">
-                        <div class="product-image">
-                            <img src="data:image/jpeg;base64,@orderItem.Product.Image" alt="@orderItem.Product.Name" style="width:150px;height:150px;object-fit:cover;" />
-                        </div>
-                        <div class="product-info">
-                            <h3>@orderItem.Product.Name</h3>
-                            <p class="product-quantity">x @orderItem.Quantity</p>
-                            <p class="product-price"><span>@orderItem.Product.Price.ToString("0,0") đ</span></p>
-                        </div>
-                        <div class="order-summary">
-                            <p>@((orderItem.Price * orderItem.Quantity).ToString("0,0")) đ</p>
+            <!-- Order Details Section (Initially Hidden) -->
+            <div class="order-details" data-order-id="@item.OrderId" style="display:none;">
+                @foreach (var orderItem in item.OrderDetails)
+                {
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-image-1">
+                                <img src="data:image/jpeg;base64,@orderItem.Product.Image" alt="@orderItem.Product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                            </div>
+                            <div class="product-info">
+                                <h3>@orderItem.Product.Name</h3>
+                                <p class="product-quantity">x @orderItem.Quantity</p>
+                                <p class="product-price"><span>@orderItem.Product.Price.ToString("0,0") đ</span></p>
+                            </div>
+                            <div class="order-summary">
+                                <p>@((orderItem.Price * orderItem.Quantity).ToString("0,0")) đ</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-            }
+                }
 
-            @*@if (item.Status == OnlineShopWeb.Models.OrderStatus.Processing)
-            {
-                <button class="buy-cancel">Hủy</button>
-            }*@
+                @if (item.Status == OnlineShopWeb.Models.OrderStatus.Processing)
+                {
+                    <button class="buy-cancel">Hủy</button>
+                }
+            </div>
         </div>
     </div>
 }
-
-<script>
-    $(document).ready(function () {
-        // Event delegation để bắt sự kiện click của các phần tử mới được tải vào DOM
-        $(document).on('click', '.order-header', function () {
-            var orderId = $(this).data('order-id');
-            var orderDetails = $('.order-details[data-order-id="' + orderId + '"]');
-
-            orderDetails.toggle();
-        });
-    });
-</script>
 
 <style>
     .order-list {
@@ -75,7 +74,24 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+        gap: 5px; /* Thêm khoảng cách giữa các dòng */
     }
+
+    .payment-status, .payment-method {
+        font-size: 14px;
+        color: #555; /* Màu chữ trung tính */
+    }
+
+    .payment-status {
+        font-weight: bold; /* In đậm trạng thái thanh toán */
+        color: #007bff; /* Màu xanh dương */
+    }
+
+    .payment-method {
+        font-style: italic; /* Nghiêng để phân biệt phương thức */
+        color: #6c757d; /* Màu xám nhạt */
+    }
+
 
     .store-name {
         font-size: 18px;
@@ -116,7 +132,7 @@
         align-items: flex-start;
     }
 
-    .product-image img {
+    .product-image-1 img {
         max-width: 100px;
         height: auto;
         border-radius: 8px;
@@ -160,8 +176,8 @@
         display: none;
         transition: max-height 0.3s ease-in-out;
         overflow: hidden;
-        //position: relative; /* Thêm vị trí tương đối để đặt button bên trong */
-        //padding-bottom: 60px; /* Dành không gian cho nút ở phía dưới */
+        position: relative; /* Thêm vị trí tương đối để đặt button bên trong */
+        padding-bottom: 60px; /* Dành không gian cho nút ở phía dưới */
     }
 
     .buy-cancel {
@@ -187,6 +203,4 @@
             background-color: #c51717; /* Màu nền khi nhấn */
             transform: scale(1); /* Quay lại kích thước ban đầu */
         }
-
-
 </style>

@@ -13,6 +13,7 @@ using OnlineShopWeb.ViewModels;
 using OnlineShopWeb.Helpers;
 using System.Diagnostics;
 using System.Security.Claims;
+using AngleSharp.Io;
 
 namespace OnlineShopWeb.Controllers
 {
@@ -63,7 +64,11 @@ namespace OnlineShopWeb.Controllers
                 return Redirect(vnPayService.CreatePaymentUrl(httpContext, vnPayModel));
             }
 
-            TempData["Message"] = "Lỗi thanh toán VNPay";
+            if (paymentRequest.PaymentMethod == "COD")
+            {
+                return ProcessCODPayment(paymentRequest);
+            }
+            TempData["Message"] = "Phương thức thanh toán không hỗ trợ";
             return RedirectToAction("PaymentFail");
         }
 
@@ -91,7 +96,7 @@ namespace OnlineShopWeb.Controllers
                 return RedirectToAction("PaymentFail");
             }
 
-            return ProcessOrder(userId, orderItems, (decimal)response.Amount);
+            return ProcessNCBOrder(userId, orderItems, response);
         }
 
         // Hiển thị thông báo lỗi thanh toán
@@ -130,25 +135,52 @@ namespace OnlineShopWeb.Controllers
             return View(order);
         }
 
-        //public ActionResult GetOrdersByStatus(string status = "All")
-        //{
-        //    ViewBag.Status = status;
+        public ActionResult CancelOrder(int orderId)
+        {
+            // Tìm kiếm đơn hàng dựa trên orderId
+            var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
-        //    if (Enum.TryParse(status, out OrderStatus parsedStatus))
-        //    {
-        //        if(parsedStatus == OrderStatus.All)
-        //        {
-        //            var orders = db.Orders.Include(o => o.OrderDetails).OrderByDescending(o => o.OrderDate).ToList();
-        //            return PartialView("_OrderList", orders);
-        //        }
+            // Kiểm tra nếu đơn hàng không tồn tại
+            if (order == null)
+            {
+                return Json(new { success = false, message = "Đơn hàng không tồn tại." });
+            }
 
-        //        var orderByStatus = db.Orders.Include(o => o.OrderDetails).Where(o => o.Status == parsedStatus).OrderByDescending(o => o.OrderDate).ToList();
-        //        return PartialView("_OrderList", orderByStatus);
-        //    }
+            // Kiểm tra nếu trạng thái đơn hàng không phải là "Processing"
+            if (order.Status != OrderStatus.Processing)
+            {
+                return Json(new { success = false, message = "Chỉ có thể hủy đơn hàng đang xử lý." });
+            }
 
-        //    var allOrders = db.Orders.OrderByDescending(o => o.OrderDate).ToList();
-        //    return PartialView("_OrderList", allOrders);
-        //}
+            // Xử lý ghi chú đơn hàng dựa trên trạng thái thanh toán và phương thức thanh toán
+            if (order.PaymentStatus == PaymentStatus.Completed && order.PaymentMethod == "NCB")
+            {
+                order.OrderNotes = "Đang xử lí hoàn tiền. Vui lòng chờ";
+            }
+            else if (order.PaymentStatus == PaymentStatus.Pending && order.PaymentMethod == "COD")
+            {
+                order.OrderNotes = "Hủy đơn hàng thành công";
+            }
+            else
+            {
+                // Nếu không thuộc các trường hợp trên
+                return Json(new { success = false, message = "Không thể hủy đơn hàng với trạng thái hiện tại." });
+            }
+
+            // Cập nhật trạng thái đơn hàng
+            order.Status = OrderStatus.Canceled;
+
+            // Lưu thay đổi vào cơ sở dữ liệu
+            try
+            {
+                db.SaveChanges();
+                return Json(new { success = true, message = "Hủy đơn hàng thành công." }, JsonRequestBehavior.AllowGet);
+            }
+            catch (Exception ex)
+            {
+                return Json(new { success = false, message = $"Lỗi khi hủy đơn hàng: {ex.Message}" }, JsonRequestBehavior.AllowGet);
+            }
+        }
 
         public ActionResult GetOrdersByStatus(string status = "All")
         {
@@ -213,7 +245,7 @@ namespace OnlineShopWeb.Controllers
         }
 
         // Xử lý logic đặt hàng
-        private ActionResult ProcessOrder(int userId, List<OrderItem> orderItems, decimal? amount)
+        private ActionResult ProcessNCBOrder(int userId, List<OrderItem> orderItems, VnPaymentResponseModel response)
         {
             using (var transaction = db.Database.BeginTransaction())
             {
@@ -225,15 +257,82 @@ namespace OnlineShopWeb.Controllers
                     var newOrder = new Order
                     {
                         CustomerId = userId,
-                        OrderDate = DateTime.Now,
-                        ToTalAmount = amount/100 ?? 0,
+                        OrderDate = DateTime.ParseExact(response.TransactionDate, "yyyyMMddHHmmss", null),
+                        ToTalAmount = response.Amount != null ? ((decimal)response.Amount) / 100 : 0,
                         RecipientName = orderInfo.FullName,
                         RecipientAddress = orderInfo.Address,
                         RecipientPhoneNumber = orderInfo.Mobile,
-                        Status = OrderStatus.Processing
+                        Status = OrderStatus.Processing,
+                        OrderCode = response.OrderCode,
+                        PaymentMethod = response.PaymentMethod,
+                        OrderNotes = orderInfo.OrderNotes,
+                        PaymentStatus = PaymentStatus.Completed,
                     };
                     db.Orders.Add(newOrder);
                     db.SaveChanges();
+
+                    // Thêm chi tiết đơn hàng
+                    var orderDetails = orderItems.Select(item => new OrderDetail
+                    {
+                        OrderId = newOrder.OrderId,
+                        ProductId = item.ProductId,
+                        Price = item.Price,
+                        Quantity = item.Quantity
+                    }).ToList();
+                    db.OrderDetails.AddRange(orderDetails);
+
+                    // Cập nhật sản phẩm
+                    UpdateProductStock(orderItems);
+
+                    // Xóa sản phẩm trong giỏ hàng
+                    ClearCart(userId, orderItems);
+
+                    ClearSession();
+
+                    transaction.Commit();
+                    TempData["Message"] = "Thanh toán VNPay thành công";
+                    return RedirectToAction("PaymentSuccess");
+                }
+                catch
+                {
+                    transaction.Rollback();
+                    TempData["Message"] = "Đã xảy ra lỗi trong quá trình xử lý thanh toán.";
+                    return RedirectToAction("PaymentFail");
+                }
+            }
+        }
+
+        private ActionResult ProcessCODPayment(PaymentRequest paymentRequest)
+        {
+            var userId = GetUserId();
+
+            using (var transaction = db.Database.BeginTransaction())
+            {
+                try
+                {
+                    // Thêm đơn hàng
+                    var newOrder = new Order
+                    {
+                        CustomerId = userId,
+                        OrderDate = DateTime.Now,
+                        ToTalAmount = (decimal)paymentRequest.Total,
+                        RecipientName = paymentRequest.FullName,
+                        RecipientAddress = paymentRequest.Address,
+                        RecipientPhoneNumber = paymentRequest.Mobile,
+                        Status = OrderStatus.Processing,
+                        PaymentMethod = paymentRequest.PaymentMethod,
+                        OrderNotes = paymentRequest.OrderNotes,
+                        PaymentStatus = PaymentStatus.Pending
+                    };
+                    db.Orders.Add(newOrder);
+                    db.SaveChanges();
+
+                    var orderItems = Session["OrderItems"] as List<OrderItem>;
+                    if (orderItems == null || !orderItems.Any())
+                    {
+                        TempData["Message"] = "Không có sản phẩm nào trong đơn hàng.";
+                        return RedirectToAction("PaymentFail");
+                    }
 
                     // Thêm chi tiết đơn hàng
                     var orderDetails = orderItems.Select(item => new OrderDetail
