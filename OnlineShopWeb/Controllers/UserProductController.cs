@@ -59,12 +59,13 @@ namespace OnlineShopWeb.Controllers
             {
                 var user = db.Users.FirstOrDefault(u => u.CustomerId == userSession.CustomerId);
 
-                if(user != null)
+                if (user != null)
                 {
                     var recommendedProducts = user.UserProducts
-                                       .Where(up => up.ViewNum > 0 ||
-                            (up.LastViewed.HasValue && up.LastViewed.Value >= DateTime.Now.AddDays(-7)))
-                                       .OrderByDescending(up => up.ViewNum) 
+                                       .Where(up => (up.ViewNum > 0 ||
+                                (up.LastViewed.HasValue && up.LastViewed.Value >= DateTime.Now.AddDays(-7)))
+                                && !up.Product.IsDeleted) 
+                                       .OrderByDescending(up => up.ViewNum)
                                        .ThenByDescending(up => up.LastViewed)
                                        .Select(up => up.Product)
                                        .Take(10)
@@ -73,8 +74,9 @@ namespace OnlineShopWeb.Controllers
                     if (recommendedProducts.Count < 10)
                     {
                         var additionalProducts = user.UserProducts
-                            .Where(up => up.ViewNum > 0 ||
+                            .Where(up => (up.ViewNum > 0 ||
                             (up.LastViewed.HasValue && up.LastViewed.Value >= DateTime.Now.AddDays(-30)))
+                            && !up.Product.IsDeleted)
                             .OrderByDescending(up => up.ViewNum)
                             .ThenByDescending(up => up.LastViewed)
                             .Select(up => up.Product)
