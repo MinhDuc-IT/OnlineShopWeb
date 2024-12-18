@@ -7,7 +7,7 @@
     {
         <li>
             <a href="/Home/GetProductsByBrand?brandId=@brand.BrandId">
-                <span class="pull-right">(@brand.Products.Count)</span>@brand.Name
+                <span class="pull-right">(@brand.Products.Count(p=>p.IsDeleted == false))</span>@brand.Name
             </a>
         </li>
     }

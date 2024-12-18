@@ -20,7 +20,7 @@ namespace OnlineShopWeb.Controllers
         [AllowAnonymous]
         public ActionResult ListBrand()
         {
-            var items = db.Brands.ToList();
+            var items = db.Brands.Where(x => x.IsDeleted == false).ToList();
             return PartialView("_ListBrand", items);
         }
     }

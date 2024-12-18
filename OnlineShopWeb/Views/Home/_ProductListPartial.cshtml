@@ -8,7 +8,6 @@
 </div>
 <div class="col-sm-9">
     <h2 class="title text-center">List products</h2>
-
     @if (Model == null || !Model.Any())
     {
         <div class="col-sm-12">
@@ -22,9 +21,9 @@
     else
     {
 
-        foreach (var product in Model)
+        foreach (var product in Model.Where(p => !p.IsDeleted))
         {
-            <div class="col-sm-4">
+            <div class="col-sm-4" >
                 <div class="product-image-wrapper product-hover">
                     <div class="single-products">
                         <div class="productinfo text-center">

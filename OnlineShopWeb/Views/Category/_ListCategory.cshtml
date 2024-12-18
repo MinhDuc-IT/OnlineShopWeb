@@ -7,7 +7,7 @@
 {
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h4 class="panel-title"><a href="/Home/GetProductsByCategory?categoryId=@item.CategoryId"><span class="pull-right">(@item.Products.Count)</span>@item.Name</a>
+            <h4 class="panel-title"><a href="/Home/GetProductsByCategory?categoryId=@item.CategoryId"><span class="pull-right">(@item.Products.Count(p => p.IsDeleted == false))</span>@item.Name</a>
         </div>
     </div>
 }
