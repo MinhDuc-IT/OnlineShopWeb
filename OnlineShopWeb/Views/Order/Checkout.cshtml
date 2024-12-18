@@ -45,7 +45,7 @@
                                     <th scope="col">Name</th>
                                     <th scope="col">Price</th>
                                     <th scope="col">Quantity</th>
-                                    <th scope="col">Total</th>
+                                    <th scope="col" >Total</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -76,7 +76,7 @@
                                     <td class="py-5"></td>
                                     <td class="py-5"></td>
                                     <td class="py-5">
-                                        <input type="text" class="form-control total" name="Total" value="0" readonly>
+                                        <input type="text" class="form-control total" name="Total" value="0" readonly style="width: 110px;">
                                     </td>
                                 </tr>
                             </tbody>
@@ -175,6 +175,43 @@
                 }
             });*@
 
+        //    $('form').on('submit', function (event) {
+        //        const mobileInput = document.getElementById('Mobile');
+
+        //        let isValid = true;
+
+        //        // Validate Mobile
+        //        const mobileValue = mobileInput.value.trim();
+        //        const mobileRegex = /^[0-9]{10,15}$/; // Chấp nhận số từ 10 đến 15 ký tự
+        //        if (!mobileRegex.test(mobileValue)) {
+        //            showError(mobileInput, 'Số điện thoại không hợp lệ. Vui lòng nhập 10-15 chữ số.');
+        //            isValid = false;
+        //        } else {
+        //            showSuccess(mobileInput);
+        //        }
+
+        //        const paymentMethodSelected = $('input[name="PaymentMethod"]:checked');
+        //        if (paymentMethodSelected.length === 0) {
+        //            toastr.warning("Please select a payment method.");
+        //            isValid = false;
+        //        }
+
+        //        // Ngăn gửi form nếu không hợp lệ
+        //        if (!isValid) {
+        //            event.preventDefault();
+        //        }
+        //    });
+        //});
+
+        //function UpdateTotal() {
+        //    var total = 0;
+        //    $('.total-price').each(function () {
+        //        var subTotal = parseFloat($(this).text().replace(/[^0-9.-]+/g, "")) || 0;
+        //        total += subTotal;
+        //    });
+        //    $('.total').val(total.toFixed(0));
+        //}
+
             $('form').on('submit', function (event) {
                 const mobileInput = document.getElementById('Mobile');
 
@@ -196,6 +233,14 @@
                     isValid = false;
                 }
 
+                var totalValue = $('.total').val();
+
+                // Loại bỏ dấu phân cách hàng nghìn (.)
+                totalValue = totalValue.replace(/\./g, '');
+
+                // Gán lại giá trị đã loại bỏ dấu chấm vào input .total
+                $('.total').val(totalValue);
+
                 // Ngăn gửi form nếu không hợp lệ
                 if (!isValid) {
                     event.preventDefault();
@@ -209,7 +254,10 @@
                 var subTotal = parseFloat($(this).text().replace(/[^0-9.-]+/g, "")) || 0;
                 total += subTotal;
             });
-            $('.total').val(total.toFixed(0));
+            var formattedTotal = new Intl.NumberFormat('vi-VN').format(total);
+
+            // Cập nhật giá trị vào ô total
+            $('.total').val(formattedTotal);;
         }
 
         // Hàm hiển thị lỗi

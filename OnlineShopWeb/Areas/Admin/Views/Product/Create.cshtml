@@ -137,13 +137,28 @@
             });
 
             // Xử lý submit form
-            $('form').submit(function () {
+            $('form').submit(function (e) {
+                e.preventDefault();
+
+                const price = parseFloat($('[name="Price"]').val());
+                const costPrice = parseFloat($('[name="CostPrice"]').val());
+
+                if (isNaN(price) || isNaN(costPrice)) {
+                    toastr.error('Price and Cost Price must be valid numbers.', 'Validation Error');
+                    return false;
+                }
+
+                if (costPrice >= price) {
+                    toastr.warning('Cost Price must be less than Price.', 'Validation Warning');
+                    return false;
+                }
                 var editorContent = $('#description-editor').html();
                 $('<input>').attr({
                     type: 'hidden',
                     name: 'Description',
                     value: editorContent
                 }).appendTo('form');
+                this.submit();
             });
         </script>
     }

@@ -153,28 +153,55 @@ namespace OnlineShopWeb.Controllers
             return Json(new { success = true, newQuantity = cartItem.Quantity, newTotalPrice = cartItem.TotalPrice, cartCount = cart.CartItems.Count });
         }
 
+        //[HttpPost]
+        //public ActionResult DecreaseQuantity(int id)
+        //{
+        //    //Cart cart = (Cart)Session["Cart"];
+        //    var db = new ApplicationDbContext();
+        //    var SessionUser = Session["User"] as User;
+        //    var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
+        //    //int userId = 5;
+        //    var cart = GetCartFromDatabase(db, user.CustomerId);
+        //    var cartItem = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == user.CustomerId);
+        //    if (cartItem != null && cartItem.Quantity > 0)
+        //    {
+        //        cartItem.Quantity--;
+        //        if (cartItem.Quantity == 0)
+        //            db.CartItems.Remove(cartItem);
+        //        else
+        //            cartItem.TotalPrice = cartItem.Quantity * cartItem.Price;
+
+        //        //Session["Cart"] = cart;
+        //        db.SaveChanges();
+        //    }
+        //    return Json(new { success = true, newQuantity = cartItem?.Quantity ?? 0, newTotalPrice = cartItem?.TotalPrice ?? 0, cartCount = cart.CartItems.Count });
+        //}
+
         [HttpPost]
         public ActionResult DecreaseQuantity(int id)
         {
-            //Cart cart = (Cart)Session["Cart"];
             var db = new ApplicationDbContext();
             var SessionUser = Session["User"] as User;
             var user = db.Users.FirstOrDefault(x => x.CustomerId == SessionUser.CustomerId);
-            //int userId = 5;
             var cart = GetCartFromDatabase(db, user.CustomerId);
             var cartItem = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == user.CustomerId);
+
             if (cartItem != null && cartItem.Quantity > 0)
             {
                 cartItem.Quantity--;
-                if (cartItem.Quantity == 0)
-                    db.CartItems.Remove(cartItem);
-                else
-                    cartItem.TotalPrice = cartItem.Quantity * cartItem.Price;
+                cartItem.TotalPrice = cartItem.Quantity * cartItem.Price;
 
-                //Session["Cart"] = cart;
+                // Không xóa sản phẩm ngay lập tức
+                // Nếu số lượng giảm xuống 0, trả về thông báo cho client
+                if (cartItem.Quantity == 0)
+                {
+                    return Json(new { success = true, newQuantity = 0, newTotalPrice = 0, cartCount = cart.CartItems.Count, removeItem = true });
+                }
+
                 db.SaveChanges();
             }
-            return Json(new { success = true, newQuantity = cartItem?.Quantity ?? 0, newTotalPrice = cartItem?.TotalPrice ?? 0, cartCount = cart.CartItems.Count });
+
+            return Json(new { success = true, newQuantity = cartItem.Quantity, newTotalPrice = cartItem.TotalPrice, cartCount = cart.CartItems.Count, removeItem = false });
         }
 
         [HttpPost]

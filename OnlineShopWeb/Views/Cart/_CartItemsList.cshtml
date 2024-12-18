@@ -1,5 +1,16 @@
 ﻿@model IEnumerable<OnlineShopWeb.Models.CartItem>
 
+<style>
+    .cart_description h4 {
+    max-width: 250px; /* Adjust this value based on your needs */
+    word-wrap: break-word;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Number of lines to show */
+    -webkit-box-orient: vertical;
+}
+</style>
 
 <table class="table table-condensed">
     <thead>
@@ -26,7 +37,7 @@
                 <tr id="trow_@item.ProductId">
                     <td class="cart_product">
                         <input type="checkbox" class="item-select" data-price="@item.TotalPrice" data-id="@item.ProductId">
-                        
+
                         <a href="/Product/Detail/@item.ProductId">
                             <img src="data:image/jpeg;base64,@item.Product.Image" alt="@item.Product.Name" style="width:150px;height:150px;object-fit:cover;" />
                         </a>
@@ -69,7 +80,7 @@
                 </div>
             </div>
             <div class="sum">
-                <strong>Sum:</strong> <span id="sum">@sum <sup>đ</sup></span>
+                <strong>Sum:</strong> <span id="sum">@sum.ToString("N0") <sup>đ</sup></span>
             </div>
         </div>
 
