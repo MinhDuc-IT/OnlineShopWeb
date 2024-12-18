@@ -37,7 +37,7 @@
                             <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })">
                                 <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
                             </a>
-                            <h2>@product.Price.ToString("N0") VNĐ</h2>
+                            <h2>@product.Price.ToString("N0") <sup>đ</sup></h2>
                             <p>@product.Name</p>
                             <a href="#" class="btn btn-default add-to-cart btnAddToCart" data-id="@product.ProductId">
                                 <i class="fa fa-shopping-cart "></i>Add to cart

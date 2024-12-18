@@ -16,14 +16,37 @@
 }
 
 <section class="content">
-    <div class="row" style="padding-top: 10px">
-        <div class="col-md-6" style=" display: flex">
-            <label style="margin: 0px" for="datePicker">Chọn ngày:</label>
+    @*<div class="row" style="padding-top: 10px">
+            <div class="col-md-6" style=" display: flex">
+                <label style="margin: 0px" for="datePicker">Chọn ngày:</label>
+                <div class="col-md-6">
+                    <input type="date" id="datePicker" class="form-control" />
+                </div>
+            </div>
             <div class="col-md-6">
+                <div class="card card-success">
+                    <div class="card-header">
+                        <h3 class="card-title">Doanh thu theo tuần</h3>
+                    </div>
+                    <div class="card-body">
+                        <canvas id="barChart" style="height: 250px;"></canvas>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+    <div class="row" style="padding-top: 10px">
+        <!-- Phần chọn ngày -->
+        <div class="col-md-12" style="display: flex; align-items: center;">
+            <label style="margin-right: 10px;" for="datePicker">Chọn ngày:</label>
+            <div style="width: 200px;">
                 <input type="date" id="datePicker" class="form-control" />
             </div>
         </div>
-        <div class="col-md-6">
+    </div>
+
+    <!-- Phần biểu đồ doanh thu -->
+    <div class="row" style="padding-top: 10px;">
+        <div class="col-md-7">
             <div class="card card-success">
                 <div class="card-header">
                     <h3 class="card-title">Doanh thu theo tuần</h3>
@@ -34,6 +57,7 @@
             </div>
         </div>
     </div>
+
     <div class="card">
         <div class="card-header border-transparent">
             <h3 class="card-title">Latest Orders</h3>
