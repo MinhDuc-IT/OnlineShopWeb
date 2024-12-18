@@ -44,6 +44,20 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             return Json(new { success = true });
         }
 
+        //[HttpPost]
+        //public JsonResult EditBrand(int branchId, string name, string description)
+        //{
+        //    var branch = db.Brands.FirstOrDefault(b => b.BrandId == branchId);
+        //    if (branch != null)
+        //    {
+        //        branch.Name = name;
+        //        branch.Description = description;
+        //        db.SaveChanges();
+        //        return Json(new { success = true });
+        //    }
+        //    return Json(new { success = false, message = "Brand not found" });
+        //}
+
         [HttpPost]
         public JsonResult EditBrand(int branchId, string name, string description)
         {
@@ -52,11 +66,20 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             {
                 branch.Name = name;
                 branch.Description = description;
-                db.SaveChanges();
-                return Json(new { success = true });
+
+                try
+                {
+                    db.SaveChanges();
+                    return Json(new { success = true });
+                }
+                catch (Exception ex)
+                {
+                    return Json(new { success = false, message = ex.Message });
+                }
             }
             return Json(new { success = false, message = "Brand not found" });
         }
+
 
         [HttpPost]
         public JsonResult DeleteBrand(int branchId)
