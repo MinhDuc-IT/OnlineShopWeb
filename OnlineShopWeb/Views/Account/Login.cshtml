@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Login";
+    Layout = "~/Views/Shared/_EmptyLayout.cshtml";
+}
+
+<div class="form-login">
+    <form id="myForm">
+        <div class="FL-header">
+            Đăng nhập
+        </div>
+        <div class="FL-main">
+            <div class="form-group">
+                <input type="email" name="email" id="email" class="form-control" placeholder="Your Email" required>
+            </div>
+            <div class="form-group">
+                <input type="password" name="password" id="Password" class="form-control" placeholder="Your Password" required>
+                <i id="FL-eye-slash" style="display: none" class="css_eye fas fa-eye-slash"></i>
+                <i id="FL-eye" class="css_eye fas fa-eye"></i>
+            </div>
+            <div class="FL-checkbox">
+                <input type="checkbox" name="rememberMe" id="RememberMe">
+                <label for="RememberMe">Remember Me</label>
+            </div>
+            <button type="submit" class="FormButtonChild">Login</button>
+        </div>
+        <div class="FL-footer">
+            <span>Bạn chưa có tài khoản? <a href="/Account/SignUp">Đăng ký</a></span>
+        </div>
+    </form>
+</div>
+<script>
+    $(document).ready(function () {
+        $("#myForm").on("submit", function (e) {
+            e.preventDefault();
+
+            var rememberMe = $('#RememberMe').is(':checked');
+            var email = $("#email").val();
+            var password = $("#Password").val();
+
+            $.ajax({
+                type: "POST",
+                url: "/Account/Login",
+                data: { email: email, password: password, remember: rememberMe },
+                success: function (response) {
+                    if (response.success === true) {
+                        window.location.href = response.redirectUrl;
+                    } else {
+                        alert("Sai thông tin đăng nhập ");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    console.error("Error details:", xhr.responseText);
+                    alert("Có lỗi xảy ra trong quá trình đăng nhập.");
+                }
+            });
+        });
+
+        $('#FL-eye').on('click', function () {
+            $('#Password').attr('type', 'text');
+            $('#FL-eye').hide();
+            $('#FL-eye-slash').show();
+        });
+
+        $('#FL-eye-slash').on('click', function () {
+            $('#Password').attr('type', 'password');
+            $('#FL-eye-slash').hide();
+            $('#FL-eye').show();
+        });
+    })
+</script>

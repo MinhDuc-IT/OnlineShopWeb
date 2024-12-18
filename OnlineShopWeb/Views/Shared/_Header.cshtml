@@ -1,0 +1,131 @@
+﻿﻿<div class="hd_middle">
+    <!--header-->
+    <div class="hd_container">
+        <div class="hd_logo">
+            <a href="/"><img src="~/Content/images/home/logo.png" alt="" /></a>
+        </div>
+        <div class="search_container respon">
+            <img src="~/Content/images/CustomImage/icon_search.png" />
+            <input type="text" id="searchInput" placeholder="Search" autocomplete="off" />
+            <button class="btn_search">Tìm kiếm</button>
+        </div>
+        <div class="hd_item">
+            <ul class="hd_nav">
+                <li>
+                    <a href="/Cart/Index">
+                        <i class="fa fa-shopping-cart"></i> Cart
+                        <span id="cart-item-count" class="badge">0</span>
+                    </a>
+                </li>
+                @{
+                    if (Session["User"] == null)
+                    {
+                        <li id="test">
+                            <a href="/Account/login">
+                                <i class="fa fa-lock"></i> Login
+                            </a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li id="test2" class="account-dropdown">
+                            <div class="account">
+                                <img id="Image_user" src="~/Content/images/CustomImage/Avatar_user.jpg" /> <i id="icon_user" class="fa fa-user"></i><span> Account</span>
+                            </div>
+                            <ul class="list_item">
+                                <li class="item_container">
+                                    <a class="css_item" id="profileHeader" href="/Account/profile">Thông tin tài khoản</a>
+                                </li>
+                                <li class="item_container">
+                                    <a class="css_item" id="orderHeader" href="/Account/myOrder">Đơn hàng của tôi</a>
+                                </li>
+                                <li class="item_container">
+                                    <a class="css_item" id="btn_Logout" href="#">Đăng xuất</a>
+                                </li>
+                            </ul>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+    </div>
+    <div class="search_container respon_1" style="display: none">
+        <img src="~/Content/images/CustomImage/icon_search.png" />
+        <input type="text" id="searchInputRespon" placeholder="Search" autocomplete="off" />
+        <button class="btn_search">Tìm kiếm</button>
+    </div>
+</div>
+
+<script>
+    function FindByInputSearch() {
+        var query = $('#searchInput').is(':visible') ? $('#searchInput').val() : $('#searchInputRespon').val();
+        if (query) {
+            $.ajax({
+                url: '/Search/Index',
+                type: 'GET',
+                data: { query: query },
+                success: function (response) {
+                    $('body').html(response);
+                },
+                error: function (xhr, status, error) {
+                    alert("Có lỗi xảy ra: " + error);
+                }
+            });
+        } else {
+            alert("Vui lòng nhập từ khóa!");
+        }
+    }
+    $(document).ready(function () {
+        $('body').on('click', '.btn_search', function () {
+            FindByInputSearch();
+        });
+
+        $('#searchInput, #searchInputRespon').on('keydown', function (event) {
+            if (event.key === "Enter") {
+                FindByInputSearch();
+            }
+        });
+
+        $('#btn_Logout').on("click", function () {
+            $.ajax({
+                url: '/Account/Logout',
+                type: 'POST',
+                success: function (response) {
+                    $('body').html(response);
+                },
+                error: function (xhr, status, error) {
+                    alert("Có lỗi xảy ra: " + error);
+                }
+            });
+        })
+
+        $.ajax({
+            type: "GET",
+            url: "/Account/GetUserInfo",
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#sb_UserName").text(response.userInfo.Name);
+                    if (response.userInfo.Avatar) {
+                        $('#icon_user').hide();
+                        $('#Image_user').show();
+                        $("#Image_user").attr("src", "data:image/png;base64," + response.userInfo.Avatar);
+                    }
+                } else {
+                    //alert("Đã có lỗi xảy ra: " + response.message);
+                }
+            },
+            error: function (error) {
+                alert("Đã xảy ra lỗi khi lấy thông tin!");
+            }
+        });
+
+        $('#profileHeader').on("click", function () {
+            sessionStorage.setItem('activeLink', 'profile');
+        })
+
+        $('#orderHeader').on("click", function () {
+            sessionStorage.setItem('activeLink', 'order');
+        })
+    });
+</script>

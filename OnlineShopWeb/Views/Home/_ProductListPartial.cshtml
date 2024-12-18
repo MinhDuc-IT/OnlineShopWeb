@@ -1,0 +1,47 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Product>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2 class="title text-center"></h2>
+<div class="col-sm-3">
+    @Html.Partial("_SidebarPartial")
+</div>
+<div class="col-sm-9">
+    <h2 class="title text-center">List products</h2>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="col-sm-12">
+            <div class="sp_empty">
+                <img src="~/Content/images/CustomImage/logoSearch.png" />
+                <div class="spe_title">Không có sản phẩm nào</div>
+                <div class="spe_hint">Hãy chọn mục khác và đợi các sản phẩm mới từ shop nhé</div>
+            </div>
+        </div>
+    }
+    else
+    {
+
+        foreach (var product in Model)
+        {
+            <div class="col-sm-4">
+                <div class="product-image-wrapper product-hover">
+                    <div class="single-products">
+                        <div class="productinfo text-center">
+
+                            <a href="@Url.Action("Detail", "Product", new { id = product.ProductId })">
+                                <img src="data:image/jpeg;base64,@product.Image" alt="@product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                                <p>@product.Name</p>
+                            </a>
+                            <h2>@product.Price.ToString("N0")<sup>đ</sup></h2>
+                            <a href="#" class="btn btn-default add-to-cart btnAddToCart" data-id="@product.ProductId">
+                                <i class="fa fa-shopping-cart "></i>Add to cart
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+</div>
+

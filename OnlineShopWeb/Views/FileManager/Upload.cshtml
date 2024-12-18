@@ -1,0 +1,47 @@
+﻿@{
+    Layout = "~/Views/Shared/_FileManagerLayout.cshtml";
+}
+
+<div id="upload" class="upload">
+    <img src="" alt="Click to upload an image" style="width: 200px; height: 300px; object-fit: cover;" />
+    +
+</div>
+
+@section Scripts {
+    <script>
+        function elfinderDialog(imgElement) {
+            
+            fmDialogInstance = $('<div/>').dialogelfinder({
+                url: '/el-finder-file-system/connector',
+                baseUrl: "/lib/elfinder/",
+                lang: 'en',
+                width: 840,
+                height: 450,
+                destroyOnClose: true,
+                getFileCallback: function (files, fm) {
+                    console.log(files);
+                    imgElement.attr('src', files.url);
+                },
+                commandsOptions: {
+                    getfile: {
+                        oncomplete: 'close',
+                        folders: false
+                    }
+                },
+        
+            }).dialogelfinder('instance');
+        }
+
+        function setupUpload() {
+            $('.upload').click(function () {
+                var img = $(this).find('img');
+                elfinderDialog(img);
+            });
+        }
+
+        $(document).ready(function () {
+            setupUpload();
+        });
+    </script>
+}
+

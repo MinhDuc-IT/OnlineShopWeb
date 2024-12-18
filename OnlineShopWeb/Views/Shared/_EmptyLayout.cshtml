@@ -1,0 +1,72 @@
+﻿@{
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Account | E-Shopper</title>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Content/css/price-range.css" rel="stylesheet">
+    <link href="~/Content/css/animate.css" rel="stylesheet">
+    <link href="~/Content/css/main.css" rel="stylesheet">
+    <link href="~/Content/css/Customize.css" rel="stylesheet">
+    <link href="~/Content/css/SearchPage.css" rel="stylesheet">
+    <link href="~/Content/css/responsive.css" rel="stylesheet">
+    <link href="~/Content/css/Slider.css" rel="stylesheet">
+    <link src="~/Content/fonts/fontawesome-webfont.svg">
+    <link href="~/Content/fonts/fontawesome-webfont.woff">
+    <link href="~/Content/fonts/FontAwesome.otf">
+    <link src="~/Content/fonts/glyphicons-halflings-regular.svg">
+    <link href="~/Content/fonts/glyphicons-halflings-regular.woff">
+
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
+    <link href="~/Content/css/checkoutcustom.css" rel="stylesheet" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" rel="stylesheet" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div class="EL-Header">
+        <div class="hd_logo">
+            <a href="/"><img src="~/Content/images/home/logo.png" alt="" /></a>
+        </div>
+        <span id="hd_title">Đăng nhập</span>
+    </div>
+    <div class="EL-content">
+        <div class="EL-Inner">
+            <div class="ELC_Left">
+                <div class="ELC_logo"><img src="~/Content/images/home/logo.png" alt="" /></div>
+                <div class="ELC_title">Shop bán hàng chất lượng và uy tín</div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    @Html.Partial("_Footer");
+    <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Scripts/jsShopping.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Content/js/price-range.js"></script>
+    <script src="~/Content/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/Slider.js"></script>
+    <script>
+        $(document).ready(function () {
+            if (window.location.pathname === '/Account/SignUp') {
+                $('#hd_title').text("Đăng ký");
+            }
+        })
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

@@ -4,6 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace OnlineShopWeb.Models
 {
@@ -20,6 +21,7 @@ namespace OnlineShopWeb.Models
         [Required]
         public int BrandId { get; set; }
 
+        [AllowHtml]
         public string Description { get; set; }
 
         [Required]
@@ -34,7 +36,17 @@ namespace OnlineShopWeb.Models
 
         [Required]
         public int CategoryId { get; set; }
+
+        [Range(0, int.MaxValue, ErrorMessage = "Click count must be a non-negative integer.")]
+        public int Click { get; set; } = 1;
+
+        public DateTime? LastViewed { get; set; } = DateTime.Now;
+
         public bool IsDeleted { get; set; }
+
+        [Required]
+        [Range(0, (double)decimal.MaxValue)]
+        public decimal CostPrice { get; set; }
 
         [ForeignKey("CategoryId")]
         public virtual Category Category { get; set; }
@@ -43,5 +55,6 @@ namespace OnlineShopWeb.Models
         public virtual Brand Brand { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+        public virtual ICollection<UserProduct> UserProducts { get; set; }
     }
 }

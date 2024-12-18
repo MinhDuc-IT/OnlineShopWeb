@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OnlineShopWeb.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -21,5 +22,60 @@ namespace OnlineShopWeb.Models
 
         public virtual ICollection<CartItem> CartItems { get; set; }
 
+        public Cart()
+        {
+            this.CartItems = new List<CartItem>();
+        }
+
+        public void AddToCart(CartItem item, int quantity)
+        {
+            var checkExits = CartItems.FirstOrDefault(x => x.ProductId == item.ProductId);
+            if (checkExits != null)
+            {
+                checkExits.Quantity += quantity;
+                checkExits.TotalPrice = checkExits.Price * checkExits.Quantity;
+            }
+            else
+            {
+                CartItems.Add(item);
+            }
+        }
+
+        public void Remove(int id, int userId)
+        {
+            var db = new ApplicationDbContext();
+            var checkExits = db.CartItems.SingleOrDefault(x => x.ProductId == id && x.Cart.CustomerId == userId);
+            if (checkExits != null)
+            {
+                CartItems.Remove(checkExits);
+                db.CartItems.Remove(checkExits);
+                db.SaveChanges();
+            }
+        }
+
+        public void UpdateQuantity(int id, int quantity)
+        {
+            var checkExits = CartItems.SingleOrDefault(x => x.ProductId == id);
+            if (checkExits != null)
+            {
+                checkExits.Quantity = quantity;
+                checkExits.TotalPrice = checkExits.Price * checkExits.Quantity;
+            }
+        }
+
+        public decimal GetTotalPrice()
+        {
+            return CartItems.Sum(x => x.TotalPrice);
+        }
+
+        public int GetTotalQuantity()
+        {
+            return CartItems.Sum(x => x.Quantity);
+        }
+
+        public void ClearCart()
+        {
+            CartItems.Clear();
+        }
     }
 }

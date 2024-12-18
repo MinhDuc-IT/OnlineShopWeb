@@ -1,0 +1,104 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title>Account | E-Shopper</title>
+    <link href="~/Content/css/bootstrap.min.css" rel="stylesheet">
+    <link href="~/Content/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Content/css/prettyPhoto.css" rel="stylesheet">
+    <link href="~/Content/css/price-range.css" rel="stylesheet">
+    <link href="~/Content/css/animate.css" rel="stylesheet">
+    <link href="~/Content/css/main.css" rel="stylesheet">
+    <link href="~/Content/css/responsive.css" rel="stylesheet">
+    <link href="~/Content/css/Customize.css" rel="stylesheet">
+    <link href="~/Content/css/SearchPage.css" rel="stylesheet">
+    <!--[if lt IE 9]>
+    <script src="js/html5shiv.js"></script>
+    <script src="js/respond.min.js"></script>
+    <![endif]-->
+    <link rel="shortcut icon" href="~/Content/images/ico/favicon.ico">
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="~/Content/images/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="~/Content/images/ico/apple-touch-icon-114-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="~/Content/images/ico/apple-touch-icon-72-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" href="~/Content/images/ico/apple-touch-icon-57-precomposed.png">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    @Html.Partial("_Header")
+    <div class="bg_fullScreen">
+        <div class="profile_container">
+            <div class="p_sidebar">
+                <div class="p_image_user">
+                    <div class="p_user_logo">
+                        <img id="sb_Avatar" src="https://cdn-icons-png.flaticon.com/512/149/149071.png" alt="User Logo">
+                    </div>
+                    <div class="p_name_user">
+                        <span style="font-weight: bold;" id="sb_UserName">OnlineShopWeb</span>
+                        <span id="changeProfile"><i class="fa fa-pencil"></i> <a style="color: #555" href="/Account/profile">Sửa Hồ Sơ</a></span>
+                    </div>
+                </div>
+                <div class="p_sidebar_item">
+                    <div class="p_title"><img src="~/Content/images/CustomImage/user.png" /><a id="account" href="/Account/profile">Tài khoản của tôi </a></div>
+                    <ul>
+                        <li><a id="profile" href="/Account/profile">Hồ sơ</a></li>
+                        <li><a id="address" href="/Account/address">Địa chỉ</a></li>
+                        <li><a id="password" href="/Account/changePassword">Đổi mật khẩu</a></li>
+                    </ul>
+                    <div class="p_title">
+                        <img src="~/Content/images/CustomImage/bill.png" /> <a id="order" href="/Account/myOrder">Đơn mua </a>
+                    </div>
+                </div>
+            </div>
+            @RenderBody()
+        </div>
+    </div>
+    @Html.Partial("_Footer");
+
+    <script src="~/Content/js/jquery.js"></script>
+    <script src="~/Content/js/bootstrap.min.js"></script>
+    <script src="~/Content/js/jquery.scrollUp.min.js"></script>
+    <script src="~/Content/js/price-range.js"></script>
+    <script src="~/Content/js/jquery.prettyPhoto.js"></script>
+    <script src="~/Content/js/main.js"></script>
+    <script src="~/Content/js/Slider.js"></script>
+    <script src="~/Scripts/jsShopping.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#profile, #address, #password, #order').on('click', function () {
+                sessionStorage.setItem('activeLink', this.id);
+            });
+
+            $('#account, #changeProfile').on('click', function () {
+                sessionStorage.setItem('activeLink', "profile");
+            });
+
+            const activeLink = sessionStorage.getItem('activeLink');
+            if (activeLink) {
+                $('#' + activeLink).addClass('active_link');
+            }
+            $.ajax({
+                type: "GET",
+                url: "/Account/GetUserInfo",
+                dataType: "json",
+                success: function (response) {
+                    if (response.success) {
+                        $("#sb_UserName").text(response.userInfo.Name);
+                        if (response.userInfo.Avatar) {
+                            $("#sb_Avatar").attr("src", "data:image/png;base64," + response.userInfo.Avatar);
+                        }
+                    } else {
+                        alert("Đã có lỗi xảy ra: " + response.message);
+                    }
+                },
+                error: function (error) {
+                    alert("Đã xảy ra lỗi khi lấy thông tin!");
+                }
+            });
+        })
+    </script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

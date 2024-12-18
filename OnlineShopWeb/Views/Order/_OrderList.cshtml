@@ -1,0 +1,206 @@
+﻿@model IEnumerable<OnlineShopWeb.Models.Order>
+
+@foreach (var item in Model)
+{
+    <div class="OrderListPartialView">
+        <div class="order-list">
+            <!-- Header Section -->
+            <div class="order-header" data-order-id="@item.OrderId">
+                <div class="store-info">
+                    <div class="store-info">
+                        <span class="store-name">
+                            @item.OrderId - <span class="order-status">@item.Status</span>
+                            @if (!string.IsNullOrEmpty(item.OrderNotes))
+                            {
+                                <span> -  @item.OrderNotes</span>
+                            }
+                        </span>
+                    </div>
+                    <span class="payment-status">Trạng thái thanh toán: @item.PaymentStatus.ToString()</span>
+                    <span class="payment-method">Phương thức thanh toán: @item.PaymentMethod</span>
+                </div>
+                <div class="order-review-status">
+                    <strong>Tổng số tiền: <span class="review-status">@item.ToTalAmount.ToString("0,0") đ</span></strong>
+                </div>
+            </div>
+
+            <!-- Order Details Section (Initially Hidden) -->
+            <div class="order-details" data-order-id="@item.OrderId" style="display:none;">
+                @foreach (var orderItem in item.OrderDetails)
+                {
+                    <div class="product-list">
+                        <div class="product-item">
+                            <div class="product-image-1">
+                                <img src="data:image/jpeg;base64,@orderItem.Product.Image" alt="@orderItem.Product.Name" style="width:150px;height:150px;object-fit:cover;" />
+                            </div>
+                            <div class="product-info">
+                                <h3>@orderItem.Product.Name</h3>
+                                <p class="product-quantity">x @orderItem.Quantity</p>
+                                <p class="product-price"><span>@orderItem.Product.Price.ToString("0,0") đ</span></p>
+                            </div>
+                            <div class="order-summary">
+                                <p>@((orderItem.Price * orderItem.Quantity).ToString("0,0")) đ</p>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                @if (item.Status == OnlineShopWeb.Models.OrderStatus.Processing)
+                {
+                    <button class="buy-cancel">Hủy</button>
+                }
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    .order-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        padding: 15px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        cursor: pointer; /* Thêm hiệu ứng con trỏ khi di chuột */
+    }
+
+    .store-info {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 5px; /* Thêm khoảng cách giữa các dòng */
+    }
+
+    .payment-status, .payment-method {
+        font-size: 14px;
+        color: #555; /* Màu chữ trung tính */
+    }
+
+    .payment-status {
+        font-weight: bold; /* In đậm trạng thái thanh toán */
+        color: #007bff; /* Màu xanh dương */
+    }
+
+    .payment-method {
+        font-style: italic; /* Nghiêng để phân biệt phương thức */
+        color: #6c757d; /* Màu xám nhạt */
+    }
+
+
+    .store-name {
+        font-size: 18px;
+        font-weight: bold;
+        color: #333;
+    }
+
+    .order-status {
+        font-size: 14px;
+        color: #888;
+    }
+
+    .order-review-status {
+        display: flex;
+        justify-content: flex-end;
+        align-items: center;
+    }
+
+    .review-status {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .product-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .product-item {
+        display: flex;
+        background-color: #fff;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+
+    .product-image-1 img {
+        max-width: 100px;
+        height: auto;
+        border-radius: 8px;
+    }
+
+    .product-info {
+        flex-grow: 1;
+        padding: 0 10px;
+    }
+
+        .product-info h3 {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+    .product-quantity, .product-price {
+        font-size: 14px;
+        color: #777;
+    }
+
+        .product-price span {
+            color: #e63946;
+            font-weight: bold;
+        }
+
+    .order-summary {
+        text-align: right;
+    }
+
+        .order-summary p {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+    .order-header:hover {
+        background-color: #f0f0f0;
+    }
+
+    .order-details {
+        display: none;
+        transition: max-height 0.3s ease-in-out;
+        overflow: hidden;
+        position: relative; /* Thêm vị trí tương đối để đặt button bên trong */
+        padding-bottom: 60px; /* Dành không gian cho nút ở phía dưới */
+    }
+
+    .buy-cancel {
+        position: absolute;
+        bottom: 10px; /* Đặt nút ở phía dưới */
+        right: 10px; /* Đặt nút ở phía bên phải */
+        background-color: #e63946; /* Màu nền đỏ */
+        color: white; /* Màu chữ trắng */
+        border: none;
+        border-radius: 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+    }
+
+        .buy-cancel:hover {
+            background-color: #d62828; /* Màu nền khi hover */
+            transform: scale(1.05); /* Tăng kích thước khi hover */
+        }
+
+        .buy-cancel:active {
+            background-color: #c51717; /* Màu nền khi nhấn */
+            transform: scale(1); /* Quay lại kích thước ban đầu */
+        }
+</style>

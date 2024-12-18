@@ -1,0 +1,168 @@
+﻿@model OnlineShopWeb.Models.User
+﻿@{
+    ViewBag.Title = "profile";
+    Layout = "~/Views/Shared/_LayoutAccount.cshtml";
+}
+@{
+    DateTime? birthDate = Model.BirthDay;
+    int day, month, year;
+    if (birthDate.HasValue) 
+    {
+        day = birthDate.Value.Day; 
+        month = birthDate.Value.Month;
+        year = birthDate.Value.Year;
+    }
+    else
+    {
+        day = DateTime.Now.Day;
+        month = DateTime.Now.Month;
+        year = DateTime.Now.Year;
+    }
+}
+
+<div class="p_content">
+    <div class="pc_header">
+        <span class="pch_title">Hồ sơ của tôi</span>
+        <span>Quản lý thông tin hồ sơ để bảo mật tài khoản</span>
+    </div>
+    <div class="pc_main">
+        <div class="pcm_info">
+            <form id="my-form">
+                <table>
+                    <tr>
+                        <td class="pcm_title">Tên đăng nhập</td>
+                        <td class="pcm_property">@Model.Name</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Tên</td>
+                        <td class="pcm_property">
+                            <input name="input_Name" value="@Model.Name" class="input_Name" type="text" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Email</td>
+                        <td class="pcm_property">@Model.Email</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Số điện thoại</td>
+                        <td class="pcm_property">@Model.Phone</td>
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Giới tính</td>
+                        <td class="pcm_property pcm_gender">
+                            <input id="Male" name="gender" value="0" type="radio"
+                                   @(Model.Gender == 0 ? "checked" : "") />
+                            <label for="Male">Nam</label>
+
+                            <input id="Female" name="gender" value="1" type="radio"
+                                   @(Model.Gender == 1 ? "checked" : "") />
+                            <label for="Female">Nữ</label>
+
+                            <input id="other" name="gender" value="2" type="radio"
+                                   @(Model.Gender == 2 ? "checked" : "") />
+                            <label for="other">Khác</label>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="pcm_title">Ngày sinh</td>
+                        <td class="pcm_property pcm_date">
+                            <select class="css_select" id="day">
+                                @for (int i = 1; i <= 31; i++)
+                                {
+                                    <option value="@i" @(i == day ? "selected" : "")>@i</option>
+                                }
+                            </select>
+                            <select class="css_select" id="month">
+                                @for (int i = 1; i <= 12; i++)
+                                {
+                                    <option value="@i" @(i == month ? "selected" : "")>@i</option>
+                                }
+                            </select>
+                            <select class="css_select" id="year">
+                                @for (int i = year; i >= 1910; i--)
+                                {
+                                    <option value="@i" @(i == year ? "selected" : "")>@i</option>
+                                }
+                            </select>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="pcm_title"></td>
+                        <td id="submitChange" class="pcm_property"><button>Lưu</button></td>
+                    </tr>
+                </table>
+            </form>
+        </div>
+        <div class="pcm_avatar">
+            <img id="prevImage"
+                 src="@((Model.Avatar != null && Model.Avatar.Length > 0)
+                   ? "data:image/png;base64," + Convert.ToBase64String(Model.Avatar)
+                   : Url.Content("~/Content/images/CustomImage/Avatar_user.jpg"))"
+                 alt="user_avatar" />
+            <input type="file" onchange="handleUploadImage(event)" id="user_avatar" style="display:none;" />
+            <label class="btnUpLoad" for="user_avatar">Chọn Ảnh</label>
+            <span>Dụng lượng file tối đa 1 MB</span>
+            <span>Định dạng:.JPEG, .PNG</span>
+        </div>
+    </div>
+</div>
+
+<script>
+    let file;
+    const handleUploadImage = (event) => {
+        file = event.target.files[0];
+        if (file) {
+            const validTypes = ["image/jpeg", "image/png"];
+            if (validTypes.includes(file.type)) {
+                const maxSize = 1 * 1024 * 1024;
+                if (file.size <= maxSize) {
+                    const imgElement = document.getElementById("prevImage");
+                    imgElement.src = URL.createObjectURL(file);
+                } else {
+                    alert("File quá lớn! Dung lượng tối đa là 1 MB.");
+                }
+            } else {
+                alert("Chỉ chấp nhận định dạng .JPEG và .PNG.");
+            }
+        }
+    };
+
+    const handleSaveInfo = () => {
+        const urlImage = file;
+        let form = document.getElementById("my-form");
+        let formData = new FormData(form);
+        let birthDay = ($("#day").val() < 10 ? "0" + $("#day").val() : $("#day").val()) + "/" + ($("#month").val() < 10 ? "0" + $("#month").val() : $("#month").val()) + "/" + $("#year").val();
+        formData.append("urlImage", urlImage);
+        formData.append("birthDay", birthDay);
+
+        $.ajax({
+            type: "POST",
+            url: "/Account/updateProfile",
+            data: formData,
+            processData: false,
+            contentType: false,
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#sb_UserName").text(response.userUpdate.Name);
+                    $("#sb_Avatar").attr("src", response.userUpdate.Avatar);
+                } else {
+                    alert("Đã có lỗi xảy ra: " + response.message);
+                }
+            },
+            error: function (error) {
+                alert("Đã xảy ra lỗi khi lưu thông tin!");
+            }
+        });
+
+    }
+
+    $(document).ready(function () {
+        $("#submitChange").on("click", function (e) {
+            e.preventDefault();
+            handleSaveInfo();
+        })
+    });
+</script>
