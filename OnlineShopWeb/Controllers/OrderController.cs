@@ -137,6 +137,8 @@ namespace OnlineShopWeb.Controllers
 
         public ActionResult CancelOrder(int orderId)
         {
+            var user = GetUser();
+
             // Tìm kiếm đơn hàng dựa trên orderId
             var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
@@ -169,7 +171,8 @@ namespace OnlineShopWeb.Controllers
 
             // Cập nhật trạng thái đơn hàng
             order.Status = OrderStatus.Canceled;
-
+            order.CanceledBy = user.Name + " - " + user.Role;
+            order.CancellationTime = DateTime.Now;
             // Lưu thay đổi vào cơ sở dữ liệu
             try
             {
@@ -441,6 +444,20 @@ namespace OnlineShopWeb.Controllers
             var user = Session["User"] as User;
 
             return db.Users.FirstOrDefault(u => u.CustomerId == user.CustomerId)?.CustomerId ?? 0;
+        }
+
+        private User GetUser()
+        {
+            var user = Session["User"] as User;
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var customer = db.Users.FirstOrDefault(u => u.CustomerId == user.CustomerId);
+
+            return customer;
         }
 
         #endregion

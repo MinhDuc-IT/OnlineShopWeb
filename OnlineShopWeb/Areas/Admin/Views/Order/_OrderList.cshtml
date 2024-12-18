@@ -54,6 +54,11 @@
                     <button class="transaction-query">Truy vấn giao dịch</button>
                     <button class="refund-request">Hoàn tiền</button>
                 }
+
+                @if (item.Status == OnlineShopWeb.Models.OrderStatus.Shipping)
+                {
+                    <button class="delivery-confirmation">Đã giao</button>
+                }
             </div>
         </div>
     </div>

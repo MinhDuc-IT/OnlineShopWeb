@@ -254,6 +254,10 @@
     <Compile Include="Migrations\202412180532536_ sda.Designer.cs">
       <DependentUpon>202412180532536_ sda.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412181036543_AddShippingAndOrderConfirmationFieldsToOrder.cs" />
+    <Compile Include="Migrations\202412181036543_AddShippingAndOrderConfirmationFieldsToOrder.Designer.cs">
+      <DependentUpon>202412181036543_AddShippingAndOrderConfirmationFieldsToOrder.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -3097,10 +3101,14 @@
     <Content Include="Views\Product\_HotProducts.cshtml" />
     <Content Include="Views\Brand\Index.cshtml" />
     <Content Include="Views\Brand\_ListBrand.cshtml" />
+    <Content Include="UploadedFiles\DeliveryConfirmations\localhost_44353_Order_PaymentSuccess%28Nest Hub Max%29.png20241218_190220" />
+    <Content Include="UploadedFiles\DeliveryConfirmations\localhost_44353_Order_PaymentSuccess%28Nest Hub Max%29.png20241218_191611" />
+    <Content Include="UploadedFiles\DeliveryConfirmations\tải xuống %282%29.jpg20241218_191132" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="UploadedFiles\DeliveryConfirmations\localhost_44353_Order_PaymentSuccess%28Nest Hub Max%29.png12\18\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
@@ -3139,6 +3147,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412180532536_ sda.resx">
       <DependentUpon>202412180532536_ sda.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412181036543_AddShippingAndOrderConfirmationFieldsToOrder.resx">
+      <DependentUpon>202412181036543_AddShippingAndOrderConfirmationFieldsToOrder.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

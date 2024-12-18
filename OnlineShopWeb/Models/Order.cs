@@ -53,6 +53,25 @@ namespace OnlineShopWeb.Models
         public virtual User Customer { get; set; }
 
         public virtual ICollection<OrderDetail> OrderDetails { get; set; }
+
+        // Trường lưu ảnh xác nhận đã giao hàng
+        public string DeliveryConfirmationImage { get; set; } // Lưu đường dẫn ảnh xác nhận giao hàng
+
+        // Trường hủy bởi ai và thời gian hủy
+        public string CanceledBy { get; set; } // Lưu tên hoặc ID của người hủy
+        public DateTime? CancellationTime { get; set; } // Lưu thời gian hủy
+
+        // Trường xác nhận giao hàng thành công và thời gian
+        public string DeliveredBy { get; set; } // Lưu tên hoặc ID của người xác nhận giao hàng thành công
+        public DateTime? DeliveryConfirmationTime { get; set; } // Lưu thời gian xác nhận giao hàng
+
+        // Trường thời gian vận chuyển
+        public DateTime? ShippingTime { get; set; } // Lưu thời gian bắt đầu vận chuyển
+
+        // Trường người xác nhận đơn
+        public string OrderConfirmedBy { get; set; } // Lưu tên hoặc ID của người xác nhận đơn hàng
+        public DateTime? OrderConfirmationTime { get; set; } // Lưu thời gian xác nhận đơn
+
     }
 
     public enum OrderStatus
