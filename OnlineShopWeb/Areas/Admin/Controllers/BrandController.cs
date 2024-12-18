@@ -31,7 +31,8 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         }
         public JsonResult GetBrandbyId(int id)
         {
-            var branches = db.Brands.FirstOrDefault(b=>b.BrandId == id);
+            //var branches = db.Brands.FirstOrDefault(b=>b.BrandId == id);
+            var branches = db.Brands.Find(id);
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
 
