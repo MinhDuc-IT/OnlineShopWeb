@@ -1,7 +1,8 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
+using Newtonsoft.Json;
 using OnlineShopWeb.Attributes;
 using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
@@ -29,11 +30,44 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
 
             return Json(branches, JsonRequestBehavior.AllowGet);
         }
-        public JsonResult GetBrandbyId(int id)
+        public ActionResult GetBrandById(int id)
         {
-            var branches = db.Brands.FirstOrDefault(b=>b.BrandId == id);
-            return Json(branches, JsonRequestBehavior.AllowGet);
+            try
+            {
+                // Tìm kiếm thương hiệu theo ID và kiểm tra xem nó có bị xóa hay không
+                var brand = db.Brands.FirstOrDefault(b => b.BrandId == id && !b.IsDeleted);
+
+                // Kiểm tra nếu không tìm thấy thương hiệu
+                if (brand == null)
+                {
+                    var errorResult = new { success = false, message = "Brand not found or has been deleted" };
+                    var jsonError = JsonConvert.SerializeObject(errorResult, new JsonSerializerSettings
+                    {
+                        ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    });
+                    return Content(jsonError, "application/json");
+                }
+
+                // Trả về dữ liệu thương hiệu
+                var successResult = new { success = true, data = brand };
+                var jsonData = JsonConvert.SerializeObject(successResult, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+
+                return Content(jsonData, "application/json");
+            }
+            catch (Exception ex)
+            {
+                var errorResult = new { success = false, message = ex.Message };
+                var jsonError = JsonConvert.SerializeObject(errorResult, new JsonSerializerSettings
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                });
+                return Content(jsonError, "application/json");
+            }
         }
+
 
         [HttpPost]
         public JsonResult AddBrand(string name, string description)
