@@ -1,6 +1,6 @@
-﻿﻿<footer id="footer">
-    <!--Footer-->
-    <div class="footer-top">
+﻿<!--﻿<footer id="footer">-->
+<!--Footer-->
+<!--<div class="footer-top">
         <div class="container">
             <div class="row">
                 <div class="col-sm-2">
@@ -155,4 +155,159 @@
         </div>
     </div>
 
-</footer><!--/Footer-->
+</footer>-->
+<!--/Footer-->
+@* Footer Partial View *@
+<style>
+    body {
+        margin: 0;
+        overflow-x: hidden;
+        font-family: 'Play', sans-serif;
+    }
+
+    .footer {
+        display: flex;
+        flex-direction: column;
+        background: #F0F0E9;
+        padding: 30px 20px;
+        color: #000;
+        font-family: 'Play', sans-serif;
+    }
+
+    .footer-content {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .footer-section {
+        flex: 1;
+        min-width: 200px;
+        text-align: center;
+    }
+
+        .footer-section h4 {
+            font-size: 16px;
+            margin-bottom: 15px;
+            color: #000;
+        }
+
+    /* Payment & Logistics */
+    .payment, .logistics {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+        .payment img, .logistics img {
+            max-width: 50px;
+            height: auto;
+            margin: 0;
+            transition: transform 0.3s ease;
+        }
+
+            .payment img:hover, .logistics img:hover {
+                transform: scale(1.1);
+            }
+
+    /* Social Icons */
+    .social-icons {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+
+        .social-icons a {
+            text-decoration: none;
+            color: #000;
+            font-size: 1.8em;
+            transition: transform 0.3s ease;
+            outline: none;
+        }
+
+            .social-icons a:hover {
+                transform: scale(1.2);
+                outline: none;
+            }
+
+    /* About Shop */
+    .footer-section ul {
+        list-style: none;
+        padding: 0;
+    }
+
+        .footer-section ul li {
+            margin-bottom: 10px;
+        }
+
+            .footer-section ul li a {
+                text-decoration: none;
+                color: #000;
+                transition: color 0.3s ease;
+            }
+
+                .footer-section ul li a:hover {
+                    color: #777;
+                }
+
+    /* Copyright */
+    .footer-copyright {
+        text-align: center;
+        margin-top: 20px;
+        font-size: 14px;
+    }
+</style>
+
+<link href="~/Content/css/font-awesome.min.css" rel="stylesheet" />
+<footer>
+    <div class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>PAYMENT</h4>
+                <div class="payment">
+                    <img src="~/Content/images/shop/vnpay.png" alt="VNPay">
+                    <img src="~/Content/images/shop/jcb.jpg" alt="JCB">
+                    <img src="~/Content/images/shop/zalopay.png" alt="Zalopay">
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>LOGISTICS</h4>
+                <div class="logistics">
+                    <img src="~/Content/images/shop/vanchuyen.png" alt="Shipping">
+                    <img src="~/Content/images/shop/be.jpg" alt="Grab">
+                    <img src="~/Content/images/shop/viettelpost.png" alt="ViettelPost">
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>FOLLOW US</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fa fa-facebook"></i></a>
+                    <a href="#"><i class="fa fa-instagram"></i></a>
+                    <a href="#"><i class="fa fa-youtube"></i></a>
+                    <a href="#"><i class="fa fa-twitter"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <h4>ABOUT SHOP</h4>
+                <ul>
+                    <li><a href="#">Online Help</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms & Conditions</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Copyright -->
+        <div class="footer-copyright">
+            Copyright © 2024 E-Shopper Inc. - All rights reserved || Designed By: <a href="#">Nhom 6</a>
+        </div>
+    </div>
+</footer>
