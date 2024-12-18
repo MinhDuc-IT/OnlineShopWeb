@@ -117,72 +117,88 @@
                             // Duyệt qua tất cả các đơn hàng trong response.data.Orders
                             response.data.Orders.forEach(function (item) {
                                 htmlContent += `
-                                                            <div class="OrderListPartialView">
-                                                                <div class="order-list">
-                                                                    <!-- Header Section -->
-                                                                    <div class="order-header" data-order-id="${item.OrderId}">
-                                                                        <div class="store-info">
-                                                                            <span class="store-name">
-                                                                                ${item.OrderId} - <span class="order-status">${item.Status}</span>
-                                                                                ${item.OrderNotes ? ` -  ${item.OrderNotes}` : ''}
-                                                                            </span>
-                                                                        </div>
-                                                                        <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span><br>
-                                                                        <span class="payment-method">Phương thức thanh toán: ${item.PaymentMethod}</span>
-                                                                        <div class="order-review-status">
-                                                                            <strong>Tổng số tiền: <span class="review-status">${item.TotalAmount.toLocaleString()} đ</span></strong>
-                                                                        </div>
-                                                                    </div>
+    <div class="OrderListPartialView">
+        <div class="order-list">
+            <!-- Header Section -->
+            <div class="order-header" data-order-id="${item.OrderId}">
+                <div class="store-info">
+                    <span class="store-name">
+                        ${item.OrderCode ? `${item.OrderCode} - ` : ''}${item.OrderId} - <span class="order-status">${item.Status}</span>
+                        ${item.OrderNotes ? ` - ${item.OrderNotes}` : ''}
+                    </span>
+                    <br>
+                    <span class="recipient-info">
+                        <strong>Người nhận:</strong> ${item.RecipientName}<br>
+                        <strong>SĐT:</strong> ${item.RecipientPhoneNumber}<br>
+                        <strong>Địa chỉ:</strong> ${item.RecipientAddress}
+                    </span>
+                    <br>
+                    <span class="additional-info">
+                        ${item.Status === "Canceled" ? `
+                            <strong>Hủy bởi:</strong> ${item.CanceledBy || "N/A"}<br>
+                            <strong>Thời gian hủy:</strong> ${item.CancellationTime ? new Date(item.CancellationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                        ${item.Status === "Delivered" ? `
+                            <strong>Người xác nhận giao thành công:</strong> ${item.DeliveredBy || "N/A"}<br>
+                            <strong>Thời xác nhận giao thành công:</strong> ${item.DeliveryConfirmationTime ? new Date(item.DeliveryConfirmationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                        ${item.Status === "Shipping" ? `
+                            <strong>Thời gian vận chuyển:</strong> ${item.OrderConfirmationTime ? new Date(item.OrderConfirmationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                    </span>
+                </div>
+                <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span><br>
+                <span class="payment-method">Phương thức thanh toán: ${item.PaymentMethod}</span>
+                <div class="order-review-status">
+                    <strong>Tổng số tiền: <span class="review-status">${item.TotalAmount.toLocaleString()} đ</span></strong>
+                </div>
+            </div>
 
-                                                                    <!-- Order Details Section (Initially Hidden) -->
-                                                                    <div class="order-details" data-order-id="${item.OrderId}" style="display:none;">
-                                                                        ${item.OrderDetails.map(orderItem => `
-                                                                        <div class="product-list">
-                                                                            <div class="product-item">
-                                                                                <div class="product-image-1">
-                                                                                    <img src="data:image/jpeg;base64,${orderItem.ProductImage}" alt="${orderItem.ProductName}" style="width:150px;height:150px;object-fit:cover;" />
-                                                                                </div>
-                                                                                <div class="product-info">
-                                                                                    <h3>${orderItem.ProductName}</h3>
-                                                                                    <p class="product-quantity">x ${orderItem.Quantity}</p>
-                                                                                    <p class="product-price"><span>${(orderItem.Price).toLocaleString()} đ</span></p>
-                                                                                </div>
-                                                                                <div class="order-summary">
-                                                                                    <p>${(orderItem.Price * orderItem.Quantity).toLocaleString()} đ</p>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        `).join('')}
+            <!-- Order Details Section (Initially Hidden) -->
+            <div class="order-details" data-order-id="${item.OrderId}" style="display:none;">
+                <div class="product-list">
+                    ${item.OrderDetails.map(orderItem => `
+                    <div class="product-item">
+                        <div class="product-image-1">
+                            <img src="data:image/jpeg;base64,${orderItem.ProductImage}" alt="${orderItem.ProductName}" style="width:150px;height:150px;object-fit:cover;" />
+                        </div>
+                        <div class="product-info">
+                            <h3>${orderItem.ProductName}</h3>
+                            <p class="product-quantity">x ${orderItem.Quantity}</p>
+                            <p class="product-price"><span>${(orderItem.Price).toLocaleString()} đ</span></p>
+                        </div>
+                        <div class="order-summary">
+                            <p>${(orderItem.Price * orderItem.Quantity).toLocaleString()} đ</p>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
 
-                                                                        <div class="order-actions" >
-                                                                              ${item.Status === "Processing" ? `
-                                                                                <button class="buy-confirm">Xác nhận</button>
-                                                                                <button class="buy-cancel">Hủy</button>
-                                                                              ` : ''}
-                                                                        </div>
+                <div class="order-actions">
+                    ${item.Status === "Processing" ? `
+                        <button class="buy-confirm">Xác nhận</button>
+                        <button class="buy-cancel">Hủy</button>
+                    ` : ''}
 
-                                                                        <div class="order-actions" >
-                                                                              ${item.Status === "Canceled" && item.PaymentStatus === "Completed" && item.PaymentMethod === "NCB" ? `
-                                                                                <button class="transaction-query">Truy vấn giao dịch</button>
-                                                                                <button class="refund-request">Hoàn tiền</button>
-                                                                              ` : ''}
-                                                                        </div>
+                    ${item.Status === "Canceled" && item.PaymentStatus === "Completed" && item.PaymentMethod === "NCB" ? `
+                        <button class="transaction-query">Truy vấn giao dịch</button>
+                        <button class="refund-request">Hoàn tiền</button>
+                    ` : ''}
 
-                                                                        <div class="order-actions" >
-                                                                              ${item.Status === "Shipping" ? `
-                                                                                <button class="delivery-confirmation">Đã giao</button>
-                                                                              ` : ''}
-                                                                        </div>
+                    ${item.Status === "Shipping" ? `
+                        <button class="delivery-confirmation">Đã giao</button>
+                    ` : ''}
 
-                                                                        <div class="order-actions">
-                                                                            ${item.Status === "Delivered" ? `
-                                                                                <button class="btn btn-success queryImage">Truy vấn Ảnh</button>
-                                                                            ` : ''}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            `;
+                    ${item.Status === "Delivered" ? `
+                        <button class="btn btn-success queryImage">Truy vấn Ảnh</button>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+
+
                             });
 
                             // Chèn HTML vào contentArea

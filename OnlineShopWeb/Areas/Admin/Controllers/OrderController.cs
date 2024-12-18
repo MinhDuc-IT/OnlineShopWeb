@@ -144,6 +144,22 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                                            .ToList();
 
                     // Chuyển đổi sang DTO
+                    //var orderDTOs = pagedOrders.Select(order => new OrderDTO
+                    //{
+                    //    OrderId = order.OrderId,
+                    //    Status = order.Status.ToString(),
+                    //    PaymentStatus = order.PaymentStatus.ToString(),
+                    //    PaymentMethod = order.PaymentMethod,
+                    //    TotalAmount = order.ToTalAmount,
+                    //    OrderNotes = order.OrderNotes,
+                    //    OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+                    //    {
+                    //        ProductName = od.Product.Name,
+                    //        Quantity = od.Quantity,
+                    //        Price = od.Price,
+                    //        ProductImage = od.Product.Image
+                    //    }).ToList()
+                    //}).ToList();
                     var orderDTOs = pagedOrders.Select(order => new OrderDTO
                     {
                         OrderId = order.OrderId,
@@ -152,6 +168,14 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                         PaymentMethod = order.PaymentMethod,
                         TotalAmount = order.ToTalAmount,
                         OrderNotes = order.OrderNotes,
+                        RecipientName = order.RecipientName,
+                        RecipientPhoneNumber = order.RecipientPhoneNumber,
+                        RecipientAddress = order.RecipientAddress,
+                        DeliveredBy = order.DeliveredBy,
+                        DeliveryConfirmationTime = order.DeliveryConfirmationTime,
+                        CanceledBy = order.CanceledBy,
+                        CancellationTime = order.CancellationTime,
+                        OrderConfirmationTime = order.OrderConfirmationTime,
                         OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
                         {
                             ProductName = od.Product.Name,
