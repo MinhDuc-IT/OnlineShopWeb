@@ -209,6 +209,7 @@
                     url: `/Admin/Brand/GetBrandbyId?id=${id}`,
                     method: 'GET',
                     success: function (brand) {
+                        console.log(brand)
                         $('#branchIdd').val(id);
                         $('#branchName').val(brand.data.Name);
                         $('#branchDescription').val(brand.data.Description);
