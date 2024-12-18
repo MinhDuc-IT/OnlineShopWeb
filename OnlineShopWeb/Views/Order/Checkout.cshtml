@@ -196,6 +196,14 @@
                     isValid = false;
                 }
 
+                var totalValue = $('.total').val();
+
+                // Loại bỏ dấu phân cách hàng nghìn (.)
+                totalValue = totalValue.replace(/\./g, '');
+
+                // Gán lại giá trị đã loại bỏ dấu chấm vào input .total
+                $('.total').val(totalValue);
+
                 // Ngăn gửi form nếu không hợp lệ
                 if (!isValid) {
                     event.preventDefault();
@@ -209,7 +217,10 @@
                 var subTotal = parseFloat($(this).text().replace(/[^0-9.-]+/g, "")) || 0;
                 total += subTotal;
             });
-            $('.total').val(total.toFixed(0));
+            var formattedTotal = new Intl.NumberFormat('vi-VN').format(total);
+
+            // Cập nhật giá trị vào ô total
+            $('.total').val(formattedTotal);;
         }
 
         // Hàm hiển thị lỗi

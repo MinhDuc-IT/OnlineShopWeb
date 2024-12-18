@@ -93,7 +93,7 @@
             <div class="modal-body">
                 <form id="branchForm">
                     <div class="form-group">
-                        <label id="idLable" for="branchName">BrandId</label>
+                        <label id="idLable" for="branchId">BrandId</label>
                         <input type="text" class="form-control" id="branchId" readonly>
                     </div>
                     <div class="form-group">
@@ -193,6 +193,7 @@
                 url: `/Admin/Brand/GetBrandbyId?id=${id}`,
                 method: 'GET',
                 success: function (brand) {
+                    console.log(brand);
                     $('#branchId').val(id);
                     $('#branchName').val(brand.Name);
                     $('#branchDescription').val(brand.Description);

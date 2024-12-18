@@ -31,9 +31,19 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         }
         public JsonResult GetBrandbyId(int id)
         {
-            var branches = db.Brands.FirstOrDefault(b=>b.BrandId == id);
-            return Json(branches, JsonRequestBehavior.AllowGet);
+            var brand = db.Brands
+                .Where(b => b.BrandId == id)
+                .Select(b => new
+                { 
+                    b.BrandId,
+                    b.Name,
+                    b.Description
+                })
+                .FirstOrDefault(); 
+
+            return Json(brand, JsonRequestBehavior.AllowGet);
         }
+
 
         [HttpPost]
         public JsonResult AddBrand(string name, string description)
