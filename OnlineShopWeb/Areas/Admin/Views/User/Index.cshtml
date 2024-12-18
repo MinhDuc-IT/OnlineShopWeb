@@ -155,7 +155,7 @@
                                 Paging(page);
                             }
                             else {
-                                alert(rs.message);
+                                toastr.error(rs.message, "Error");
                             }
                         }
                     })

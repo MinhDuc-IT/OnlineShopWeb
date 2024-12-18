@@ -29,6 +29,7 @@ namespace OnlineShopWeb.Controllers
             var products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
+                .Where(p => p.IsDeleted ==  false)
                 .ToList();
 
             if (id.HasValue)
@@ -44,7 +45,7 @@ namespace OnlineShopWeb.Controllers
             var products = _context.Products
                 .Include(p => p.Brand)
                 .Include(p => p.Category)
-                .Where(p => p.CategoryId == id)
+                .Where(p => p.CategoryId == id && p.IsDeleted == false)
                 .ToList();
 
             var category = _context.Categories.Find(id);
@@ -62,7 +63,7 @@ namespace OnlineShopWeb.Controllers
             try
             {
                 var products = _context.Products
-                    .Where(p => p.BrandId == brandId)
+                    .Where(p => p.BrandId == brandId && p.IsDeleted == false)
                     .Include(p => p.Brand)
                     .Include(p => p.Category)
                     .ToList();
@@ -80,7 +81,7 @@ namespace OnlineShopWeb.Controllers
             try
             {
                 var products = _context.Products
-                    .Where(p => p.CategoryId == categoryId)
+                    .Where(p => p.CategoryId == categoryId && p.IsDeleted == false)
                     .Include(p => p.Brand)
                     .Include(p => p.Category)
                     .ToList();
@@ -152,7 +153,7 @@ namespace OnlineShopWeb.Controllers
         {
             // Fetch viewed products, handle null case
             var viewedProducts = _context.Products
-                .Where(p => p.LastViewed >= startDate && p.LastViewed <= endDate)
+                .Where(p => p.LastViewed >= startDate && p.LastViewed <= endDate && p.IsDeleted == false)
                 .Select(p => new ViewedProduct
                 {
                     ProductId = p.ProductId,
@@ -240,6 +241,7 @@ namespace OnlineShopWeb.Controllers
         public ActionResult loadMoreProducts(int page = 1, int pageSize = 3) 
         {
             var products = _context.Products
+                .Where(p => p.IsDeleted == false)
                             .OrderBy(b => b.ProductId)
                             .Skip((page - 1) * pageSize)
                             .Take(pageSize)
@@ -258,7 +260,7 @@ namespace OnlineShopWeb.Controllers
 
         public ActionResult Detail(int id)
         {
-            var product = _context.Products.FirstOrDefault(p => p.ProductId == id);
+            var product = _context.Products.FirstOrDefault(p => p.ProductId == id && p.IsDeleted == false);
             if (product == null)
             {
                 return HttpNotFound();

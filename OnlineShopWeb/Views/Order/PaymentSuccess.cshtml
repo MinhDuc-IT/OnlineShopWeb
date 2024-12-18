@@ -1,4 +1,4 @@
-﻿
+﻿@model OnlineShopWeb.Models.Order
 @{
     Layout = "~/Views/Shared/_OtherLayout.cshtml";
     ViewData["Title"] = "PaymentSuccess";
@@ -9,9 +9,8 @@
         <a href="@Url.Action("Index", "Home")"><img src="~/Content/images/home/logo.png" alt="Logo" /></a>
     </div>
     <div class="content-404">
-        <img src="~/Content/images/404/404.png" class="img-responsive" alt="Payment Success" />
-        <h1><b>Oops!</b> Payment Process Success</h1>
-        <h2 class="text-danger">@TempData["Message"]</h2>
+        <h1>Payment Process Success</h1>
+        <h2 class="text-success">@TempData["Message"]</h2>
         <p>Your payment has been successfully processed. Thank you for your purchase!</p>
         <h2><a href="@Url.Action("myOrder", "Account")">View Your Order</a></h2>
         <h2><a href="@Url.Action("Index", "Home")">Continue Shopping</a></h2>

@@ -106,9 +106,9 @@ namespace OnlineShopWeb.Controllers
         }
 
         // Hiển thị thông báo thanh toán thành công
-        public ActionResult PaymentSuccess()
+        public ActionResult PaymentSuccess(Order order)
         {
-            return View();
+            return View(order);
         }
 
         // Hiển thị danh sách đơn hàng
@@ -137,6 +137,8 @@ namespace OnlineShopWeb.Controllers
 
         public ActionResult CancelOrder(int orderId)
         {
+            var user = GetUser();
+
             // Tìm kiếm đơn hàng dựa trên orderId
             var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
@@ -169,7 +171,8 @@ namespace OnlineShopWeb.Controllers
 
             // Cập nhật trạng thái đơn hàng
             order.Status = OrderStatus.Canceled;
-
+            order.CanceledBy = user.Name + " - " + user.Role;
+            order.CancellationTime = DateTime.Now;
             // Lưu thay đổi vào cơ sở dữ liệu
             try
             {
@@ -232,9 +235,14 @@ namespace OnlineShopWeb.Controllers
                     return null;
                 }
 
-                if (selectedItem.Quantity <= 0 || selectedItem.Quantity > product.Stock)
+                if (selectedItem.Quantity <= 0)
                 {
-                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} không hợp lệ.";
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} phải lớn hơn 0.";
+                    return null;
+                }
+                else if (selectedItem.Quantity > product.Stock)
+                {
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} vượt quá số lượng trong kho ({product.Stock}).";
                     return null;
                 }
 
@@ -290,8 +298,11 @@ namespace OnlineShopWeb.Controllers
                     ClearSession();
 
                     transaction.Commit();
+
+                    var temp = db.Orders.FirstOrDefault(o => o.OrderId == newOrder.OrderId);
+
                     TempData["Message"] = "Thanh toán VNPay thành công";
-                    return RedirectToAction("PaymentSuccess");
+                    return RedirectToAction("PaymentSuccess", temp);
                 }
                 catch
                 {
@@ -353,8 +364,11 @@ namespace OnlineShopWeb.Controllers
                     ClearSession();
 
                     transaction.Commit();
+
+                    var temp = db.Orders.FirstOrDefault(o => o.OrderId == newOrder.OrderId);
+
                     TempData["Message"] = "Thanh toán VNPay thành công";
-                    return RedirectToAction("PaymentSuccess");
+                    return RedirectToAction("PaymentSuccess", temp);
                 }
                 catch
                 {
@@ -430,6 +444,20 @@ namespace OnlineShopWeb.Controllers
             var user = Session["User"] as User;
 
             return db.Users.FirstOrDefault(u => u.CustomerId == user.CustomerId)?.CustomerId ?? 0;
+        }
+
+        private User GetUser()
+        {
+            var user = Session["User"] as User;
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var customer = db.Users.FirstOrDefault(u => u.CustomerId == user.CustomerId);
+
+            return customer;
         }
 
         #endregion

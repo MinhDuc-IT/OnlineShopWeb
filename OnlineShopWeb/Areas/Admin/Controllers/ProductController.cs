@@ -25,7 +25,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         public ActionResult Index(string searchQuery, string searchBy, int? page)
         {
             // Lấy danh sách sản phẩm từ database
-            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).Where(p=> p.IsDeleted == false).AsQueryable();
+            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).AsQueryable();
 
             // Lọc sản phẩm dựa trên tiêu chí tìm kiếm
             if (!string.IsNullOrEmpty(searchQuery))

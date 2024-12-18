@@ -90,11 +90,10 @@
                     contentType: false,
                     success: function (response) {
                         if (response.success) {
-                            alert("Thêm mới banner thành công");
-                        }
+                            toastr.success("Thêm mới banner thành công", "Thông báo");                        }
                     },
                     error: function (xhr, status, error) {
-                        alert('An error occurred: ' + error);
+                        toastr.error('An error occurred: ' + error, 'Error');
                     }
                 });
             });

@@ -138,11 +138,11 @@
                             barChart.data.datasets[0].data = response.revenue;
                             barChart.update();
                         } else {
-                            alert('Không thể tải dữ liệu doanh thu!');
+                            toastr.error('Không thể tải dữ liệu doanh thu!', "Error");
                         }
                     },
                     error: function () {
-                        alert('Có lỗi xảy ra khi tải dữ liệu doanh thu!');
+                        toastr.error('Có lỗi xảy ra khi tải dữ liệu doanh thu!', "Error");
                     }
                 });
             }
@@ -168,11 +168,11 @@
                         });
                         $('table tbody').html(tbody);
                     } else {
-                        alert('Không thể tải dữ liệu đơn hàng!');
+                        toastr.error('Không thể tải dữ liệu đơn hàng!', "Error");
                     }
                 },
                 error: function () {
-                    alert('Đã xảy ra lỗi trong quá trình tải dữ liệu.');
+                    toastr.error('Đã xảy ra lỗi trong quá trình tải dữ liệu.', "Error");
                 }
             });
         });

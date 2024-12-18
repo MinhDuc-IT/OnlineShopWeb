@@ -32,7 +32,7 @@
     @if (TempData["Message"] != null)
     {
         <script>
-        alert(@Html.Raw(Json.Encode(TempData["Message"])));
+            toastr.info('@Html.Raw(Json.Encode(TempData["Message"]))');
         </script>
     }
     <section id="cart_items">
@@ -95,7 +95,7 @@
                     });
 
                 if (selectedItems.length === 0) {
-                    alert("Please select at least one item to checkout.");
+                    toastr.warning("Please select at least one item to checkout.");
                     return;
                 }
 
@@ -110,11 +110,11 @@
                             console.log("Session updated successfully.");
                             window.location.href = '@Url.Action("Checkout", "Order")';
                         } else {
-                            alert("Failed to update the cart. Please try again.");
+                            toastr.error("Failed to update the cart. Please try again.");
                         }
                     },
                     error: function () {
-                        alert("An error occurred while updating the cart. Please try again.");
+                        toastr.error("An error occurred while updating the cart. Please try again.");
                     }
                 });
             });

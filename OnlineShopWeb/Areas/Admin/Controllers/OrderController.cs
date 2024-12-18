@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -12,12 +13,15 @@ using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 using Newtonsoft.Json;
+using OnlineShopWeb.Attributes;
 using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using OnlineShopWeb.ViewModels;
 
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+    [AuthenticateUser]
+    [AuthorizeUser(Roles = "Admin")]
     public class OrderController : Controller
     {
         private ApplicationDbContext db = new ApplicationDbContext();
@@ -140,6 +144,22 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                                            .ToList();
 
                     // Chuyển đổi sang DTO
+                    //var orderDTOs = pagedOrders.Select(order => new OrderDTO
+                    //{
+                    //    OrderId = order.OrderId,
+                    //    Status = order.Status.ToString(),
+                    //    PaymentStatus = order.PaymentStatus.ToString(),
+                    //    PaymentMethod = order.PaymentMethod,
+                    //    TotalAmount = order.ToTalAmount,
+                    //    OrderNotes = order.OrderNotes,
+                    //    OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
+                    //    {
+                    //        ProductName = od.Product.Name,
+                    //        Quantity = od.Quantity,
+                    //        Price = od.Price,
+                    //        ProductImage = od.Product.Image
+                    //    }).ToList()
+                    //}).ToList();
                     var orderDTOs = pagedOrders.Select(order => new OrderDTO
                     {
                         OrderId = order.OrderId,
@@ -148,6 +168,14 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
                         PaymentMethod = order.PaymentMethod,
                         TotalAmount = order.ToTalAmount,
                         OrderNotes = order.OrderNotes,
+                        RecipientName = order.RecipientName,
+                        RecipientPhoneNumber = order.RecipientPhoneNumber,
+                        RecipientAddress = order.RecipientAddress,
+                        DeliveredBy = order.DeliveredBy,
+                        DeliveryConfirmationTime = order.DeliveryConfirmationTime,
+                        CanceledBy = order.CanceledBy,
+                        CancellationTime = order.CancellationTime,
+                        OrderConfirmationTime = order.OrderConfirmationTime,
                         OrderDetails = order.OrderDetails.Select(od => new OrderDetailDTO
                         {
                             ProductName = od.Product.Name,
@@ -197,6 +225,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
 
         public ActionResult ConfirmOrder(int orderId)
         {
+            var user = GetUser();
             var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
             if (order == null)
@@ -216,6 +245,9 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             try
             {
                 order.Status = OrderStatus.Shipping;
+                order.OrderConfirmationTime = DateTime.Now;
+                order.OrderConfirmedBy = user.Name + " - " + user.Role;
+
                 db.SaveChanges();
                 return Json(new { success = true, message = "Order confirmed successfully" }, JsonRequestBehavior.AllowGet);
             }
@@ -227,6 +259,8 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
 
         public ActionResult CancelOrder(int orderId)
         {
+            var user = GetUser();
+
             var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
 
             if (order == null)
@@ -253,7 +287,8 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             }
 
             order.Status = OrderStatus.Canceled;
-
+            order.CancellationTime = DateTime.Now;
+            order.CanceledBy = user.Name + " - " + user.Role;
             try
             {
                 db.SaveChanges();
@@ -263,6 +298,87 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
             {
                 return Json(new { success = false, message = $"Lỗi khi hủy đơn hàng: {ex.Message}" }, JsonRequestBehavior.AllowGet);
             }
+        }
+
+        [HttpPost]
+        public ActionResult DeliveryConfirmation(IEnumerable<HttpPostedFileBase> deliveryImages)
+        {
+            try
+            {
+                var user = GetUser();
+                var orderId = Convert.ToInt32(Request.Form["orderId"]);
+                var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+                if (order == null)
+                    return Json(new { success = false, message = "Đơn hàng không tồn tại." });
+
+                if (order.Status != OrderStatus.Shipping)
+                    return Json(new { success = false, message = "Đơn hàng không phải trạng thái vận chuyển." });
+
+                if (deliveryImages == null || !deliveryImages.Any())
+                    return Json(new { success = false, message = "Vui lòng tải lên ít nhất một ảnh xác nhận giao hàng." });
+
+                var images = SaveUploadedImages(deliveryImages, "/UploadedFiles/DeliveryConfirmations");
+                if (images == null || !images.Any())
+                    return Json(new { success = false, message = "Không thể lưu ảnh, vui lòng thử lại." });
+
+                // Cập nhật đơn hàng
+                order.Status = OrderStatus.Delivered;
+                order.DeliveryConfirmationImage = string.Join(",", images);
+                order.DeliveredBy = $"{user.Name} - {user.Role}";
+                order.DeliveryConfirmationTime = DateTime.Now;
+                order.PaymentStatus = PaymentStatus.Completed;
+
+                db.SaveChanges();
+                return Json(new { success = true, message = "Xác nhận giao hàng thành công." });
+            }
+            catch (Exception ex)
+            {
+                // Log lỗi (nếu cần)
+                return Json(new { success = false, message = $"Đã xảy ra lỗi: {ex.Message}" });
+            }
+        }
+
+        private List<string> SaveUploadedImages(IEnumerable<HttpPostedFileBase> files, string folderPath)
+        {
+            var savedFiles = new List<string>();
+            var allowedExtensions = new[] { ".jpg", ".jpeg", ".png", ".gif" };
+            var serverPath = Server.MapPath(folderPath);
+
+            if (!Directory.Exists(serverPath))
+                Directory.CreateDirectory(serverPath);
+
+            foreach (var file in files)
+            {
+                if (file != null && file.ContentLength > 0)
+                {
+                    var extension = Path.GetExtension(file.FileName).ToLower();
+                    if (!allowedExtensions.Contains(extension))
+                        continue;
+
+                    var fileName = $"{Guid.NewGuid()}{extension}";
+                    var fullPath = Path.Combine(serverPath, fileName);
+                    file.SaveAs(fullPath);
+                    savedFiles.Add($"{folderPath}/{fileName}");
+                }
+            }
+
+            return savedFiles;
+        }
+
+        [HttpGet]
+        public JsonResult QueryImages(int orderId)
+        {
+            var order = db.Orders.FirstOrDefault(o => o.OrderId == orderId);
+
+            if (order == null)
+            {
+                return Json(new { success = false, message = "Đơn hàng không tồn tại." }, JsonRequestBehavior.AllowGet);
+            }
+
+            var images = order.DeliveryConfirmationImage?.Split(',') ?? new string[0];
+
+            return Json(new { success = true, images = images }, JsonRequestBehavior.AllowGet);
         }
 
 

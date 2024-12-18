@@ -137,7 +137,7 @@
                     $('#branchesTable').html(rows);
                 },
                 error: function (xhr, status, error) {
-                    alert("Error: " + error);
+                    toastr.error("Error: " + error, "Error");
                 }
             });
         }
@@ -177,11 +177,11 @@
                         $('#branchModal').modal('hide');
                         loadBrands(); // Reload the list after saving
                     } else {
-                        alert("Error: " + response.message);
+                        toastr.error("Error: " + response.message, "Error");
                     }
                 },
                 error: function (xhr, status, error) {
-                    alert("Error: " + error);
+                    toastr.error("Error: " + error, "Error");
                 }
             });
         });
@@ -202,7 +202,7 @@
                     $('#branchModal').modal('show');
                 },
                 error: function (xhr, status, error) {
-                    alert("Error: " + error);
+                    toastr.error("Error: " + error, "Error");
                 }
             });
         });
@@ -220,11 +220,11 @@
                         if (response.success) {
                             loadBrands(); // Reload the list after deletion
                         } else {
-                            alert('Error: ' + response.message);
+                            toastr.error("Error: " + response.message, "Error");
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert("Error: " + error);
+                        toastr.error("Error: " + error, "Error");
                     }
                 });
             }

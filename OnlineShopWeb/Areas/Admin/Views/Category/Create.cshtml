@@ -92,10 +92,10 @@
                     processData: false,
                     contentType: false,
                     success: function (response) {
-                        alert(response.message);
+                        toastr.success(response.message, "Success");
                     },
                     error: function (xhr, status, error) {
-                        alert('An error occurred: ' + error);
+                        toastr.error('An error occurred: ' + error, "Error");
                     }
                 });
             });

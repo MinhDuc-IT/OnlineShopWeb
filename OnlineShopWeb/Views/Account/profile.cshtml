@@ -121,10 +121,10 @@
                     const imgElement = document.getElementById("prevImage");
                     imgElement.src = URL.createObjectURL(file);
                 } else {
-                    alert("File quá lớn! Dung lượng tối đa là 1 MB.");
+                    toastr.error("File quá lớn! Dung lượng tối đa là 1 MB.");
                 }
             } else {
-                alert("Chỉ chấp nhận định dạng .JPEG và .PNG.");
+                toastr.error("Chỉ chấp nhận định dạng .JPEG và .PNG.");
             }
         }
     };
@@ -149,11 +149,11 @@
                     $("#sb_UserName").text(response.userUpdate.Name);
                     $("#sb_Avatar").attr("src", response.userUpdate.Avatar);
                 } else {
-                    alert("Đã có lỗi xảy ra: " + response.message);
+                    toastr.error("Đã có lỗi xảy ra: " + response.message);
                 }
             },
             error: function (error) {
-                alert("Đã xảy ra lỗi khi lưu thông tin!");
+                toastr.error("Đã xảy ra lỗi khi lưu thông tin!");
             }
         });
 

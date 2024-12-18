@@ -136,11 +136,11 @@
                         if (response.success) {
                             window.location.href = "/Admin/User";
                         } else {
-                            alert(response.message);
+                            toastr.error(response.message, "Error");
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert('An error occurred: ' + error);
+                        toastr.error('An error occurred: ' + error, 'Error');
                     }
                 });
             });

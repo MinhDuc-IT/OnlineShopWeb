@@ -38,6 +38,65 @@
     </div>
 </div>
 
+
+<!-- Modal xác nhận giao hàng -->
+<div class="modal fade" id="deliveryConfirmationModal" tabindex="-1" aria-labelledby="deliveryConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deliveryConfirmationModalLabel">Xác nhận giao hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <input type="file" id="deliveryImages" class="form-control" accept=".jpg,.jpeg,.png,.gif" multiple required />
+                <input type="hidden" id="orderId" name="orderId">
+                <div id="imagePreview" class="mt-3 d-flex flex-wrap"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+                <button type="button" id="submitDeliveryConfirmation" class="btn btn-primary">Xác nhận</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Modal xác nhận giao hàng -->
+<div class="modal fade" id="deliveryConfirmationModal" tabindex="-1" aria-labelledby="deliveryConfirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deliveryConfirmationModalLabel">Xác nhận giao hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="imagePreview" class="mt-3"></div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal xác nhận giao hàng -->
+<div class="modal fade" id="deliveryConfirmationModal-1" tabindex="-1" aria-labelledby="deliveryConfirmationModalLabel-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="deliveryConfirmationModalLabel-1">Xác nhận giao hàng</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Vui lòng xem các ảnh xác nhận giao hàng dưới đây:</p>
+                <div id="imagePreview-1" class="mt-3"></div> <!-- Khu vực hiển thị ảnh -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+            </div>
+        </div>
+    </div>
+</div>
 @section scripts {
     <script>
         $(document).ready(function () {
@@ -58,60 +117,88 @@
                             // Duyệt qua tất cả các đơn hàng trong response.data.Orders
                             response.data.Orders.forEach(function (item) {
                                 htmlContent += `
-                                    <div class="OrderListPartialView">
-                                        <div class="order-list">
-                                            <!-- Header Section -->
-                                            <div class="order-header" data-order-id="${item.OrderId}">
-                                                <div class="store-info">
-                                                    <span class="store-name">
-                                                        ${item.OrderId} - <span class="order-status">${item.Status}</span>
-                                                        ${item.OrderNotes ? ` -  ${item.OrderNotes}` : ''}
-                                                    </span>
-                                                </div>
-                                                <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span><br>
-                                                <span class="payment-method">Phương thức thanh toán: ${item.PaymentMethod}</span>
-                                                <div class="order-review-status">
-                                                    <strong>Tổng số tiền: <span class="review-status">${item.TotalAmount.toLocaleString()} đ</span></strong>
-                                                </div>
-                                            </div>
+    <div class="OrderListPartialView">
+        <div class="order-list">
+            <!-- Header Section -->
+            <div class="order-header" data-order-id="${item.OrderId}">
+                <div class="store-info">
+                    <span class="store-name">
+                        ${item.OrderCode ? `${item.OrderCode} - ` : ''}${item.OrderId} - <span class="order-status">${item.Status}</span>
+                        ${item.OrderNotes ? ` - ${item.OrderNotes}` : ''}
+                    </span>
+                    <br>
+                    <span class="recipient-info">
+                        <strong>Người nhận:</strong> ${item.RecipientName}<br>
+                        <strong>SĐT:</strong> ${item.RecipientPhoneNumber}<br>
+                        <strong>Địa chỉ:</strong> ${item.RecipientAddress}
+                    </span>
+                    <br>
+                    <span class="additional-info">
+                        ${item.Status === "Canceled" ? `
+                            <strong>Hủy bởi:</strong> ${item.CanceledBy || "N/A"}<br>
+                            <strong>Thời gian hủy:</strong> ${item.CancellationTime ? new Date(item.CancellationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                        ${item.Status === "Delivered" ? `
+                            <strong>Người xác nhận giao thành công:</strong> ${item.DeliveredBy || "N/A"}<br>
+                            <strong>Thời xác nhận giao thành công:</strong> ${item.DeliveryConfirmationTime ? new Date(item.DeliveryConfirmationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                        ${item.Status === "Shipping" ? `
+                            <strong>Thời gian vận chuyển:</strong> ${item.OrderConfirmationTime ? new Date(item.OrderConfirmationTime).toLocaleString() : "N/A"}
+                        ` : ''}
+                    </span>
+                </div>
+                <span class="payment-status">Trạng thái thanh toán: ${item.PaymentStatus}</span><br>
+                <span class="payment-method">Phương thức thanh toán: ${item.PaymentMethod}</span>
+                <div class="order-review-status">
+                    <strong>Tổng số tiền: <span class="review-status">${item.TotalAmount.toLocaleString()} đ</span></strong>
+                </div>
+            </div>
 
-                                            <!-- Order Details Section (Initially Hidden) -->
-                                            <div class="order-details" data-order-id="${item.OrderId}" style="display:none;">
-                                                ${item.OrderDetails.map(orderItem => `
-                                                <div class="product-list">
-                                                    <div class="product-item">
-                                                        <div class="product-image-1">
-                                                            <img src="data:image/jpeg;base64,${orderItem.ProductImage}" alt="${orderItem.ProductName}" style="width:150px;height:150px;object-fit:cover;" />
-                                                        </div>
-                                                        <div class="product-info">
-                                                            <h3>${orderItem.ProductName}</h3>
-                                                            <p class="product-quantity">x ${orderItem.Quantity}</p>
-                                                            <p class="product-price"><span>${(orderItem.Price).toLocaleString()} đ</span></p>
-                                                        </div>
-                                                        <div class="order-summary">
-                                                            <p>${(orderItem.Price * orderItem.Quantity).toLocaleString()} đ</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                `).join('')}
+            <!-- Order Details Section (Initially Hidden) -->
+            <div class="order-details" data-order-id="${item.OrderId}" style="display:none;">
+                <div class="product-list">
+                    ${item.OrderDetails.map(orderItem => `
+                    <div class="product-item">
+                        <div class="product-image-1">
+                            <img src="data:image/jpeg;base64,${orderItem.ProductImage}" alt="${orderItem.ProductName}" style="width:150px;height:150px;object-fit:cover;" />
+                        </div>
+                        <div class="product-info">
+                            <h3>${orderItem.ProductName}</h3>
+                            <p class="product-quantity">x ${orderItem.Quantity}</p>
+                            <p class="product-price"><span>${(orderItem.Price).toLocaleString()} đ</span></p>
+                        </div>
+                        <div class="order-summary">
+                            <p>${(orderItem.Price * orderItem.Quantity).toLocaleString()} đ</p>
+                        </div>
+                    </div>
+                    `).join('')}
+                </div>
 
-                                                <div class="order-actions" >
-                                                      ${item.Status === "Processing" ? `
-                                                        <button class="buy-confirm">Xác nhận</button>
-                                                        <button class="buy-cancel">Hủy</button>
-                                                      ` : ''}
-                                                </div>
+                <div class="order-actions">
+                    ${item.Status === "Processing" ? `
+                        <button class="buy-confirm">Xác nhận</button>
+                        <button class="buy-cancel">Hủy</button>
+                    ` : ''}
 
-                                                <div class="order-actions" >
-                                                      ${item.Status === "Canceled" && item.PaymentStatus === "Completed" && item.PaymentMethod === "NCB" ? `
-                                                        <button class="transaction-query">Truy vấn giao dịch</button>
-                                                        <button class="refund-request">Hoàn tiền</button>
-                                                      ` : ''}
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    `;
+                    ${item.Status === "Canceled" && item.PaymentStatus === "Completed" && item.PaymentMethod === "NCB" ? `
+                        <button class="transaction-query">Truy vấn giao dịch</button>
+                        <button class="refund-request">Hoàn tiền</button>
+                    ` : ''}
+
+                    ${item.Status === "Shipping" ? `
+                        <button class="delivery-confirmation">Đã giao</button>
+                    ` : ''}
+
+                    ${item.Status === "Delivered" ? `
+                        <button class="btn btn-success queryImage">Truy vấn Ảnh</button>
+                    ` : ''}
+                </div>
+            </div>
+        </div>
+    </div>
+`;
+
+
                             });
 
                             // Chèn HTML vào contentArea
@@ -133,28 +220,28 @@
 
             function createPagination(currentPage, totalPages, status) {
                 let paginationHtml = `
-            <nav class="pagination-nav">
-                <ul class="pagination justify-content-center">
-                    <!-- Previous Button -->
-                    <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${currentPage - 1}">&laquo;</a>
-                    </li>`;
+                                    <nav class="pagination-nav">
+                                        <ul class="pagination justify-content-center">
+                                            <!-- Previous Button -->
+                                            <li class="page-item ${currentPage === 1 ? 'disabled' : ''}">
+                                                <a class="page-link" href="#" data-page="${currentPage - 1}">&laquo;</a>
+                                            </li>`;
 
                 // Các trang trước và sau trang hiện tại
                 for (let i = Math.max(1, currentPage - 2); i <= Math.min(totalPages, currentPage + 2); i++) {
                     paginationHtml += `
-                <li class="page-item ${i === currentPage ? 'active' : ''}">
-                    <a class="page-link" href="#" data-page="${i}">${i}</a>
-                </li>`;
+                                        <li class="page-item ${i === currentPage ? 'active' : ''}">
+                                            <a class="page-link" href="#" data-page="${i}">${i}</a>
+                                        </li>`;
                 }
 
                 // Next Button
                 paginationHtml += `
-                    <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
-                        <a class="page-link" href="#" data-page="${currentPage + 1}">&raquo;</a>
-                    </li>
-                </ul>
-            </nav>`;
+                                            <li class="page-item ${currentPage === totalPages ? 'disabled' : ''}">
+                                                <a class="page-link" href="#" data-page="${currentPage + 1}">&raquo;</a>
+                                            </li>
+                                        </ul>
+                                    </nav>`;
 
                 // Chèn HTML phân trang vào khu vực phân trang
                 $('.pagination-container').html(paginationHtml);
@@ -202,13 +289,17 @@
                         type: 'GET',
                         data: { orderId: orderId },
                         success: function (response) {
-                            alert(response.message);
                             if (response.success) {
-                                location.reload();
+                                toastr.success(response.message, "Success");
+                                setTimeout(() => {
+                                    location.reload(); // Tải lại trang sau khi hiển thị thông báo thành công
+                                }, 2000); // Thời gian chờ 2 giây để đảm bảo người dùng thấy thông báo
+                            } else {
+                                toastr.error(response.message, "Error");
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi xác nhận đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi xác nhận đơn hàng.", "Error");
                         }
                     });
                 } else {
@@ -225,13 +316,140 @@
                         type: 'GET',
                         data: { orderId: orderId },
                         success: function (response) {
-                            alert(response.message);
                             if (response.success) {
-                                location.reload();
+                                toastr.success(response.message, "Success");
+                                setTimeout(() => {
+                                    location.reload(); // Tải lại trang sau khi hiển thị thông báo thành công
+                                }, 2000); // Thời gian chờ 2 giây để đảm bảo người dùng thấy thông báo
+                            } else {
+                                toastr.error(response.message, "Error");
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi hủy đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi hủy đơn hàng.", "Error");
+                        }
+                    });
+                } else {
+                    console.log('Không tìm thấy orderId.');
+                }
+            });
+
+            contentArea.on('click', '.delivery-confirmation', function () {
+                const orderId = $(this).closest('.order-list').find('.order-header').data('order-id'); // Lấy đúng orderId từ data attribute
+                console.log('Xác nhận giao hàng với ID:', orderId);  // Kiểm tra giá trị orderId
+
+                // Cập nhật giá trị orderId trong modal
+                $('#orderId').val(orderId);
+
+                // Hiển thị modal
+                $('#deliveryConfirmationModal').modal('show');
+            });
+
+            $('#deliveryImages').on('change', function (event) {
+                const files = event.target.files;
+                const imagePreview = $('#imagePreview');
+                imagePreview.empty(); // Xóa các ảnh cũ trong preview
+
+                if (files.length > 0) {
+                    Array.from(files).forEach((file) => {
+                        if (!file.type.startsWith('image/')) {
+                            toastr.warning('Chỉ được chọn file ảnh.', "Warning");
+                            return;
+                        }
+
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const img = $('<img>')
+                                .attr('src', e.target.result)
+                                .addClass('img-thumbnail')
+                                .css({ 'max-width': '150px', 'margin-right': '10px', 'margin-bottom': '10px' });
+                            imagePreview.append(img);
+                        };
+                        reader.readAsDataURL(file);
+                    });
+                }
+            });
+
+            $('#submitDeliveryConfirmation').on('click', function () {
+                const orderId = $('#orderId').val();
+                const files = $('#deliveryImages')[0].files;
+
+                if (!orderId) {
+                    toastr.error('Mã đơn hàng không hợp lệ.', "Error");
+                    return;
+                }
+
+                if (files.length === 0) {
+                    toastr.warning('Vui lòng chọn ít nhất một ảnh xác nhận giao hàng.', "Warning");
+                    return;
+                }
+
+                const formData = new FormData();
+                formData.append('orderId', orderId);
+
+                Array.from(files).forEach((file) => formData.append('deliveryImages', file));
+
+                $.ajax({
+                    url: '/Admin/Order/DeliveryConfirmation',
+                    type: 'POST',
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (response) {
+                        if (response.success) {
+                            toastr.success(response.message, "Success");
+                            $('#deliveryConfirmationModal').modal('hide');
+                            setTimeout(() => location.reload(), 2000);
+                        } else {
+                            toastr.error(response.message, "Error");
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Có lỗi xảy ra, vui lòng thử lại.', "Error");
+                    }
+                });
+            });
+
+            contentArea.on('click', '.queryImage', function () {
+                const orderId = $(this).closest('.order-list').find('.order-header').data('order-id');
+                if (orderId) {
+                    $.ajax({
+                        url: '/Admin/Order/QueryImages',
+                        type: 'GET',
+                        data: { orderId: orderId },
+                        success: function (response) {
+                            if (response.success) {
+                                var images = response.images;
+
+                                // Kiểm tra xem có ảnh hay không
+                                if (images && images.length > 0) {
+                                    var previewContainer = $('#imagePreview-1');
+                                    previewContainer.empty(); // Xóa ảnh cũ
+
+                                    // Hiển thị từng ảnh
+                                    images.forEach(function (imagePath) {
+                                        var img = $('<img>')
+                                            .attr('src', imagePath)
+                                            .addClass('img-thumbnail')
+                                            .css({
+                                                'max-width': '200px',
+                                                'max-height': '200px',
+                                                'margin-right': '10px'
+                                            });
+                                        previewContainer.append(img);
+                                    });
+
+                                    // Hiển thị modal
+                                    $('#deliveryConfirmationModal-1').modal('show');
+                                } else {
+                                    toastr.warning("Không có ảnh xác nhận nào được tìm thấy.", "Thông báo");
+                                }
+                            } else {
+                                toastr.error(response.message || "Không thể truy vấn ảnh.", "Error");
+                            }
+                        },
+                        error: function () {
+                            toastr.error("Đã xảy ra lỗi khi truy vấn ảnh.", "Error");
                         }
                     });
                 } else {
@@ -249,7 +467,7 @@
                         data: { orderId: orderId },
                         success: function (response) {
                             if (!response.success) {
-                                alert(response.message);
+                                toastr.error(response.message, "Error");
                             }
                             if (response.success) {
                                 $('#transactionQueryMessage').text(response.message); // Hiển thị thông báo
@@ -293,7 +511,7 @@
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi truy vấn đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi truy vấn đơn hàng.", "Error");
                         }
                     });
                 } else {
@@ -311,7 +529,7 @@
                         data: { orderId: orderId },
                         success: function (response) {
                             if (!response.success) {
-                                alert(response.message);
+                                toastr.error(response.message, "Error");
                             }
                             if (response.success) {
                                 const data = response.data;
@@ -338,10 +556,6 @@
                                     refundInfo += `<strong>Ngày thanh toán:</strong> ${data.Vnp_PayDate} <br>`;
                                 }
 
-                                if (data.Vnp_TransactionStatus) {
-                                    refundInfo += `<strong>Trạng thái giao dịch:</strong> ${data.Vnp_TransactionStatus === "00" ? 'Thành công' : 'Thất bại'} <br>`;
-                                }
-
                                 if (data.Vnp_ResponseCode) {
                                     refundInfo += `<strong>Mã phản hồi:</strong> ${data.Vnp_ResponseCode} <br>`;
                                 }
@@ -357,7 +571,7 @@
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi hoàn tiền đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi hoàn tiền đơn hàng.", "Error");
                         }
                     });
                 } else {
