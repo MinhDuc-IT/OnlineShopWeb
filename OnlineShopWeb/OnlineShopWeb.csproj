@@ -250,6 +250,10 @@
     <Compile Include="Migrations\202412170234144_update.designer.cs">
       <DependentUpon>202412170234144_update.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202412180532536_ sda.cs" />
+    <Compile Include="Migrations\202412180532536_ sda.Designer.cs">
+      <DependentUpon>202412180532536_ sda.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Banner.cs" />
     <Compile Include="Models\Brand.cs" />
@@ -3132,6 +3136,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202412170234144_update.resx">
       <DependentUpon>202412170234144_update.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202412180532536_ sda.resx">
+      <DependentUpon>202412180532536_ sda.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

@@ -1,4 +1,5 @@
-﻿using OnlineShopWeb.Data;
+﻿using OnlineShopWeb.Attributes;
+using OnlineShopWeb.Data;
 using OnlineShopWeb.Models;
 using System;
 using System.Collections.Generic;
@@ -9,17 +10,22 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 
+
 namespace OnlineShopWeb.Areas.Admin.Controllers
 {
+
+    [AuthenticateUser]
+    [AuthorizeUser(Roles = "Admin")]
     public class ProductController : Controller
     {
+
         private ApplicationDbContext db = new ApplicationDbContext();
 
         // GET: Admin/Products1
         public ActionResult Index(string searchQuery, string searchBy, int? page)
         {
             // Lấy danh sách sản phẩm từ database
-            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).AsQueryable();
+            var products = db.Products.Include(p => p.Brand).Include(p => p.Category).Where(p=> p.IsDeleted == false).AsQueryable();
 
             // Lọc sản phẩm dựa trên tiêu chí tìm kiếm
             if (!string.IsNullOrEmpty(searchQuery))
@@ -107,6 +113,7 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
 
                 // Handle description field (since it's contenteditable)
                 var description = Request.Form["Description"];
+                product.IsDeleted = false;
                 product.Description = description;
 
                 // Check if product already exists (based on the specified conditions)
@@ -236,7 +243,8 @@ namespace OnlineShopWeb.Areas.Admin.Controllers
         public ActionResult DeleteConfirmed(int id)
         {
             Product product = db.Products.Find(id);
-            db.Products.Remove(product);
+            product.IsDeleted = true;
+            db.Entry(product).State = EntityState.Modified;
             db.SaveChanges();
             return RedirectToAction("Index");
         }
