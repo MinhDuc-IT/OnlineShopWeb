@@ -51,7 +51,7 @@
             var phone = $("#phone").val()
 
             if (password !== confirmPassword) {
-                alert("Mật khẩu và xác nhận mật khẩu không khớp!");
+                toastr.error("Mật khẩu và xác nhận mật khẩu không khớp!");
                 return;
             }
 
@@ -61,14 +61,14 @@
                 data: { name: name, email: email, password: password, phone: phone, confirmPassword: confirmPassword },
                 success: function (response) {
                     if (response.success === true) {
-                        window.location.href = "/Account/Login"
+                        window.location.href = "/Account/Login";
                     } else {
-                        alert(response.Message);
+                        toastr.error(response.Message);
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error details:", xhr.responseText);
-                    alert("Có lỗi xảy ra.");
+                    toastr.error("Có lỗi xảy ra.");
                 }
             });
         });

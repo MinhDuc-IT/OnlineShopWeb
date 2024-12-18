@@ -106,9 +106,9 @@ namespace OnlineShopWeb.Controllers
         }
 
         // Hiển thị thông báo thanh toán thành công
-        public ActionResult PaymentSuccess()
+        public ActionResult PaymentSuccess(Order order)
         {
-            return View();
+            return View(order);
         }
 
         // Hiển thị danh sách đơn hàng
@@ -232,9 +232,14 @@ namespace OnlineShopWeb.Controllers
                     return null;
                 }
 
-                if (selectedItem.Quantity <= 0 || selectedItem.Quantity > product.Stock)
+                if (selectedItem.Quantity <= 0)
                 {
-                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} không hợp lệ.";
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} phải lớn hơn 0.";
+                    return null;
+                }
+                else if (selectedItem.Quantity > product.Stock)
+                {
+                    TempData["Message"] = $"Số lượng sản phẩm {product.Name} vượt quá số lượng trong kho ({product.Stock}).";
                     return null;
                 }
 
@@ -290,8 +295,11 @@ namespace OnlineShopWeb.Controllers
                     ClearSession();
 
                     transaction.Commit();
+
+                    var temp = db.Orders.FirstOrDefault(o => o.OrderId == newOrder.OrderId);
+
                     TempData["Message"] = "Thanh toán VNPay thành công";
-                    return RedirectToAction("PaymentSuccess");
+                    return RedirectToAction("PaymentSuccess", temp);
                 }
                 catch
                 {
@@ -353,8 +361,11 @@ namespace OnlineShopWeb.Controllers
                     ClearSession();
 
                     transaction.Commit();
+
+                    var temp = db.Orders.FirstOrDefault(o => o.OrderId == newOrder.OrderId);
+
                     TempData["Message"] = "Thanh toán VNPay thành công";
-                    return RedirectToAction("PaymentSuccess");
+                    return RedirectToAction("PaymentSuccess", temp);
                 }
                 catch
                 {

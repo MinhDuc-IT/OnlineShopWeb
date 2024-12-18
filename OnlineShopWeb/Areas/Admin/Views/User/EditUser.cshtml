@@ -117,12 +117,12 @@
                     contentType: false,
                     success: function (response) {
                         if (response.success) {
-                            alert("Sửa người dùng thành công");
+                            toastr.success("Sửa người dùng thành công", "Success");
                             window.location.href = "/Admin/User";
                         }
                     },
                     error: function (xhr, status, error) {
-                        alert('An error occurred: ' + error);
+                        toastr.error('An error occurred: ' + error, 'Error');
                     }
                 });
             });

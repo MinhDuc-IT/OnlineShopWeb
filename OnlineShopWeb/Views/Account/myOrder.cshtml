@@ -68,13 +68,13 @@
                             type: 'GET',
                             data: { orderId: orderId },
                             success: function (response) {
-                                alert(response.message);
+                                toastr.success(response.message);
                                 if (response.success) {
                                     location.reload();
                                 }
                             },
                             error: function () {
-                                alert("Đã xảy ra lỗi khi hủy đơn hàng.");
+                                toastr.error("Đã xảy ra lỗi khi hủy đơn hàng.");
                             }
                         });
                     });

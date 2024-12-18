@@ -202,13 +202,13 @@
                         type: 'GET',
                         data: { orderId: orderId },
                         success: function (response) {
-                            alert(response.message);
+                            toastr.success(response.message, "Success");
                             if (response.success) {
                                 location.reload();
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi xác nhận đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi xác nhận đơn hàng.", "Error");
                         }
                     });
                 } else {
@@ -225,13 +225,13 @@
                         type: 'GET',
                         data: { orderId: orderId },
                         success: function (response) {
-                            alert(response.message);
+                            toastr.success(response.message, "Success");
                             if (response.success) {
                                 location.reload();
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi hủy đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi hủy đơn hàng.", "Error");
                         }
                     });
                 } else {
@@ -249,7 +249,7 @@
                         data: { orderId: orderId },
                         success: function (response) {
                             if (!response.success) {
-                                alert(response.message);
+                                toastr.error(response.message, "Error");
                             }
                             if (response.success) {
                                 $('#transactionQueryMessage').text(response.message); // Hiển thị thông báo
@@ -293,7 +293,7 @@
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi truy vấn đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi truy vấn đơn hàng.", "Error");
                         }
                     });
                 } else {
@@ -311,7 +311,7 @@
                         data: { orderId: orderId },
                         success: function (response) {
                             if (!response.success) {
-                                alert(response.message);
+                                toastr.error(response.message, "Error");
                             }
                             if (response.success) {
                                 const data = response.data;
@@ -357,7 +357,7 @@
                             }
                         },
                         error: function () {
-                            alert("Đã xảy ra lỗi khi hoàn tiền đơn hàng.");
+                            toastr.error("Đã xảy ra lỗi khi hoàn tiền đơn hàng.", "Error");
                         }
                     });
                 } else {

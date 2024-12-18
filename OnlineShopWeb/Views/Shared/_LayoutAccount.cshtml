@@ -90,11 +90,11 @@
                             $("#sb_Avatar").attr("src", "data:image/png;base64," + response.userInfo.Avatar);
                         }
                     } else {
-                        alert("Đã có lỗi xảy ra: " + response.message);
+                        toastr.error("Đã có lỗi xảy ra: " + response.message);
                     }
                 },
                 error: function (error) {
-                    alert("Đã xảy ra lỗi khi lấy thông tin!");
+                    toastr.error("Đã xảy ra lỗi khi lấy thông tin!");
                 }
             });
         })

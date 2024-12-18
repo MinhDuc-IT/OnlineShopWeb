@@ -159,7 +159,7 @@
                 }
             },
             error: function () {
-                alert('Không thể lấy danh sách năm.');
+                toastr.error('Không thể lấy danh sách năm.', 'Error');
             }
         });
 
@@ -197,7 +197,7 @@
                 });
             },
             error: function () {
-                alert('Không thể lấy dữ liệu biểu đồ.');
+                toastr.error('Không thể lấy dữ liệu biểu đồ.', 'Error');
             }
         });
     }

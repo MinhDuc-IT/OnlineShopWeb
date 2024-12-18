@@ -45,12 +45,12 @@
                     if (response.success === true) {
                         window.location.href = response.redirectUrl;
                     } else {
-                        alert("Sai thông tin đăng nhập ");
+                        toastr.error("Sai thông tin đăng nhập");
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Error details:", xhr.responseText);
-                    alert("Có lỗi xảy ra trong quá trình đăng nhập.");
+                    toastr.error("Có lỗi xảy ra trong quá trình đăng nhập.");
                 }
             });
         });

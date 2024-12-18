@@ -68,11 +68,11 @@
                     $('body').html(response);
                 },
                 error: function (xhr, status, error) {
-                    alert("Có lỗi xảy ra: " + error);
+                    toastr.error("Có lỗi xảy ra: " + error);
                 }
             });
         } else {
-            alert("Vui lòng nhập từ khóa!");
+            toastr.warning("Vui lòng nhập từ khóa!");
         }
     }
     $(document).ready(function () {
@@ -94,7 +94,7 @@
                     $('body').html(response);
                 },
                 error: function (xhr, status, error) {
-                    alert("Có lỗi xảy ra: " + error);
+                    toastr.error("Có lỗi xảy ra: " + error);
                 }
             });
         })
@@ -116,7 +116,7 @@
                 }
             },
             error: function (error) {
-                alert("Đã xảy ra lỗi khi lấy thông tin!");
+                toastr.error("Đã xảy ra lỗi khi lấy thông tin!");
             }
         });
 
